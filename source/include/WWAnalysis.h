@@ -24,6 +24,7 @@
 #include "jetVariables.h"
 #include "PandoraPfoVariables.h"
 #include "anaVariables.h"
+#include "overlayVariables.h"
 #include "HistoManager.h"
 
 
@@ -78,8 +79,8 @@ using namespace lcio;
  // bool FindJetsWithOverlay( LCEvent* evt );
   bool FindJetCollection( LCEvent* evt, std::string JetCollectionName, std::vector<ReconstructedParticle*>& localVec );
 
-	void processSignalVariableSet(LCEvent* evt, eventVariables*& evtVar, jetVariables*& jetVar, PandoraPfoVariables*& ppfoVar, anaVariables*& anaVar, std::vector<ReconstructedParticle*> jets);
-	void printSignalVariableSet( eventVariables*& evtVar, jetVariables*& jetVar, PandoraPfoVariables*& ppfoVar, anaVariables*& anaVar );
+	void processSignalVariableSet(LCEvent* evt, std::vector<LCRelation*> pfo2mc, eventVariables*& evtVar, jetVariables*& jetVar, PandoraPfoVariables*& ppfoVar, anaVariables*& anaVar, overlayVariables*& oVar, std::vector<ReconstructedParticle*> jets);
+	void printSignalVariableSet( eventVariables*& evtVar, jetVariables*& jetVar, PandoraPfoVariables*& ppfoVar, anaVariables*& anaVar, overlayVariables*& oVar );
 
 
 
@@ -111,6 +112,8 @@ using namespace lcio;
  eventVariables* ev_eekt{};
  jetVariables* jv_eekt{};
  anaVariables* ana_eekt{};
+ overlayVariables* ov_eekt{};
+ overlayVariables* ppfo_ovr{};
 
 	eventVariables* ev_kt15{};
  jetVariables* jv_kt15{};
@@ -120,6 +123,10 @@ using namespace lcio;
  jetVariables* jv_kt08{};
  anaVariables* ana_kt08{};
 
+//overlay removed from eekt variables set
+ eventVariables* ev_eekt_no_overlay{};
+ jetVariables* jv_eekt_no_overlay{};
+ anaVariables* ana_eekt_no_overlay{};
 
  PandoraPfoVariables* ppfov{};
  HistoManager* h1{};

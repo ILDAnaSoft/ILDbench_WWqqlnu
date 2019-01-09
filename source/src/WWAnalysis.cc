@@ -120,6 +120,9 @@ void WWAnalysis::init() {
 	jv_eekt->initLocalTree();
    ana_eekt = new anaVariables(_tree, ev_eekt);
 	ana_eekt->initLocalTree();
+	ov_eekt = new overlayVariables("eekt",_tree,_nJets, 1);
+	ov_eekt->initLocalTree();
+	
 
 	ev_kt15 = new eventVariables("kt15",_nfermions, _nleptons, _nJets, _tree);
 	ev_kt15->initLocalTree();
@@ -136,10 +139,19 @@ void WWAnalysis::init() {
 	ana_kt08->initLocalTree();
 
 
+	ev_eekt_no_overlay = new eventVariables("eektpure", _nfermions, _nleptons, _nJets, _tree);
+	ev_eekt_no_overlay->initLocalTree();
+    jv_eekt_no_overlay = new jetVariables(ev_eekt_no_overlay, _JetCollName_eekt);
+	jv_eekt_no_overlay->initLocalTree();
+    ana_eekt_no_overlay = new anaVariables(_tree, ev_eekt_no_overlay);
+    ana_eekt_no_overlay->initLocalTree();
+
 
    ppfov = new PandoraPfoVariables(_tree);
   ppfov->initLocalTree();
 
+	 ppfo_ovr= new overlayVariables("ppfoOvr",_tree,1,0);
+	 ppfo_ovr->initLocalTree();
 
   h1 = new HistoManager(ncuts,weight); // no need to init until the class is more finalized
  // h1->initHists1();
@@ -951,9 +963,21 @@ void WWAnalysis::AnalyzeOverlayAcceptance(std::vector<TLorentzVector*> _jetswith
 	*/
 
 }
-void WWAnalysis::processSignalVariableSet(LCEvent* evt, eventVariables*& evtVar, jetVariables*& jetVar, PandoraPfoVariables*& ppfoVar, anaVariables*& anaVar , std::vector<ReconstructedParticle*> jets){
+void WWAnalysis::processSignalVariableSet(LCEvent* evt, std::vector<LCRelation*> pfo2mc, eventVariables*& evtVar, jetVariables*& jetVar, PandoraPfoVariables*& ppfoVar, anaVariables*& anaVar , overlayVariables*& oVar, std::vector<ReconstructedParticle*> jets){
 
 	std::cout<<"Populating Event Variables "<<evtVar->_variableSetName<<std::endl;
+
+	oVar->setParticles(jets, pfo2mc);
+
+	oVar->setMCOverlay(oVar->_MCOverlay, oVar->_MCOverlayIDs, _mcpartvec );
+		std::cout<<"2"<<std::endl;
+	oVar->setOverlayparticlesLoop(oVar->_overlayParticles, oVar->_tlvoverlayParticles, oVar->_purgedJets, oVar->_tlvpurgedJets, jets);
+	std::cout<<"3"<<std::endl;
+	oVar->sumOverlayParticlesLoop(oVar->_tlvoverlaySum, oVar->_tlvoverlayParticles);
+	std::cout<<"4"<<std::endl;
+	oVar->setTotalVariables();
+		
+
 	evtVar->setParticles(_mcpartvec, jets);
 	evtVar->initMCVars(evtVar->_isTau, evtVar->_isMuon, evtVar->_mclepCharge, evtVar->_mcl, evtVar->_mcqq, evtVar->_MCf, evtVar->_MCfpdg, evtVar->_mclepTrkMult, evtVar->_mclepPfoMult);
 	evtVar->initJetTLV(evtVar->_tlvjets);
@@ -961,6 +985,9 @@ void WWAnalysis::processSignalVariableSet(LCEvent* evt, eventVariables*& evtVar,
 	evtVar->computeRecoResultsFromTags(evtVar->_jetmctags, evtVar->_mctWl, evtVar->_mctlep, evtVar->_mctWqq, evtVar->_mctNu);
 	evtVar->populateCMTLVs(evtVar->_jetmctags, evtVar->_mctWl, evtVar->_mctWqq, evtVar->_mctNu, evtVar->_mctCMjets,  evtVar->_mctCMNu );
 	evtVar-> getCosThetaW(evtVar->_mctlepCharge, evtVar->_mctWl, evtVar->_mctWqq, evtVar->_mctWmProdAngle);
+
+	//use mctag to set overlay for now
+	oVar->setTagVariables(evtVar->_jetmctags);
 
 
 	jetVar->setParticles(evt, evtVar->_jets, evtVar->_tlvjets);
@@ -981,12 +1008,13 @@ void WWAnalysis::processSignalVariableSet(LCEvent* evt, eventVariables*& evtVar,
 
 	jetVar->setAnaJetMultiplicity( anaVar->_jetanatags, jetVar->_analepPfoMult, jetVar->_analepTrkMult);
 }
-void WWAnalysis::printSignalVariableSet( eventVariables*& evtVar, jetVariables*& jetVar, PandoraPfoVariables*& ppfoVar, anaVariables*& anaVar ){
+void WWAnalysis::printSignalVariableSet( eventVariables*& evtVar, jetVariables*& jetVar, PandoraPfoVariables*& ppfoVar, anaVariables*& anaVar, overlayVariables*& oVar ){
 	std::cout<<"Printing Event Variables "<<evtVar->_variableSetName <<std::endl;
 	evtVar->printEventVariables();	
 	ppfoVar->printPandoraPfoVariables();
 	jetVar->printJetVariables();
 	anaVar->printAnaVariables();
+	oVar->printOverlayVariables();
 
 }
 void WWAnalysis::processEvent( LCEvent * evt ) {
@@ -1007,7 +1035,7 @@ FindRecoToMCRelation( evt );
 
 
 	///little test area for lcrelation
-	for(unsigned int i=0; i< _reco2mcvec.size(); i++){
+/*	for(unsigned int i=0; i< _reco2mcvec.size(); i++){
 			if( i < 1 ){
 				LCObject* from =_reco2mcvec.at(i)->getFrom();
 				LCObject* to =_reco2mcvec.at(i)->getTo();
@@ -1018,7 +1046,7 @@ FindRecoToMCRelation( evt );
 				std::cout<<"Decoded weights "<<  "trackwgt = " << (int(wgt)%10000)/1000. <<  " clusterwgt  = " << (int(wgt)/10000)/1000. <<std::endl; 
 
 			}	
-	}
+	} */
 
 
  
@@ -1031,15 +1059,58 @@ FindRecoToMCRelation( evt );
 	
 
 
+	std::cout<<"event No. "<< nEvt<<std::endl;
+	processSignalVariableSet(evt, _reco2mcvec, ev_eekt, jv_eekt, ppfov, ana_eekt, ov_eekt, _eektJets);
+	
+//do ppfo
+	//std::vector<std::vector<ReconstructedParticle*> > ppfo_wrapper(1);
+//	ppfo_wrapper.at(0) = _pfovec;
+/*
+	ppfo_ovr->setParticles(_pfovec,  _reco2mcvec);
+	ppfo_ovr->setMCOverlay(ppfo_ovr->_MCOverlay, ppfo_ovr->_MCOverlayIDs, _mcpartvec );
+	ppfo_ovr->setOverlayParticles(ppfo_ovr->_overlayParticles.at(0), ppfo_ovr->_tlvoverlayParticles.at(0), ppfo_ovr->_purgedJets.at(0), ppfo_ovr->_tlvpurgedJets.at(0), _pfovec);
 
-	processSignalVariableSet(evt, ev_eekt, jv_eekt, ppfov, ana_eekt, _eektJets);
-	printSignalVariableSet( ev_eekt, jv_eekt, ppfov, ana_eekt);
+	ppfo_ovr->sumOverlayParticles(ppfo_ovr->_tlvoverlaySum.at(0), ppfo_ovr->_tlvoverlayParticles.at(0));
+	ppfo_ovr->setTotalVariables();
+//end special ppfo overlay
+*/
+	printSignalVariableSet( ev_eekt, jv_eekt, ppfov, ana_eekt, ov_eekt);
 
-	processSignalVariableSet(evt, ev_kt15, jv_kt15, ppfov, ana_kt15, _kt15Jets);
-	printSignalVariableSet( ev_kt15, jv_kt15, ppfov, ana_kt15);
+	//processSignalVariableSet(evt, ev_kt15, jv_kt15, ppfov, ana_kt15, _kt15Jets);
+	//printSignalVariableSet( ev_kt15, jv_kt15, ppfov, ana_kt15);
 
-	processSignalVariableSet(evt, ev_kt08, jv_kt08, ppfov, ana_kt08, _kt08Jets);
-	printSignalVariableSet( ev_kt08, jv_kt08, ppfov, ana_kt08);
+	//processSignalVariableSet(evt, ev_kt08, jv_kt08, ppfov, ana_kt08, _kt08Jets);
+	//printSignalVariableSet( ev_kt08, jv_kt08, ppfov, ana_kt08);
+
+
+	//processSignalVariableSet(evt, reco //TODO
+
+/*
+	ev_eekt_no_overlay->setParticles(_mcpartvec, ov_eekt->_purgedJets);
+	ev_eekt_no_overlay->initMCVars(ev_eekt_no_overlay->_isTau, ev_eekt_no_overlay->_isMuon, ev_eekt_no_overlay->_mclepCharge, ev_eekt_no_overlay->_mcl, ev_eekt_no_overlay->_mcqq, ev_eekt_no_overlay->_MCf, ev_eekt_no_overlay->_MCfpdg, ev_eekt_no_overlay->_mclepTrkMult, ev_eekt_no_overlay->_mclepPfoMult);
+	ev_eekt_no_overlay->initJetTLV(ev_eekt_no_overlay->_tlvjets);
+	ev_eekt_no_overlay->MCTagJets( ev_eekt_no_overlay->_jetmctags, ev_eekt_no_overlay->_isMCTagValid, ev_eekt_no_overlay->_mctlepCharge);
+	ev_eekt_no_overlay->computeRecoResultsFromTags(ev_eekt_no_overlay->_jetmctags, ev_eekt_no_overlay->_mctWl, ev_eekt_no_overlay->_mctlep, ev_eekt_no_overlay->_mctWqq, ev_eekt_no_overlay->_mctNu);
+	ev_eekt_no_overlay->populateCMTLVs(ev_eekt_no_overlay->_jetmctags, ev_eekt_no_overlay->_mctWl, ev_eekt_no_overlay->_mctWqq, ev_eekt_no_overlay->_mctNu, ev_eekt_no_overlay->_mctCMjets,  ev_eekt_no_overlay->_mctCMNu );
+	ev_eekt_no_overlay-> getCosThetaW(ev_eekt_no_overlay->_mctlepCharge, ev_eekt_no_overlay->_mctWl, ev_eekt_no_overlay->_mctWqq, ev_eekt_no_overlay->_mctWmProdAngle);
+*/
+	
+
+/*
+	jv_eekt_no_overlay->setParticles(evt, ev_eekt_no_overlay->_jets, ev_eekt_no_overlay->_tlvjets);
+	jv_eekt_no_overlay->setLogYVariables(jv_eekt_no_overlay->_logyMinus, jv_eekt_no_overlay->_logyPlus);
+	jv_eekt_no_overlay->setMaxCosPsi(jv_eekt_no_overlay->_jetMaxCosPsi); 
+	jv_eekt_no_overlay->setMCTJetMultiplicity(jv_eekt_no_overlay->_mctlepPfoMult, jv_eekt_no_overlay->_mctlepTrkMult, jv_eekt_no_overlay->_mctUpPfoMult, jv_eekt_no_overlay->_mctDwnPfoMult, jv_eekt_no_overlay->_mctUpTrkMult, jv_eekt_no_overlay->_mctDwnTrkMult, jv_eekt_no_overlay->_mctlepMaxCosPsi, jv_eekt_no_overlay->_mctUpMaxCosPsi, jv_eekt_no_overlay->_mctDwnMaxCosPsi);
+	
+
+	ana_eekt_no_overlay->setParticles(_pfovec);
+	ana_eekt_no_overlay->identifyLeptonJet_byTrkMult(ana_eekt_no_overlay->_jetanatags);
+	ana_eekt_no_overlay->getLeptonJetCharge_byLeadingTrack(ana_eekt_no_overlay->_analepCharge );
+	ana_eekt_no_overlay->setLeadingTrack(ana_eekt_no_overlay->_analepLeadingTracktlv );
+	ana_eekt_no_overlay->setAnaEventVariables(ev_eekt_no_overlay);
+
+	jv_eekt_no_overlay->setAnaJetMultiplicity( ana_eekt_no_overlay->_jetanatags, jv_eekt_no_overlay->_analepPfoMult, jv_eekt_no_overlay->_analepTrkMult);
+*/
 
 	/* new class testing area */
 	//make event variables with 3 overlay removed jets
