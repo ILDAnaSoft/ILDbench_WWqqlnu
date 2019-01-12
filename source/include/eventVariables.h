@@ -12,6 +12,7 @@
 #include <math.h>
 #include <iostream>
 #include <sstream>
+#include "classifyTau.h"
 using namespace lcio;
 class eventVariables{
 
@@ -45,6 +46,7 @@ class eventVariables{
 	int _mclepPfoMult{};
 	//event information
 	bool _isTau{};
+	int _tauType{}; //0=not a tau event 1=muon 2=electron 3=other
 	bool _isMuon{};
 	bool _isSignal{};//is this a signal event or background?
 
@@ -92,7 +94,7 @@ class eventVariables{
 
 
 	//methods used to populate event variables	
-	void initMCVars(bool& isTau, bool& isMuon, int& mclepCharge, TLorentzVector*& mcl, TLorentzVector*& mcqq, std::vector<TLorentzVector*>& MCf, std::vector<int>& MCfpdg, int& mclepTrkMult, int& mclepPfoMult);
+	void initMCVars(bool& isTau, bool& isMuon, int& mclepCharge, TLorentzVector*& mcl, TLorentzVector*& mcqq, std::vector<TLorentzVector*>& MCf, std::vector<int>& MCfpdg, int& mclepTrkMult, int& mclepPfoMult, int& tauType);
 	
 	//gets the FSP MCParticles from MC Lepton
 	void exploreDaughterParticles(MCParticle* p , std::vector<MCParticle*>& FSP);
@@ -114,7 +116,12 @@ class eventVariables{
 	void populateCMTLVs(std::vector<int>& tagset, TLorentzVector*& Wl, TLorentzVector*& Wqq, TLorentzVector*& Nu, std::vector<TLorentzVector*>& CMjets,  TLorentzVector*& CMNu );
 
 	void getCosThetaW(int& lepCharge, TLorentzVector*& Wl, TLorentzVector*& Wqq, double& WmProdAngle);
-	
+
+	void findBestMatch(std::vector<std::vector<double> >& angles, std::vector<int>& tags, std::vector<int>& ferm, std::vector<bool>& fused, std::vector<bool>& jused);
+
+	bool allTagged(std::vector<bool> flags);
+
+	int getTauDecayMode(MCParticle* mctau);	
 
 	//printing stuff
 	void printEventVariables();
