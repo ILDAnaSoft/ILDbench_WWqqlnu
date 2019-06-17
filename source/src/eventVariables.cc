@@ -17,8 +17,14 @@ eventVariables::eventVariables(const char* variableSetName, int nfermions, int n
 	std::vector<int> mcfpdg(nfermions);
 	_MCfpdg = mcfpdg;
 
+	std::vector<MCParticle*> mcpf(nfermions);
+	_MCPf = mcpf;
+
 	std::vector<int> jtag(nJets);
 	 _jetmctags = jtag;
+
+	std::vector<double> tagquality(nJets);
+	_tagCosPsi = tagquality;
 
 	std::vector<TLorentzVector*> j1(nJets);
 	std::vector<TLorentzVector*> j2(nJets);
@@ -95,13 +101,30 @@ void eventVariables::getMCLeptonMult(std::vector<MCParticle*>& FSPs, int& mclepT
   mclepTrkMult = counttracks;
 }
 int eventVariables::getTauDecayMode(MCParticle* mctau){
-		//1= muon 2=elec 3= other
+		//1= muon 2=elec 3=had1p 4=had3p 5=other (5p)
 		//with the tau mcp get its immediate decay products
 		//from daniels code decayChPi=0, decayRho, decayA1_1p, decayA1_3p , decayEl, decayMu , decayW , decayK , decayMultiprong , decayOthersingleprong, decayUnrecognised
 		int mode = classifyTau::getMCdecayMode(mctau);
 		if(mode == 5) return 1;
 		if(mode == 4) return 2;
-		return 3;
+
+		//if its something else just count tracks
+		std::vector<MCParticle*> dec =  classifyTau::getstablemctauDaughters(mctau);
+	//	std::cout<<"TAU DETAILS"<<std::endl;
+	//	std::cout<<"N tau daughters = "<<dec.size()<<std::endl;
+	//	std::cout<<"tau daughter pdg = ";
+		int tcount = 0;
+		for(unsigned int i=0; i< dec.size(); i++){
+	//		std::cout<< dec.at(i)->getPDG();
+				if(dec.at(i)->getCharge() != 0){
+					tcount++;
+				}
+		}
+	//	std::cout<<std::endl;
+	//	std::cout<<"N tau tracks = "<<tcount<<std::endl;
+		if(tcount == 1) return 3;
+		if(tcount == 3) return 4;
+		return 5;
 		
 }
 void eventVariables::initMCVars(bool& isTau, bool& isMuon, int& mclepCharge, TLorentzVector*& mcl, TLorentzVector*& mcqq, std::vector<TLorentzVector*>& MCf, std::vector<int>& MCfpdg, int& mclepTrkMult, int& mclepPfoMult, int& tauType){
@@ -138,13 +161,18 @@ void eventVariables::initMCVars(bool& isTau, bool& isMuon, int& mclepCharge, TLo
 			
 			for(unsigned int j=0; j<daughters.size(); j++){
 				
-                TLorentzVector mcVec(TVector3(daughters.at(j)->getMomentum()),daughters.at(j)->getEnergy());
+               // TLorentzVector mcVec(TVector3(daughters.at(j)->getMomentum()),daughters.at(j)->getEnergy());
+				TLorentzVector mcVec;
+				mcVec.SetXYZM(daughters.at(j)->getMomentum()[0], daughters.at(j)->getMomentum()[1], daughters.at(j)->getMomentum()[2], daughters.at(j)->getMass() );
+				_MCPf[j] = daughters.at(j);
                 *MCf[j] = mcVec;
                 MCfpdg[j] = daughters.at(j)->getPDG();
 
 				//is this the lepton?
-				if(abs(MCfpdg[j]) == 13  || abs(MCfpdg[j]) == 15){
-					mcl = new TLorentzVector(mcVec.Vect(),mcVec.E());
+				if(abs(MCfpdg[j]) == 13  || abs(MCfpdg[j]) == 15 || abs(MCfpdg[j]) == 11){
+					//mcl = new TLorentzVector(mcVec.Vect(),mcVec.E());
+					mcl = new TLorentzVector();
+					mcl->SetXYZM( mcVec.Px(), mcVec.Py(), mcVec.Pz(), mcVec.M() );
 
 					//also get all of the leptons visible FSP
 					std::vector<MCParticle*> mclepFSP{};
@@ -163,6 +191,7 @@ void eventVariables::initMCVars(bool& isTau, bool& isMuon, int& mclepCharge, TLo
 				//identify event containing muon
 				isMuon = true;
 				isTau = false;
+				_isElectron = false;
 				tauType = 0;
 				//get true charge of the muon
 				if (std::find(daughterpdgs.begin(),daughterpdgs.end(), 13) != daughterpdgs.end() ){
@@ -178,20 +207,66 @@ void eventVariables::initMCVars(bool& isTau, bool& isMuon, int& mclepCharge, TLo
 				//identify event containing a tau
 				isTau = true;
 				isMuon = false;
+				_isElectron=false;
+				
+
 				
 				for(unsigned int I=0; I<daughters.size(); I++){
 					if( abs(daughters.at(I)->getPDG())==15){
 						tauType = getTauDecayMode(daughters.at(I));
+					
+					//save stable daughters
+				    std::vector<MCParticle*> dec =  classifyTau::getstablemctauDaughters(daughters.at(I));
+					std::vector<TLorentzVector> mctaudaughters( dec.size() );
+					std::vector<int> mctaudaughterspdg(dec.size() );
+					std::vector<double> mctaudaughterscharge(dec.size() );
+					for(unsigned int K =0; K<dec.size(); K++){
+						int taupdg = abs(dec.at(K)->getPDG());
+						if( taupdg != 12 && taupdg != 14 && taupdg != 16 ){
+							TLorentzVector t;
+							t.SetXYZM(dec.at(K)->getMomentum()[0], dec.at(K)->getMomentum()[1], dec.at(K)->getMomentum()[2], dec.at(K)->getMass() );
+							mctaudaughters.at(K) = t;
+							mctaudaughterspdg.at(K) = dec.at(K)->getPDG();
+							mctaudaughterscharge.at(K) = dec.at(K)->getCharge();
+						}
 					}
+
+					_MCTauVisibleDaughters = mctaudaughters;
+					_MCTauVisibleDaughters_pdg = mctaudaughterspdg;
+					_MCTauVisibleDaughters_charge = mctaudaughterscharge;
+
+					}//end get mctau
+			
 				}
+
+				//save the stable daughters
+				
+
 				//identify the true charge of the lepton
 				if (std::find(daughterpdgs.begin(),daughterpdgs.end(), 15) != daughterpdgs.end() ){
 					mclepCharge = -1;
 				}
 				else{
 					mclepCharge = 1;
-				}	
+				}
 			}
+			if (std::find(daughterpdgs.begin(),daughterpdgs.end(), 11) != daughterpdgs.end() ||
+				std::find(daughterpdgs.begin(),daughterpdgs.end(), -11) != daughterpdgs.end() ){
+				//identify event containing electron
+				isMuon = false;
+				isTau = false;
+				_isElectron = true;
+				tauType = 0;
+				//get true charge of the electron
+				if (std::find(daughterpdgs.begin(),daughterpdgs.end(), 11) != daughterpdgs.end() ){
+					mclepCharge = -1;
+				}
+				else{
+					mclepCharge = 1;
+				}
+			}
+	
+			
 			//if we have found the true decay set break out of the mcpart vec loop
 			return;
 			//break;
@@ -264,7 +339,7 @@ bool eventVariables::allTagged(std::vector<bool> flags){
 	}
 	return true;
 }
-void eventVariables::findBestMatch(std::vector<std::vector<double> >& angles, std::vector<int>& tags, std::vector<int>& ferm, std::vector<bool>& fused, std::vector<bool>& jused){
+void eventVariables::findBestMatch(std::vector<std::vector<double> >& angles, std::vector<int>& tags, std::vector<double>& tagCosPsi, std::vector<int>& ferm, std::vector<bool>& fused, std::vector<bool>& jused){
 		
 	int I{},J{}; // the max indices
 	double maxangle = -9999;
@@ -279,11 +354,12 @@ void eventVariables::findBestMatch(std::vector<std::vector<double> >& angles, st
 	}
 	//using the max mark used and make a tag
 	tags.at(J) = ferm.at(I);
+	tagCosPsi.at(J) = maxangle;
 	jused.at(J) = true;
 	fused.at(I) = true;
 	std::cout<<"tagged jet "<<J<<" with "<< ferm.at(I) << " and angle "<<maxangle<<std::endl; 
 }
-void eventVariables::MCTagJets(std::vector<int>& jetmctags, bool& isMCTagValid, int& mctlepCharge ){
+void eventVariables::MCTagJets(std::vector<int>& jetmctags, std::vector<double>& tagCosPsi, double& tagCosPsiSum,  bool& isMCTagValid, int& mctlepCharge ){
 	
 	isMCTagValid = true;
 	//make a fermlist with no neutrino
@@ -291,7 +367,7 @@ void eventVariables::MCTagJets(std::vector<int>& jetmctags, bool& isMCTagValid, 
 	std::vector<TLorentzVector*> mc{};
 	for(unsigned int i=0; i< _MCfpdg.size(); i++){
 		int pdg = _MCfpdg.at(i);
-		if( (abs(pdg)!=14) && (abs(pdg)!=16) ){
+		if( (abs(pdg)!=14) && (abs(pdg)!=16) && (abs(pdg)!=12)){
 			ferm.push_back(_MCfpdg.at(i) );
 			mc.push_back(_MCf.at(i));
 		}
@@ -334,7 +410,12 @@ void eventVariables::MCTagJets(std::vector<int>& jetmctags, bool& isMCTagValid, 
 		std::cout<<std::endl;
 	}
 	while( !allTagged(fused) ){
-		findBestMatch(angles, jetmctags, ferm, fused, jused);
+		findBestMatch(angles, jetmctags,tagCosPsi, ferm, fused, jused);
+	}
+
+    tagCosPsiSum=0.;
+	for(unsigned int i=0; i< tagCosPsi.size(); i++){
+		tagCosPsiSum+= tagCosPsi.at(i);
 	}
 
 	mctlepCharge = _mclepCharge;
@@ -354,7 +435,7 @@ void eventVariables::computeRecoResultsFromTags(std::vector<int>& tagset, TLoren
 		if(abs(tagset.at(i)) < 6){
 			qq += *_tlvjets.at(i);
 		}
-		if(abs(tagset.at(i)) == 13 || abs(tagset.at(i)) == 15){
+		if(abs(tagset.at(i)) == 13 || abs(tagset.at(i)) == 15 || abs(tagset.at(i)) == 11){
 			lep = new TLorentzVector( _tlvjets.at(i)->Vect(), _tlvjets.at(i)->E() );
 		}
 	}
@@ -507,6 +588,7 @@ void eventVariables::initLocalTree(){
 	/*** Tree MC info ***/
 	_localTree->Branch((vsn+"isMuon").c_str(), &_isMuon,(vsn+"isMuon/O").c_str());
 	_localTree->Branch((vsn+"isTau").c_str(),&_isTau,(vsn+"isTau/O").c_str());
+	_localTree->Branch((vsn+"isElectron").c_str(),&_isElectron,(vsn+"isElectron/O").c_str());
 	_localTree->Branch((vsn+"tauType").c_str(),&_tauType,(vsn+"tauType/I").c_str());
 	_localTree->Branch((vsn+"mclepCharge").c_str(), &_mclepCharge,(vsn+"mclepCharge/I").c_str());
 
@@ -522,8 +604,13 @@ void eventVariables::initLocalTree(){
 		_localTree->Branch(name.str().c_str(), &_MCfpdg.at(i), (name.str()+"/I").c_str());
 	}
 
+	_localTree->Branch((vsn+"MCTauVisibleDaughters").c_str(),"vector<TLorentzVector>", &_MCTauVisibleDaughters);//TODO fill this
+	_localTree->Branch((vsn+"MCTauVisibleDaughters_pdg").c_str(),"vector<int>", &_MCTauVisibleDaughters_pdg);
+	_localTree->Branch((vsn+"MCTauVisibleDaughters_charge").c_str(),"vector<double>", &_MCTauVisibleDaughters_charge);
+
 	_localTree->Branch("mcl","TLorentzVector",&_mcl,16000,0);
 	_localTree->Branch("mcqq","TLorentzVector",&_mcqq,16000,0);
+	//_localTree->Branch("mcqq.",&_mcl);
 	
 	for(unsigned int i=0; i< _nJets; i++){
 		std::stringstream name;
@@ -548,6 +635,7 @@ void eventVariables::initLocalTree(){
 	_localTree->Branch((vsn+"mctCMNu").c_str(),"TLorentzVector",&_mctCMNu,16000,0);
 
 	_localTree->Branch((vsn+"isMCTagValid").c_str(), &_isMCTagValid,(vsn+"isMCTagValid/O").c_str());
+	_localTree->Branch((vsn+"tagCosPsiSum").c_str(), &_tagCosPsiSum,(vsn+"tagCosPsiSum/D").c_str());
 	/*** end MC tagging info ***/
 
 	/*** Ana tagging quantities ***/

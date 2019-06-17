@@ -36,8 +36,13 @@ class eventVariables{
 
 	//monte carlo
 	std::vector<MCParticle*> _mcpartvec{};
+	std::vector<MCParticle*> _MCPf{};
 	std::vector<TLorentzVector*> _MCf{};
 	std::vector<int> _MCfpdg{};
+	std::vector<TLorentzVector> _MCTauVisibleDaughters{};
+	std::vector<int> _MCTauVisibleDaughters_pdg{};
+	std::vector<double> _MCTauVisibleDaughters_charge{};
+
 	TLorentzVector* _mcl{};
 	TLorentzVector* _mcqq{};
 	int _mclepCharge{};
@@ -46,8 +51,9 @@ class eventVariables{
 	int _mclepPfoMult{};
 	//event information
 	bool _isTau{};
-	int _tauType{}; //0=not a tau event 1=muon 2=electron 3=other
+	int _tauType{}; //0=not a tau event 1=muon 2=electron 3=had1p 4=had3p 5=other
 	bool _isMuon{};
+	bool _isElectron{};
 	bool _isSignal{};//is this a signal event or background?
 
 
@@ -59,6 +65,10 @@ class eventVariables{
 	//mc jet tagging
 	std::vector<int> _jetmctags{};
 	bool _isMCTagValid{};
+
+	//mc tagging quality variables
+	std::vector<double> _tagCosPsi{};
+	double _tagCosPsiSum{};
 	
 
 	//analysis tagging 
@@ -109,7 +119,7 @@ class eventVariables{
 
 	void setJetTags(std::vector<int>& localjettags, std::vector<int> tagset );
 
-	void MCTagJets(std::vector<int>& jetmctags, bool& isMCTagValid, int& mctlepCharge);
+	void MCTagJets(std::vector<int>& jetmctags,std::vector<double>& tagCosPsi, double& tagCosPsiSum, bool& isMCTagValid, int& mctlepCharge);
 
 	void computeRecoResultsFromTags(std::vector<int>& tagset, TLorentzVector*& Wl, TLorentzVector*& lep, TLorentzVector*& Wqq, TLorentzVector*& Nu); 
 	
@@ -117,7 +127,7 @@ class eventVariables{
 
 	void getCosThetaW(int& lepCharge, TLorentzVector*& Wl, TLorentzVector*& Wqq, double& WmProdAngle);
 
-	void findBestMatch(std::vector<std::vector<double> >& angles, std::vector<int>& tags, std::vector<int>& ferm, std::vector<bool>& fused, std::vector<bool>& jused);
+	void findBestMatch(std::vector<std::vector<double> >& angles, std::vector<int>& tags, std::vector<double>& tagCosPsi, std::vector<int>& ferm, std::vector<bool>& fused, std::vector<bool>& jused);
 
 	bool allTagged(std::vector<bool> flags);
 

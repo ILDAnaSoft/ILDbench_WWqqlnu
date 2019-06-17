@@ -5,12 +5,21 @@ WWAnalysis aWWAnalysis;
 WWAnalysis::WWAnalysis() : Processor("WWAnalysis") {
 
 
+	//load vector<TLorentzVector>
+	//gROOT->ProcessLine("cd()");
+	gROOT->ProcessLine(".L ~/work/repos/ILDbench_WWqqlnu/source/src/loader.C+");
+
   // register steering parameters: name, description, class-variable, default value
 
 	registerProcessorParameter( "Printing" ,
 	                            "Print certain messages"  ,
 	                             _printing,
 	                             (int)5 ) ;
+
+	registerProcessorParameter( "RunSignalMode",
+								"toggle to run over signal or bg events",
+								_runSignalMode,
+								(int) 1 );
 
 	std::string inputMcParticleCollectionName = "x";
 	registerInputCollection( LCIO::MCPARTICLE,
@@ -19,29 +28,7 @@ WWAnalysis::WWAnalysis() : Processor("WWAnalysis") {
 				_inputMcParticleCollectionName,
 				inputMcParticleCollectionName);
 
-	//input collection parameters
-	std::string inputJetCollectionName = "x";
-  	registerInputCollection( LCIO::RECONSTRUCTEDPARTICLE,
-			     	"InputJetCollectionName" , 
-			     	"Input Jet Collection Name "  ,
-			     	_inputJetCollectionName,
-			      	inputJetCollectionName);
-
-	//collection for fast jet with no prior overlay removal
-	std::string inputJetWithOverlayCollectionName = "x";
-  	registerInputCollection( LCIO::RECONSTRUCTEDPARTICLE,
-			     	"InputJetWithOverlayCollectionName" , 
-			     	"Input Jet With Overlay Collection Name "  ,
-			     	_inputJetWithOverlayCollectionName,
-			      	inputJetWithOverlayCollectionName);
-
-	//input track and particle collections:
-	std::string inputParticleCollectionName = "x";
-  	registerInputCollection( LCIO::RECONSTRUCTEDPARTICLE,
-			     	"InputParticleCollectionName" , 
-			     	"Input Particle Collection Name "  ,
-			     	_inputParticleCollectionName,
-			      	inputParticleCollectionName);
+	
 
  	std::string inputTrackCollectionName = "x";
   	registerInputCollection( LCIO::TRACK,
@@ -49,6 +36,28 @@ WWAnalysis::WWAnalysis() : Processor("WWAnalysis") {
 				"Input Track Collection Name " ,
 				_inputTrackCollectionName,
 				inputTrackCollectionName);
+
+	std::vector<std::string> inputCollectionNames{ "x" };
+	registerInputCollections( LCIO::RECONSTRUCTEDPARTICLE,
+							"InputJetCollectionsNames",
+							"Name of the Input particle collections",
+							_inputJetCollectionsNames,
+							inputCollectionNames);
+
+    	//input remain collection 
+	std::vector<std::string> inputRemainCollectionsNames{"x"};
+	registerInputCollections( LCIO::RECONSTRUCTEDPARTICLE,
+					"InputRemainCollectionsNames",
+					"Input Remain Collections Name",
+					_inputRemainCollectionsNames,
+					inputRemainCollectionsNames);
+
+	std::vector<std::string> inputRemainJetsCollNames{"x"};
+	registerInputCollections( LCIO::RECONSTRUCTEDPARTICLE,
+					"InputRemainJetCollectionsNames",
+					"name of jet collection formed from Remain Pfos",
+					_inputRemainJetsCollNames,
+					inputRemainJetsCollNames);
 
 
 	std::string inputRecoRelationCollectionName = "x";
@@ -72,6 +81,16 @@ WWAnalysis::WWAnalysis() : Processor("WWAnalysis") {
 	registerProcessorParameter("Normalization",
 								"event normalization bg/signal",
 								weight,
+								(double) 1.0);//deprecate this
+
+	registerProcessorParameter("Xsec",
+								"Process crossection in fb",
+								_xsec,
+								(double) 1.0);
+
+	registerProcessorParameter("XsecError",
+							   "Error on cross section in fb",
+								_xsecerr,
 								(double) 1.0);
 
 	registerProcessorParameter("Njets",
@@ -84,202 +103,126 @@ WWAnalysis::WWAnalysis() : Processor("WWAnalysis") {
 								ncuts,
 								(int) 0);
 
+	std::string defaultpath= "./";
+	registerProcessorParameter("OutPath",
+							   "path of output rootfile",
+								_outpath,
+								defaultpath );
 
 
 }
+void WWAnalysis::initTauFinderOptimization(){
 
+		//the number of tau jet collections should match the number of remain collections
+			std::vector<TTree*> t(_inputJetCollectionsNames.size());
+			std::vector<tauFinderVariables*> f(_inputJetCollectionsNames.size());
+			std::vector<mcVariables*> m(_inputJetCollectionsNames.size());
 
+			std::vector<remainPfos*> r(_inputRemainCollectionsNames.size());
+			std::vector<overlayVariables*> orp(_inputRemainCollectionsNames.size());
+
+			std::vector<jetOverlay*> j1(_inputRemainCollectionsNames.size());
+
+			_trees = t;
+			_tf = f;
+			_mcv = m;
+			_rp = r;
+			_ol1j = j1;
+
+		
+
+			for(unsigned int i=0; i< _inputJetCollectionsNames.size(); i++){
+				_trees.at(i) = new TTree(_inputJetCollectionsNames.at(i).c_str(), _inputJetCollectionsNames.at(i).c_str());
+				//for each tree init branches for event level information
+				_trees.at(i)->Branch("xsec",&_xsec,"xsec/D");
+				_trees.at(i)->Branch("xsecerr",&_xsecerr,"xsecerr/D");
+				_trees.at(i)->Branch("nevt",&_nEvt,"nevt/I");
+
+				_tf.at(i) = new tauFinderVariables(_inputJetCollectionsNames.at(i).c_str(), _trees.at(i));
+				_tf.at(i)->initLocalTree();
+				_mcv.at(i) = new mcVariables(_inputJetCollectionsNames.at(i).c_str(), _nfermions, _nleptons, _trees.at(i));
+				_mcv.at(i)->initLocalTree();
+				_rp.at(i) = new remainPfos(_inputRemainCollectionsNames.at(i).c_str(), _trees.at(i));
+				_rp.at(i)->initLocalTree();
+
+				_ol1j.at(i) = new jetOverlay(_inputRemainCollectionsNames.at(i).c_str(), _trees.at(i));
+				_ol1j.at(i)->initLocalTree();
+			
+			}
+
+			std::vector<jetVariables*> jsup( _inputRemainJetsCollNames.size() );
+			_js = jsup;
+			std::vector<jetOverlay*> olnj( _inputRemainJetsCollNames.size() );
+			_rjOL = olnj;
+			
+			for(unsigned int i=0; i< _inputRemainJetsCollNames.size(); i++){
+				if(_inputJetCollectionsNames.size() == 1){
+					_js.at(i) = new jetVariables( _inputRemainJetsCollNames.at(i).c_str(), _trees.at(0));
+					_js.at(i)->initLocalTree();
+					_rjOL.at(i) = new jetOverlay( _inputRemainJetsCollNames.at(i).c_str(), _trees.at(0));
+					_rjOL.at(i)->initLocalTree();
+
+				}else if( _inputJetCollectionsNames.size() > 1){
+					_js.at(i) = new jetVariables( _inputRemainJetsCollNames.at(i).c_str(), _trees.at(i));
+					_js.at(i)->initLocalTree();
+					_rjOL.at(i) = new jetOverlay( _inputRemainJetsCollNames.at(i).c_str(), _trees.at(i));
+					_rjOL.at(i)->initLocalTree();
+				}
+			}
+			
+
+			
+}
 void WWAnalysis::init() {
   
   streamlog_out(DEBUG) << "   init called  " << std::endl;
   // usually a good idea to
   printParameters() ;
 
- 
-  file = new TFile("file.root","RECREATE");
-  _tree = new TTree("tree", "tree");
- _puretree = new TTree("puretree", "tree made for pfos with overlay removed and clustered with eekt n=3");
- _eekttree = new TTree("eekttree", "tree made from pandora pfos and clustered with eekt n=3");
- _kt15tree = new TTree("kt15tree", "tree made from pandora pfos, overlay removal with kt R=1.5, reclustered with eekt n=3");
- _kt08tree = new TTree("kt08tree", "tree made from pandora pfos, overlay removal with kt R=0.8, reclustered with eekt n=3") ;
+//init particle collection vectors
+	std::vector<std::vector<ReconstructedParticle*> > initParticleCollections(_inputJetCollectionsNames.size());
+	std::vector<std::vector<ReconstructedParticle*> > initRemainCollections( _inputRemainCollectionsNames.size());
+	for(unsigned int i=0; i<_inputJetCollectionsNames.size(); i++){
+		std::vector<ReconstructedParticle*> Jcollection{};
+		std::vector<ReconstructedParticle*> Rcollection{};
+		initParticleCollections.at(i)=Jcollection ;
+		//_particleCollections.push_back(collection);
+		initRemainCollections.at(i)=Rcollection;
+	}
+	_particleCollections = initParticleCollections;
+	_remainCollections = initRemainCollections;
 
-/*  ev1 = new eventVariables("a", _nfermions, _nleptons, _nJets, _tree);
-  ev1->initLocalTree();
+	//init remainjet collections
+	std::vector<std::vector<ReconstructedParticle*> > initRemainJetColl(_inputRemainJetsCollNames.size());
+	for(unsigned int i=0; i<_inputRemainJetsCollNames.size(); i++){
+		std::vector<ReconstructedParticle*> Jcollection{};
+		initRemainJetColl.at(i) = Jcollection;
+	}
+	_remainJetCollections = initRemainJetColl;
 
-  //set up jet variables
-  jv1 = new jetVariables(ev1, _inputJetCollectionName);
-  jv1->initLocalTree();
 
-  ppfov1 = new PandoraPfoVariables(_tree);
-  ppfov1->initLocalTree();
+// std::cout<<"set filepath "<<std::endl;
+  _outpath = _outpath+"file.root";
+  file = new TFile(_outpath.c_str(),"RECREATE");
 
-  ana1 = new anaVariables(_tree, ev1);
-  ana1->initLocalTree();		 */
-
-  //temp setup
-
-	ev_pure= new eventVariables("pure",_nfermions, _nleptons, _nJets, _puretree);
-	ev_pure->initLocalTree();
-	jv_pure= new jetVariables(ev_pure,_JetCollName_pure);
-	jv_pure->initLocalTree();
-	ana_pure= new anaVariables(_puretree, ev_pure);
-	ana_pure->initLocalTree();
-
-	ev_eekt = new eventVariables("eekt",_nfermions, _nleptons, _nJets, _eekttree);
-    ev_eekt->initLocalTree();
-   jv_eekt= new jetVariables(ev_eekt, _JetCollName_eekt) ;
-	jv_eekt->initLocalTree();
-   ana_eekt = new anaVariables(_eekttree, ev_eekt);
-	ana_eekt->initLocalTree();
-	ov_eekt = new overlayVariables("eekt",_eekttree,_nJets, 1);
-	ov_eekt->initLocalTree();
+  initTauFinderOptimization();
 	
-
-	ev_kt15 = new eventVariables("kt15",_nfermions, _nleptons, _nJets, _kt15tree);
-	ev_kt15->initLocalTree();
-	jv_kt15 = new jetVariables(ev_kt15, _JetCollName_kt15);
-	jv_kt15->initLocalTree();
-	ana_kt15 = new anaVariables(_kt15tree, ev_kt15);
-	ana_kt15->initLocalTree();
-	ov_kt15 = new overlayVariables("kt15",_kt15tree,_nJets, 1);
-    ov_kt15->initLocalTree();
-	
-	ev_kt08 = new eventVariables("kt08",_nfermions, _nleptons, _nJets, _kt08tree);
-	ev_kt08->initLocalTree();
-	jv_kt08 = new jetVariables(ev_kt08, _JetCollName_kt08);
-	jv_kt08->initLocalTree();
-	ana_kt08 = new anaVariables(_kt08tree, ev_kt08);
-	ana_kt08->initLocalTree();
-    ov_kt08 = new overlayVariables("kt08", _kt08tree, _nJets, 1);
-	ov_kt08->initLocalTree();
-
-
-	/*ev_eekt_no_overlay = new eventVariables("eektpure", _nfermions, _nleptons, _nJets, _tree);
-	ev_eekt_no_overlay->initLocalTree();
-    jv_eekt_no_overlay = new jetVariables(ev_eekt_no_overlay, _JetCollName_eekt);
-	jv_eekt_no_overlay->initLocalTree();
-    ana_eekt_no_overlay = new anaVariables(_tree, ev_eekt_no_overlay);
-    ana_eekt_no_overlay->initLocalTree();
-	*/
-  _tree->Branch("runNumber", &_nRun, "runNumber/I");
-  _tree->Branch("eventNumber", &_nEvt, "eventNumber/I");
-
-   ppfov = new PandoraPfoVariables(_tree, "pandora");
-  ppfov->initLocalTree();
-
-   ppfoPure = new PandoraPfoVariables(_tree, "pure");
-	ppfoPure->initLocalTree();
-
-	// ppfo_ovr= new overlayVariables("ppfoOvr",_tree,1,0);
-	// ppfo_ovr->initLocalTree();
-
- // h1 = new HistoManager(ncuts,weight); // no need to init until the class is more finalized
- // h1->initHists1();
- // h1->initHists2();
-
   _nRun = 0;
   _nEvt = 0;
 
-  nEvt = 0;
 
 
 	
-
-	
-
-	//overlay!
-/*	_tree->Branch("OverlaynTotalEvents",&OverlaynTotalEvents,"OverlaynTotalEvents/I");
-	_tree->Branch("OverlayPairBgOverlaynEvents",&OverlayPairBgOverlaynEvents,"OverlayPairBgOverlaynEvents/I");
-	_tree->Branch("uplike_rejects_costheta.",&uplike_rejects_costheta);
-	_tree->Branch("downlike_rejects_costheta.",&downlike_rejects_costheta);
-	_tree->Branch("lepton_rejects_costheta.",&lepton_rejects_costheta);
-	_tree->Branch("uplike_rejects_pt.",&uplike_rejects_pt);
-	_tree->Branch("downlike_rejects_pt.",&downlike_rejects_pt);
-	_tree->Branch("lepton_rejects_pt.",&lepton_rejects_pt);
-
-	_tree->Branch("uplike_rejects_P.",&uplike_rejects_P);
-	_tree->Branch("downlike_rejects_P.",&downlike_rejects_P);
-	_tree->Branch("lepton_rejects_P.",&lepton_rejects_P);
-
-*/
 }
-
 void WWAnalysis::processRunHeader( LCRunHeader* run) {
   streamlog_out(MESSAGE) << " processRunHeader "  << run->getRunNumber() << std::endl ;
 }
-void WWAnalysis::initOverlayEff(){
-	
 
-	std::vector<TH1D*> temp1(8);
-	std::vector<TH1D*> temp2(8);
-	maxcostheta_cut = temp1;
-	maxcostheta_cut_ovr = temp2;
-	
-	
-	for(unsigned int i=0; i< maxcostheta_cut.size(); i++){
-
-		char cuts[100];
-         sprintf(cuts, "_%d", i);
-         std::string cutnum(cuts);
-
-		maxcostheta_cut.at(i) = new TH1D(("maxcostheta_cut"+cutnum).c_str(), ("The polar angle of most forward jet with overlay removal with cut "+cutnum).c_str(),20,0,1.0);
-		maxcostheta_cut.at(i)->Sumw2(true);
-
-		maxcostheta_cut_ovr.at(i) = new TH1D(("maxcostheta_cut_ovr"+cutnum).c_str(), ("The polar angle of most forward jet without overlay removal and cut"+cutnum).c_str(),20,0,1.0);
-		maxcostheta_cut_ovr.at(i)->Sumw2(true);
-
-		maxcostheta_cut_mc.at(i) = new TH1D(("maxcostheta_cut_mc"+cutnum).c_str(), ("The polar angle of most forward mc particle"+cutnum).c_str(),20,0,1.0);
-		maxcostheta_cut_mc.at(i)->Sumw2(true);
-
-		mctag_mc_dM.at(i) = new TH1D(("mctag_mc_dM"+cutnum).c_str(), ("#Delta M = M_{qq}^{mctag} - M_{qq}^{mc}"+cutnum).c_str(),100,-20,20);
-
-		mctag_mc_dM.at(i)->Sumw2(true);
-
-	
-	
-		mctag_mc_dM_ovr.at(i) = new TH1D(("mctag_mc_dM_ovr"+cutnum).c_str(),("#Delta M = M_{qq}^{mctag} - M_{qq}^{mc}"+cutnum).c_str(),100,-20,20);
-		
-		mctag_mc_dM_ovr.at(i)->Sumw2(true);
-	
-	}
-}
 /*****************
 locate the pfo collection with specified name
 populated the global pfo vectors with particles from that collection for this event
 ******************/
-bool WWAnalysis::FindPFOs( LCEvent* evt ) {
 
-	bool collectionFound = false;
-
-  	// clear old global pfovector
-	_pfovec.clear();
-  	typedef const std::vector<std::string> StringVec ;
-  	StringVec* strVec = evt->getCollectionNames() ;
-	
-	//iterate over collections, find the matching name
-  	for(StringVec::const_iterator itname=strVec->begin(); itname!=strVec->end(); itname++){
-     
-		//if found print name and number of elements
-    		if(*itname==_inputParticleCollectionName){ 
-			LCCollection* collection = evt->getCollection(*itname);
-			std::cout<< "Located Pfo Collection "<< *itname<< " with "<< collection->getNumberOfElements() << " elements " <<std::endl;
-			collectionFound = true;
-
- 			//add the collection elements to the global vector
-      			for(int i=0; i<collection->getNumberOfElements(); i++){
-				ReconstructedParticle* recoPart = dynamic_cast<ReconstructedParticle*>(collection->getElementAt(i));
-				_pfovec.push_back(recoPart);
-      			}
-    		}
-  	}
-	
-	if(!collectionFound){
-		std::cout<<"Pfo Collection "<< _inputParticleCollectionName << "not found"<<std::endl;
-	}
-
-   
-	return collectionFound;
-}
 bool WWAnalysis::FindPFOCollection( LCEvent* evt, std::string PfoCollectionName, std::vector<ReconstructedParticle*>& localVec ){
 	bool collectionFound = false;
 
@@ -417,159 +360,10 @@ bool WWAnalysis::FindRecoToMCRelation( LCEvent* evt ){
   
   	return collectionFound;
 }
-/*
-bool WWAnalysis::FindJets( LCEvent* evt ) {
 
-	bool collectionFound = false;
 
-  	// clear old global pfovector
-	_jets.clear();
-  	typedef const std::vector<std::string> StringVec ;
-  	StringVec* strVec = evt->getCollectionNames() ;
-	
-	//iterate over collections, find the matching name
-  	for(StringVec::const_iterator itname=strVec->begin(); itname!=strVec->end(); itname++){
-     
-		//if found print name and number of elements
-    		if(*itname==_inputJetCollectionName){ 
-			LCCollection* collection = evt->getCollection(*itname);
-			std::cout<< "Located Jets Collection "<< *itname<< " with "<< collection->getNumberOfElements() << " elements " <<std::endl;
-			collectionFound = true;
 
- 			//add the collection elements to the global vector
-      			for(unsigned int i=0; i<collection->getNumberOfElements(); i++){
-				ReconstructedParticle* recoPart = dynamic_cast<ReconstructedParticle*>(collection->getElementAt(i));
-				_jets.push_back(recoPart);
-      			}
-    		}
-  	}
-	
-	if(!collectionFound){
-		std::cout<<"Jet Collection "<< _inputJetCollectionName << "not found"<<std::endl;
-	}
 
-   
-	return collectionFound;
-}
-*/
-
-bool WWAnalysis::FindJetCollection( LCEvent* evt, std::string JetCollectionName, std::vector<ReconstructedParticle*>& localVec ) {
-
-	bool collectionFound = false;
-
-  	// clear old global pfovector
-	localVec.clear();
-  	typedef const std::vector<std::string> StringVec ;
-  	StringVec* strVec = evt->getCollectionNames() ;
-	
-	//iterate over collections, find the matching name
-  	for(StringVec::const_iterator itname=strVec->begin(); itname!=strVec->end(); itname++){
-     
-		//if found print name and number of elements
-    		if(*itname==JetCollectionName){ 
-			LCCollection* collection = evt->getCollection(*itname);
-			std::cout<< "Located Jet Collection "<< *itname<< " with "<< collection->getNumberOfElements() << " elements " <<std::endl;
-			collectionFound = true;
-
- 			//add the collection elements to the global vector
-      			for(unsigned int i=0; i<collection->getNumberOfElements(); i++){
-				ReconstructedParticle* recoPart = dynamic_cast<ReconstructedParticle*>(collection->getElementAt(i));
-				 localVec.push_back(recoPart);
-      			}
-    		}
-  	}
-	
-	if(!collectionFound){
-		std::cout<<"Jet Collection "<< JetCollectionName << "not found"<<std::endl;
-	}   
-	return collectionFound;
-}
-
-/*
-void WWAnalysis::analyzeLeadingTracks(){
-	ReconstructedParticle* leader;
-	std::vector<ReconstructedParticle*> d;
-	std::vector<Track*> dt;
-	double maxP = -9999;
-    double maxtP = -9999;
-	int maxindex= -1;
-	int maxtindex = -1;
-	double tp;
-	const double* mom;
-	double p;
-
-	const double c = 2.99792458e8; // m*s^-1        
-  	const double mm2m = 1e-3;
-  	const double eV2GeV = 1e-9;
-    const double BField = marlin::Global::GEAR->getBField().at(gear::Vector3D(0.,0.,0.)).z();
-
-  	const double eB = BField*c*mm2m*eV2GeV;
-
-	for(int i=0; i< _jets.size(); i++){
-
-		d = _jets.at(i)->getParticles();
-		for(unsigned int j=0; j< d.size(); j++){
-			if(d.at(j)->getCharge() !=0){
-				mom = d.at(j)->getMomentum();
-				p = std::sqrt( mom[0]*mom[0] + mom[1]*mom[1] + mom[2]*mom[2]);
-			//	std::cout<<"om "<<om<<" "<<fabs(om)<<" "<<minOm<<std::endl;
-			//	std::cout<<" p "<<p<<std::endl;
-				if( p > maxP){
-					maxP = p;
-					maxindex=j;
-				}//end max reset
-			}//end charge condition
-		}//end jet particles
-
-		if(maxindex == -1) { std::cout<< "continuing" <<std::endl; continue;} //no tracks in this jet
-
-		//the maxpt track may have more than 1 associated tracks so pick out the one with highest pt
-		dt = d.at(maxindex)->getTracks();
-
-		for(int j=0; j< dt.size();j++){
-			double p_t = abs(dt.at(j)->getOmega())*eB;
-			double p_z = p_t*dt.at(j)->getTanLambda();
-
-			tp = std::sqrt(p_t*p_t + p_z*p_z);
-			if(tp > maxtP){
-				maxtP = tp;
-				maxtindex=j;
-			}
-
-		}		
-		//look at track of this particle
-	    Track* t = dt.at(maxtindex);
-		std::cout<<"jet "<<i<< std::endl;
-		
-			std::cout<<t->getD0()<<" ";
-			std::cout<<t->getPhi()<<" ";
-			std::cout<<t->getOmega()<<" ";
-			std::cout<<t->getZ0()<<" ";
-			std::cout<<t->getTanLambda()<<" ";
-		 
-		std::cout<<std::endl;
-    
-		if(i == ljet_index){
-			leadingptljet = maxtP ;
-			leadingd0ljet = t->getD0();
-		//	leadingd0relerrljet = sqrt(t->getCovMatrix()[0])/fabs(t->getD0());
-			leadingd0relerrljet = fabs(t->getD0())/sqrt(t->getCovMatrix()[0]);
-		}
-		else{
-			//we lazily just examing 1 q jet for now
-			leadingptqjet = maxtP;
-			leadingd0qjet = t->getD0();
-		//	leadingd0relerrqjet = sqrt(t->getCovMatrix()[0])/fabs(t->getD0());
-			leadingd0relerrqjet = fabs(t->getD0())/sqrt(t->getCovMatrix()[0]);
-		}
-		//reset maxindex and max p new jet
-		maxtP = -9999;
-		maxindex= -1;
-		maxtindex = -1;
-		maxP = -9999;
-	}//end jet loop
- 
-}*/
 
 /* deal with 2f backgrounds */
 /*
@@ -631,390 +425,199 @@ MCParticle* WWAnalysis::classifyEvent2fermion( std::vector<TLorentzVector*>& _MC
 */
 
 
-
-
 void WWAnalysis::processOverlayVariables(overlayVariables*& oVar, std::vector<ReconstructedParticle*> jets, std::vector<MCParticle*> mcpartvec , std::vector<LCRelation*> pfo2mc){
-	oVar->setParticles(jets, pfo2mc);
+/*	oVar->setParticles(jets, pfo2mc);
 
 	oVar->setMCOverlay(oVar->_MCOverlay, oVar->_MCOverlayIDs, mcpartvec );
-		std::cout<<"2"<<std::endl;
+	//	std::cout<<"2"<<std::endl;
 	oVar->setOverlayparticlesLoop(oVar->_overlayParticles, oVar->_tlvoverlayParticles, oVar->_purgedJets, oVar->_tlvpurgedJets, jets);
-	std::cout<<"3"<<std::endl;
+//	std::cout<<"3"<<std::endl;
 	oVar->sumOverlayParticlesLoop(oVar->_tlvoverlaySum, oVar->_tlvoverlayParticles);
-	std::cout<<"4"<<std::endl;
+//	std::cout<<"4"<<std::endl;
 	oVar->setTotalVariables();
-
-}
-void WWAnalysis::processVariables(LCEvent* evt, eventVariables*& evtVar, jetVariables*& jetVar, anaVariables*& anaVar, std::vector<ReconstructedParticle*> jets ){
-	
-	evtVar->setParticles(_mcpartvec, jets);
-	evtVar->initMCVars(evtVar->_isTau, evtVar->_isMuon, evtVar->_mclepCharge, evtVar->_mcl, evtVar->_mcqq, evtVar->_MCf, evtVar->_MCfpdg, evtVar->_mclepTrkMult, evtVar->_mclepPfoMult, evtVar->_tauType);
-	evtVar->initJetTLV(evtVar->_tlvjets);
-	evtVar->MCTagJets( evtVar->_jetmctags, evtVar->_isMCTagValid, evtVar->_mctlepCharge);
-	if( evtVar->_isMCTagValid ){
-	evtVar->computeRecoResultsFromTags(evtVar->_jetmctags, evtVar->_mctWl, evtVar->_mctlep, evtVar->_mctWqq, evtVar->_mctNu);
-	evtVar->populateCMTLVs(evtVar->_jetmctags, evtVar->_mctWl, evtVar->_mctWqq, evtVar->_mctNu, evtVar->_mctCMjets,  evtVar->_mctCMNu );
-	evtVar-> getCosThetaW(evtVar->_mctlepCharge, evtVar->_mctWl, evtVar->_mctWqq, evtVar->_mctWmProdAngle);
-
-	jetVar->setParticles(evt, evtVar->_jets, evtVar->_tlvjets);
-	jetVar->setLogYVariables(jetVar->_logyMinus, jetVar->_logyPlus);
-	jetVar->setMaxCosPsi(jetVar->_jetMaxCosPsi); 
-	jetVar->setMCTJetMultiplicity(jetVar->_mctlepPfoMult, jetVar->_mctlepTrkMult, jetVar->_mctUpPfoMult, jetVar->_mctDwnPfoMult, jetVar->_mctUpTrkMult, jetVar->_mctDwnTrkMult, jetVar->_mctlepMaxCosPsi, jetVar->_mctUpMaxCosPsi, jetVar->_mctDwnMaxCosPsi);
-	
-
-	anaVar->setParticles(_pfovec);
-	anaVar->identifyLeptonJet_byTrkMult(anaVar->_jetanatags);
-	anaVar->getLeptonJetCharge_byLeadingTrack(anaVar->_analepCharge );
-	anaVar->setLeadingTrack(anaVar->_analepLeadingTracktlv );
-	anaVar->setAnaEventVariables(evtVar);
-
-	jetVar->setAnaJetMultiplicity( anaVar->_jetanatags, jetVar->_analepPfoMult, jetVar->_analepTrkMult);
-	}
-}
-void WWAnalysis::processSignalVariableSet(LCEvent* evt, std::vector<LCRelation*> pfo2mc, eventVariables*& evtVar, jetVariables*& jetVar, PandoraPfoVariables*& ppfoVar, anaVariables*& anaVar , overlayVariables*& oVar, std::vector<ReconstructedParticle*> jets){
-/*
-	std::cout<<"Populating Event Variables "<<evtVar->_variableSetName<<std::endl;
-
-	oVar->setParticles(jets, pfo2mc);
-
-	oVar->setMCOverlay(oVar->_MCOverlay, oVar->_MCOverlayIDs, _mcpartvec );
-		std::cout<<"2"<<std::endl;
-	oVar->setOverlayparticlesLoop(oVar->_overlayParticles, oVar->_tlvoverlayParticles, oVar->_purgedJets, oVar->_tlvpurgedJets, jets);
-	std::cout<<"3"<<std::endl;
-	oVar->sumOverlayParticlesLoop(oVar->_tlvoverlaySum, oVar->_tlvoverlayParticles);
-	std::cout<<"4"<<std::endl;
-	oVar->setTotalVariables();
-		
-
-	evtVar->setParticles(_mcpartvec, jets);
-	evtVar->initMCVars(evtVar->_isTau, evtVar->_isMuon, evtVar->_mclepCharge, evtVar->_mcl, evtVar->_mcqq, evtVar->_MCf, evtVar->_MCfpdg, evtVar->_mclepTrkMult, evtVar->_mclepPfoMult);
-	evtVar->initJetTLV(evtVar->_tlvjets);
-	evtVar->MCTagJets( evtVar->_jetmctags, evtVar->_isMCTagValid, evtVar->_mctlepCharge);
-	evtVar->computeRecoResultsFromTags(evtVar->_jetmctags, evtVar->_mctWl, evtVar->_mctlep, evtVar->_mctWqq, evtVar->_mctNu);
-	evtVar->populateCMTLVs(evtVar->_jetmctags, evtVar->_mctWl, evtVar->_mctWqq, evtVar->_mctNu, evtVar->_mctCMjets,  evtVar->_mctCMNu );
-	evtVar-> getCosThetaW(evtVar->_mctlepCharge, evtVar->_mctWl, evtVar->_mctWqq, evtVar->_mctWmProdAngle);
-
-	//use mctag to set overlay for now
-	oVar->setTagVariables(evtVar->_jetmctags);
-
-
-	jetVar->setParticles(evt, evtVar->_jets, evtVar->_tlvjets);
-	jetVar->setLogYVariables(jetVar->_logyMinus, jetVar->_logyPlus);
-	jetVar->setMaxCosPsi(jetVar->_jetMaxCosPsi); 
-	jetVar->setMCTJetMultiplicity(jetVar->_mctlepPfoMult, jetVar->_mctlepTrkMult, jetVar->_mctUpPfoMult, jetVar->_mctDwnPfoMult, jetVar->_mctUpTrkMult, jetVar->_mctDwnTrkMult, jetVar->_mctlepMaxCosPsi, jetVar->_mctUpMaxCosPsi, jetVar->_mctDwnMaxCosPsi);
-	
-
-	ppfoVar->setParticles(_pfovec);
-	ppfoVar->populateVariables(ppfoVar->_nTracks, ppfoVar->_nParticles, ppfoVar->_totalPt, ppfoVar->_totalE, ppfoVar->_totalM);	
-
-
-	anaVar->setParticles(_pfovec);
-	anaVar->identifyLeptonJet_byTrkMult(anaVar->_jetanatags);
-	anaVar->getLeptonJetCharge_byLeadingTrack(anaVar->_analepCharge );
-	anaVar->setLeadingTrack(anaVar->_analepLeadingTracktlv );
-	anaVar->setAnaEventVariables(evtVar);
-
-	jetVar->setAnaJetMultiplicity( anaVar->_jetanatags, jetVar->_analepPfoMult, jetVar->_analepTrkMult);
 */
 }
-void WWAnalysis::printSignalVariableSet( eventVariables*& evtVar, jetVariables*& jetVar, PandoraPfoVariables*& ppfoVar, anaVariables*& anaVar, overlayVariables*& oVar ){
-	std::cout<<"Printing Event Variables "<<evtVar->_variableSetName <<std::endl;
-	evtVar->printEventVariables();	
-	ppfoVar->printPandoraPfoVariables();
-	jetVar->printJetVariables();
-	anaVar->printAnaVariables();
-	oVar->printOverlayVariables();
+
+
+
+void WWAnalysis::initTauWithNoMCLepton(tauFinderVariables*& t){
+
+	//set up a normal tau but dont set any MC info or do matching
+	//assume particles have already been set, just deal with mc stuff
+	std::vector<double> tempD{ -1 };
+	t->_mcTau = new MCParticleImpl();
+	t->_tauPsi = tempD;
+	t->_indexOfMinTauPsi = -1;
+	t->_minTauPsi = -1;
+
+}
+void WWAnalysis::initEmptyTau(tauFinderVariables*& t, MCParticle* tau ){//when there are no tau jets reconstructed
+
+	t->_nTaus=0;
+	std::vector<int> tempI{ -1 };
+	std::vector<double> tempD{ -1 };
+	t->_tauTrkMult = tempI;
+	t->_tauPfoMult = tempI;
+	t->_tauCharge = tempD;
+	t->_tauNOLTrks = tempI;
+	t->_tauNOLPfos = tempI;
+	t->_tauOLEFrac = tempD;
+	t->_tauOLMFrac = tempD;
+	t->_tauTrueFrac = tempD;
+
+	//std::vector<ReconstructedParticle*> _taus{};
+	std::vector<ReconstructedParticle*> tempP{ new ReconstructedParticleImpl() };
+	t->_taus = tempP;
+	std::vector<TLorentzVector*> tempT{new TLorentzVector() };
+	t->_tlvtaus = tempT;
+
+	std::vector<TLorentzVector> tempT2{};
+	TLorentzVector tlv;
+	tempT2.push_back(tlv);
+	t->_taustest = tempT2;
+	
+
+	
+	if( tau == NULL){
+		initTauWithNoMCLepton(t);
+	}
+	else{
+		t->setMCTau( tau );
+		//also set null matching
+		t->_tauPsi = tempD;
+		t->_indexOfMinTauPsi = -1;
+		t->_minTauPsi = -1;
+	}
+
+	
+
+}
+void WWAnalysis::SetTauOptimizationVariables(LCEvent* evt){
+	std::cout<<"Jet collections size "<< _particleCollections.size()<<std::endl;
+	//do tau optimization stuff
+	for(unsigned int i=0; i<_tf.size(); i++){
+		//make sure we have jets in this particular collection
+		if( _particleCollections.at(i).size() == 0){
+			std::cout<<"No Taus in: "<< _inputJetCollectionsNames.at(i)<<std::endl;
+
+			//have to save 
+			_mcv.at(i)->setParticles(_mcpartvec);
+			_mcv.at(i)->initMCVars();
+
+			_rp.at(i)->_eselindex =-1;
+			_rp.at(i)->_mcselindex = -1;
+			_rp.at(i)->evaluateSelection();
+			if( _mcv.at(i)->_isMuon || _mcv.at(i)->_isTau || _mcv.at(i)->_isElectron){
+				//there is a lepton 
+				initEmptyTau(  _tf.at(i), _mcv.at(i)->_MCPf.at(2));
+			}
+			else{
+				//there is no lepton
+			 	initEmptyTau( _tf.at(i), NULL);
+			}
+			_trees.at(i)->Fill();
+		}
+		else{
+			//there are reconstructed taus
+			std::cout<<"setting parts and filling trees"<<std::endl;
+			
+
+			_tf.at(i)->setParticles(_particleCollections.at(i), _reco2mcvec);
+			_tf.at(i)->setTauVariables();
+			_mcv.at(i)->setParticles(_mcpartvec);
+			_mcv.at(i)->initMCVars();
+
+			_rp.at(i)->setParticles( _particleCollections.at(i),_remainCollections.at(i));
+			_rp.at(i)->setESelIndex();
+			_rp.at(i)->populateRemainFromSelIndex(_rp.at(i)->_eselindex, _rp.at(i)->_eselremainpfos , _rp.at(i)->_eselremainRP);
+
+
+
+			//can look at overlay without an mc lep
+			_ol1j.at(i)->setParticles(_rp.at(i)->_eselremainRP, _reco2mcvec, 1, _mcpartvec);
+			_ol1j.at(i)->setOverlay();
+
+
+			std::cout<<"about to check tf size :"<< _tf.size() <<std::endl;
+			//if i=1 then J>= 1 dont allow multi jets when looping over multi parameter points of tau jets
+			//if there taus then there are remain pfos to be clustered separately
+			if( _tf.size() == 1 ){
+				std::cout<<"about to loop over collection size "<< _remainJetCollections.size()<<std::endl;
+				for(unsigned int J=0; J<_remainJetCollections.size(); J++){
+					for(unsigned int K=0; K<_remainJetCollections.at(J).size(); K++){
+						std::cout<<_remainJetCollections.at(J).at(K)->getEnergy()<<std::endl;
+					}
+					//std::cout<<"y+ "<<evt->getCollection(_inputRemainJetsCollNames.at(J))->getParameters().getFloatVal( "y_{n,n+1}" )<<std::endl;
+					//std::cout<<"coll name "<< _inputRemainJetsCollNames.at(J)<<std::endl;
+					_js.at(J)->setParticles(_remainJetCollections.at(J), evt, _inputRemainJetsCollNames.at(J));
+					_rjOL.at(J)->setParticles( _remainJetCollections.at(J), _reco2mcvec, _remainJetCollections.at(J).size(), _mcpartvec);
+					_rjOL.at(J)->setOverlay();
+				}			
+			}
+			else if( _tf.size() > 1){
+				
+				_js.at(i)->setParticles(_remainJetCollections.at(i), evt, _inputRemainJetsCollNames.at(i));
+				_rjOL.at(i)->setParticles( _remainJetCollections.at(i), _reco2mcvec, _remainJetCollections.at(i).size(), _mcpartvec);
+				_rjOL.at(i)->setOverlay();
+			}
+	
+
+			//make sure this isnt bg
+			if( _mcv.at(i)->_isMuon || _mcv.at(i)->_isTau || _mcv.at(i)->_isElectron){
+			//	_mcv.at(i)->setParticles(_mcpartvec);//throw in any jets
+			//	_mcv.at(i)->initMCVars();
+				_tf.at(i)->setMCTau(_mcv.at(i)->_MCPf.at(2)); //the mctau is any lepton
+				_tf.at(i)->setMCTTauVariables();
+				_tf.at(i)->setTauOLVariables(_mcpartvec);
+
+				_rp.at(i)->setMCSelIndex( _tf.at(i)->_indexOfMinTauPsi );
+				_rp.at(i)->populateRemainFromSelIndex(_rp.at(i)->_mcselindex, _rp.at(i)->_mcselremainpfos, _rp.at(i)->_mcselremainRP );
+				_rp.at(i)->evaluateSelection();
+				std::cout<< "mcindex "<< _rp.at(i)->_mcselindex<<" eindex "<< _rp.at(i)->_eselindex<<std::endl;
+
+				
+				
+
+			}
+			else{
+
+				initTauWithNoMCLepton(_tf.at(i) );
+			}
+		
+				//debug print OL
+			//std::cout<<"debug print OL"<<std::endl;
+			//_ol1j.at(i)->printOL();
+			_trees.at(i)->Fill();
+		}
+
+	}
+
 
 }
 void WWAnalysis::processEvent( LCEvent * evt ) {
 
-  _nEvt++;
+ 
+ std::cout<<"event No. "<< _nEvt<<std::endl;
  // Get Process name and cross section
  //  *_Process = evt->getParameters().getStringVal("Process");
  // _xsec = evt->getParameters().getFloatVal("CrossSection_fb");
 
+ FindRecoToMCRelation( evt );
  FindMCParticles(evt);
 // FindJets(evt);
-FindJetCollection( evt, _JetCollName_pure, _pureJets );
-FindJetCollection( evt, _JetCollName_eekt, _eektJets );
-FindJetCollection( evt, _JetCollName_kt15, _kt15Jets );
-FindJetCollection( evt, _JetCollName_kt08, _kt08Jets );
-FindRecoToMCRelation( evt );
- FindTracks(evt);
- FindPFOs(evt);
-FindPFOCollection( evt, _PfoCollName_pure, _purePFOs );
+for(unsigned int i=0; i<_inputJetCollectionsNames.size(); i++){
+	FindPFOCollection(evt, _inputJetCollectionsNames.at(i), _particleCollections.at(i));
+	FindPFOCollection(evt, _inputRemainCollectionsNames.at(i), _remainCollections.at(i));
+}
+for(unsigned int i=0; i<_inputRemainJetsCollNames.size(); i++){
+	FindPFOCollection(evt, _inputRemainJetsCollNames.at(i), _remainJetCollections.at(i));
+}
+
+//doing tau optimization
+SetTauOptimizationVariables(evt);
 
 
-	///little test area for lcrelation
-/*	for(unsigned int i=0; i< _reco2mcvec.size(); i++){
-			if( i < 1 ){
-				LCObject* from =_reco2mcvec.at(i)->getFrom();
-				LCObject* to =_reco2mcvec.at(i)->getTo();
-				
-				std::cout<<"from "<<from->id()<<" to "<<to->id()<<std::endl;
-				float wgt = _reco2mcvec.at(i)->getWeight();
-				std::cout<<"weights "<<_reco2mcvec.at(i)->getWeight()<<std::endl;
-				std::cout<<"Decoded weights "<<  "trackwgt = " << (int(wgt)%10000)/1000. <<  " clusterwgt  = " << (int(wgt)/10000)/1000. <<std::endl; 
-
-			}	
-	} */
-
-
- 
-//quickfix:::: if there are no jets... !!!!cant do anything TODO explore this phenomenon more
-	//happens if we look for jets with eekt after using kt
-/*	if(_eektJets.size() == 0 || _kt15Jets.size() == 0 || _kt08Jets.size() == 0 || _pureJets.size() == 0){ 
-		std::cout<<"NO JETS HERE!!!!!!!!"<<std::endl;
-		return;
-	}*/
-	
-
-
-	std::cout<<"event No. "<< nEvt<<std::endl;
-////////////	processSignalVariableSet(evt, _reco2mcvec, ev_eekt, jv_eekt, ppfov, ana_eekt, ov_eekt, _eektJets);
-	if(_pureJets.size() ==0 ){ 
-		std::cout<<"NO JETS IN pureJets!!!"<<std::endl;
-	}
-	else{
-   processVariables( evt, ev_pure, jv_pure, ana_pure, _pureJets );
-		ev_pure->printEventVariables();	
-		jv_pure->printJetVariables();
-		ana_pure->printAnaVariables();
-		this->_puretree->Fill();
-  	 }
-   
-
-	if(_eektJets.size() == 0){
-		std::cout<<"NO JETS IN eektJets!!!"<<std::endl;
-	}
-	else{
-   processVariables( evt, ev_eekt, jv_eekt, ana_eekt, _eektJets );
-   processOverlayVariables( ov_eekt,  _eektJets, _mcpartvec , _reco2mcvec );	
-   ov_eekt->setTagVariables(ev_eekt->_jetmctags);	
-   	std::cout<<"Printing Event Variables "<<ev_eekt->_variableSetName <<std::endl;
-	ev_eekt->printEventVariables();	
-	jv_eekt->printJetVariables();
-	ana_eekt->printAnaVariables();
-	ov_eekt->printOverlayVariables();
-		this->_eekttree->Fill();
-	}
-
-
-	if(_kt15Jets.size() == 0){
-		std::cout<<"NO JETS IN kt15Jets!!!"<<std::endl;
-	}
-	else{
-   processVariables( evt, ev_kt15, jv_kt15, ana_kt15, _kt15Jets );
-   processOverlayVariables( ov_kt15, _kt15Jets, _mcpartvec , _reco2mcvec );
-   ov_kt15->setTagVariables(ev_kt15->_jetmctags);	
-    	std::cout<<"Printing Event Variables "<<ev_kt15->_variableSetName <<std::endl;
-	ev_kt15->printEventVariables();	
-	jv_kt15->printJetVariables();
-	ana_kt15->printAnaVariables();
-	ov_kt15->printOverlayVariables();
-		this->_kt15tree->Fill();
-	}
-
-	if(_kt08Jets.size() == 0){
-		std::cout<<"NO Jets IN kt08Jets!!!"<<std::endl;
-	}
-	else{
-   processVariables( evt, ev_kt08, jv_kt08, ana_kt08, _kt08Jets );
-    processOverlayVariables( ov_kt08, _kt08Jets, _mcpartvec, _reco2mcvec );
-   ov_kt08->setTagVariables(ev_kt08->_jetmctags);	
-		std::cout<<"Printing Event Variables "<<ev_kt08->_variableSetName <<std::endl;
-	ev_kt08->printEventVariables();	
-	jv_kt08->printJetVariables();
-	ana_kt08->printAnaVariables();
-	ov_kt08->printOverlayVariables();
-		this->_kt08tree->Fill();
-	}
-
-    ppfov->setParticles(_pfovec);
-	ppfov->populateVariables(ppfov->_nTracks, ppfov->_nParticles, ppfov->_totalPt, ppfov->_totalE, ppfov->_totalM);	
-
-	ppfoPure->setParticles(_purePFOs);
-    ppfoPure->populateVariables(ppfoPure->_nTracks, ppfoPure->_nParticles, ppfoPure->_totalPt, ppfoPure->_totalE, ppfoPure->_totalM);	
-	
-	/*evtVar->printEventVariables();	
-	ppfoVar->printPandoraPfoVariables();
-	jetVar->printJetVariables();
-	anaVar->printAnaVariables();
-	oVar->printOverlayVariables();
-	*/
-//do ppfo
-	//std::vector<std::vector<ReconstructedParticle*> > ppfo_wrapper(1);
-//	ppfo_wrapper.at(0) = _pfovec;
-/*
-	ppfo_ovr->setParticles(_pfovec,  _reco2mcvec);
-	ppfo_ovr->setMCOverlay(ppfo_ovr->_MCOverlay, ppfo_ovr->_MCOverlayIDs, _mcpartvec );
-	ppfo_ovr->setOverlayParticles(ppfo_ovr->_overlayParticles.at(0), ppfo_ovr->_tlvoverlayParticles.at(0), ppfo_ovr->_purgedJets.at(0), ppfo_ovr->_tlvpurgedJets.at(0), _pfovec);
-
-	ppfo_ovr->sumOverlayParticles(ppfo_ovr->_tlvoverlaySum.at(0), ppfo_ovr->_tlvoverlayParticles.at(0));
-	ppfo_ovr->setTotalVariables();
-//end special ppfo overlay
-*/
-///////////	printSignalVariableSet( ev_eekt, jv_eekt, ppfov, ana_eekt, ov_eekt);
-
-	//processSignalVariableSet(evt, ev_kt15, jv_kt15, ppfov, ana_kt15, _kt15Jets);
-	//printSignalVariableSet( ev_kt15, jv_kt15, ppfov, ana_kt15);
-
-	//processSignalVariableSet(evt, ev_kt08, jv_kt08, ppfov, ana_kt08, _kt08Jets);
-	//printSignalVariableSet( ev_kt08, jv_kt08, ppfov, ana_kt08);
-
-
-	//processSignalVariableSet(evt, reco //TODO
-
-/*
-	ev_eekt_no_overlay->setParticles(_mcpartvec, ov_eekt->_purgedJets);
-	ev_eekt_no_overlay->initMCVars(ev_eekt_no_overlay->_isTau, ev_eekt_no_overlay->_isMuon, ev_eekt_no_overlay->_mclepCharge, ev_eekt_no_overlay->_mcl, ev_eekt_no_overlay->_mcqq, ev_eekt_no_overlay->_MCf, ev_eekt_no_overlay->_MCfpdg, ev_eekt_no_overlay->_mclepTrkMult, ev_eekt_no_overlay->_mclepPfoMult);
-	ev_eekt_no_overlay->initJetTLV(ev_eekt_no_overlay->_tlvjets);
-	ev_eekt_no_overlay->MCTagJets( ev_eekt_no_overlay->_jetmctags, ev_eekt_no_overlay->_isMCTagValid, ev_eekt_no_overlay->_mctlepCharge);
-	ev_eekt_no_overlay->computeRecoResultsFromTags(ev_eekt_no_overlay->_jetmctags, ev_eekt_no_overlay->_mctWl, ev_eekt_no_overlay->_mctlep, ev_eekt_no_overlay->_mctWqq, ev_eekt_no_overlay->_mctNu);
-	ev_eekt_no_overlay->populateCMTLVs(ev_eekt_no_overlay->_jetmctags, ev_eekt_no_overlay->_mctWl, ev_eekt_no_overlay->_mctWqq, ev_eekt_no_overlay->_mctNu, ev_eekt_no_overlay->_mctCMjets,  ev_eekt_no_overlay->_mctCMNu );
-	ev_eekt_no_overlay-> getCosThetaW(ev_eekt_no_overlay->_mctlepCharge, ev_eekt_no_overlay->_mctWl, ev_eekt_no_overlay->_mctWqq, ev_eekt_no_overlay->_mctWmProdAngle);
-*/
-	
-
-/*
-	jv_eekt_no_overlay->setParticles(evt, ev_eekt_no_overlay->_jets, ev_eekt_no_overlay->_tlvjets);
-	jv_eekt_no_overlay->setLogYVariables(jv_eekt_no_overlay->_logyMinus, jv_eekt_no_overlay->_logyPlus);
-	jv_eekt_no_overlay->setMaxCosPsi(jv_eekt_no_overlay->_jetMaxCosPsi); 
-	jv_eekt_no_overlay->setMCTJetMultiplicity(jv_eekt_no_overlay->_mctlepPfoMult, jv_eekt_no_overlay->_mctlepTrkMult, jv_eekt_no_overlay->_mctUpPfoMult, jv_eekt_no_overlay->_mctDwnPfoMult, jv_eekt_no_overlay->_mctUpTrkMult, jv_eekt_no_overlay->_mctDwnTrkMult, jv_eekt_no_overlay->_mctlepMaxCosPsi, jv_eekt_no_overlay->_mctUpMaxCosPsi, jv_eekt_no_overlay->_mctDwnMaxCosPsi);
-	
-
-	ana_eekt_no_overlay->setParticles(_pfovec);
-	ana_eekt_no_overlay->identifyLeptonJet_byTrkMult(ana_eekt_no_overlay->_jetanatags);
-	ana_eekt_no_overlay->getLeptonJetCharge_byLeadingTrack(ana_eekt_no_overlay->_analepCharge );
-	ana_eekt_no_overlay->setLeadingTrack(ana_eekt_no_overlay->_analepLeadingTracktlv );
-	ana_eekt_no_overlay->setAnaEventVariables(ev_eekt_no_overlay);
-
-	jv_eekt_no_overlay->setAnaJetMultiplicity( ana_eekt_no_overlay->_jetanatags, jv_eekt_no_overlay->_analepPfoMult, jv_eekt_no_overlay->_analepTrkMult);
-*/
-
-	/* new class testing area */
-	//make event variables with 3 overlay removed jets
-/*	std::cout<<"Populating Event Variables a"<<std::endl;
-	ev1->setParticles(_mcpartvec, _jets);
-	ev1->initMCVars(ev1->_isTau, ev1->_isMuon, ev1->_mclepCharge, ev1->_mcl, ev1->_mcqq, ev1->_MCf, ev1->_MCfpdg, ev1->_mclepTrkMult, ev1->_mclepPfoMult);
-	ev1->initJetTLV(ev1->_tlvjets);
-	ev1->MCTagJets( ev1->_jetmctags, ev1->_isMCTagValid, ev1->_mctlepCharge);
-	ev1->computeRecoResultsFromTags(ev1->_jetmctags, ev1->_mctWl, ev1->_mctlep, ev1->_mctWqq, ev1->_mctNu);
-	ev1->populateCMTLVs(ev1->_jetmctags, ev1->_mctWl, ev1->_mctWqq, ev1->_mctNu, ev1->_mctCMjets,  ev1->_mctCMNu );
-	ev1-> getCosThetaW(ev1->_mctlepCharge, ev1->_mctWl, ev1->_mctWqq, ev1->_mctWmProdAngle);
-
-
-	jv1->setParticles(evt, ev1->_jets, ev1->_tlvjets);
-	jv1->setLogYVariables(jv1->_logyMinus, jv1->_logyPlus);
-	jv1->setMaxCosPsi(jv1->_jetMaxCosPsi); 
-	jv1->setMCTJetMultiplicity(jv1->_mctlepPfoMult, jv1->_mctlepTrkMult, jv1->_mctUpPfoMult, jv1->_mctDwnPfoMult, jv1->_mctUpTrkMult, jv1->_mctDwnTrkMult, jv1->_mctlepMaxCosPsi, jv1->_mctUpMaxCosPsi, jv1->_mctDwnMaxCosPsi);
-	
-
-	ppfov1->setParticles(_pfovec);
-	ppfov1->populateVariables(ppfov1->_nTracks, ppfov1->_nParticles, ppfov1->_totalPt, ppfov1->_totalE, ppfov1->_totalM);	
-
-
-	ana1->setParticles(_pfovec);
-	ana1->identifyLeptonJet_byTrkMult(ana1->_jetanatags);
-	ana1->getLeptonJetCharge_byLeadingTrack(ana1->_analepCharge );
-	ana1->setLeadingTrack(ana1->_analepLeadingTracktlv );
-	ana1->setAnaEventVariables(ev1);
-
-	jv1->setAnaJetMultiplicity( ana1->_jetanatags, jv1->_analepPfoMult, jv1->_analepTrkMult);
-	
-
-	std::cout<<"Printing Event Variables a"<<std::endl;
-	ev1->printEventVariables();	
-	ppfov1->printPandoraPfoVariables();
-	jv1->printJetVariables();
-	ana1->printAnaVariables();
-*/
-/*
-
-	//fill base histograms and produce histos with sequential cuts hist0 is always no cuts
-	FillHistos(0);
-	//cut #1 trueq == lq, lepton sign is correctly assessed
-//	if(trueq == lq){
-//		FillHistos(1);
-//	}
-	//cut #1 require polar angle of q's or lepton to be > cos(theta)=0.995
-	bool PolarAngleRequirementMet = true;
-
-	for(int i=0; i<_nfermions; i++){
-
-		if( abs(_MCfpdg[i]) == 12 || abs(_MCfpdg[i]) == 14 || abs(_MCfpdg[i]) == 16 ){
-		//dont worry about neutrino angle
-			continue;	
-		} 
-		if( fabs(_MCf[i]->CosTheta()) > 0.995 ){
-			//a particle has failed break out
-			PolarAngleRequirementMet = false;
-			break;
-		}
-	}
-
-
-	if(PolarAngleRequirementMet){
-		FillHistos(1);
-	
-		//continue cutflow
-		if( totaltracks > 10 ){
-			FillHistos(2);
-			if( total_Pt > 7.0 ){
-				FillHistos(3);
-				if(total_E < 500.0){
-					FillHistos(4);
-				if( total_M	> 80.0 && total_M < 500.0 ){
-					FillHistos(5);
-					if(_yMinus > -9.5 ){
-						FillHistos(6);
-						if(_yPlus>-12 && _yPlus< -2.9){
-							FillHistos(7);
-
-								if(trueq == lq){
-			std::cout<<"got correct charge"<<std::endl;
-			if(isTau) tauqmatch++;
-			if(isMuon) muonqmatch++;
-		}
-		else{
-			std::cout<<"charge wrong "<<std::endl;
-		}
-		if(psi_mcl_ljet > 0.7){
-			std::cout<<"jet loose match"<<std::endl;
-			if(isTau) ljetmatchmctau++;
-			if(isMuon) ljetmatchmcmuon++;
-		}
-						}
-					}
-			
-				}
-					
-			} }
-				
-		}
-	} 
-	
-	
-	
- */
-  this->_tree->Fill();
-/* removed for refactor
-	//clear vectors for next event
-	uplike_rejects_costheta.clear();
-	downlike_rejects_costheta.clear();
-	lepton_rejects_costheta.clear();
-
-	uplike_rejects_pt.clear(); 
-	downlike_rejects_pt.clear();
-	lepton_rejects_pt.clear();
-	
-	uplike_rejects_P.clear();
-	downlike_rejects_P.clear();
-	lepton_rejects_P.clear();
-
-*/
-
- nEvt++;
+ _nEvt++;
 }
 void WWAnalysis::end(){
 
