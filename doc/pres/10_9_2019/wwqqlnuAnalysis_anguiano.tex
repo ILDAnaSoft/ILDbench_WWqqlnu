@@ -1,0 +1,643 @@
+\documentclass[10pt]{beamer}
+\usetheme{Rochester}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[export]{adjustbox}
+\usepackage[compat=1.0.0]{tikz-feynman}
+\setbeamertemplate{footline}[frame number]
+\usepackage{siunitx}
+\author{Justin Anguiano}
+\title{$WW\rightarrow qql\nu$ Benchmark}
+%\setbeamercovered{transparent} 
+%\setbeamertemplate{navigation symbols}{} 
+%\logo{} 
+%\institute{} 
+\date{\today} 
+%\subject{} 
+\begin{document}
+\maketitle
+
+
+%\begin{frame}
+%\tableofcontents
+%\end{frame}
+
+\begin{frame}{Introduction / Motivation}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\feynmandiagram [horizontal=a to b] {
+  i1 [particle=\(e^{-}\)] -- [fermion] a -- [fermion] i2 [particle=\(e^{+}\)],
+  a -- [photon, edge label=\(\gamma / Z\)] b,
+  f1 [particle=\(W^{+}\)] -- [photon] b -- [photon] f2 [particle=\(W^{-}\)],
+};
+    \feynmandiagram[vertical'=a to b ]{
+        i1 [particle=\(e^{-}\)]
+            -- [fermion] a 
+            -- [boson] f1 [particle=\(W^{-}\)],
+        a -- [fermion, edge label'=\(\nu\)] b ,
+        i2 [particle=\(e^{+}\)]
+            -- [anti fermion] b
+            -- [boson] f2 [particle=\(W^{+}\)]
+    };
+\end{column}
+\begin{column}{0.5\textwidth}
+	WW is a standard process with a large cross-section 
+		\begin{itemize}
+		\scriptsize
+		\item[--] 15 pb in semileptonic channel at 500 GeV
+		\end{itemize} 
+	Three central physics issues addressable by this channel are
+		\begin{itemize}
+		\scriptsize
+		\item[--] Dynamics of the charged triple gauge couplings
+		\item[--] Measurement of W boson mass, width, cross-section, and BR
+		\item[--] Beam polarization measurement
+		
+		\end{itemize}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}{500 GeV Samples}
+
+$\sqrt{s} = 500$ GeV\\
+Total luminosity : 4000 fb$^{-1}$\\
+Polarizations:
+\scriptsize
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+Pol. &(-0.8,+0.3) & (+0.8,-0.3) & (-0.8,-0.3) & (+0.8,+0.3) \\ 
+\hline 
+Lum. [fb$^{-1}$] & 1600 & 1600 & 400 & 400 \\ 
+\hline 
+\end{tabular} 
+\normalsize
+\quad \quad \\
+Reco/Sim: \quad \scriptsize
+\url{ILCSoft v02-00-02} \quad
+\url{ILD_l5_o1_v02}\\
+\quad \quad \\
+\normalsize
+MC Background Samples (DBD)--\\
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+
+\begin{itemize}
+
+	\item[--] 2-fermion 
+		\begin{itemize}
+			\scriptsize
+			\item[-] Z-bhabhag/hadronic/leptonic
+		\end{itemize}
+	\item[--] 4-fermion 
+		\begin{itemize}
+			\scriptsize
+			\item[-] singleW-leptonic 
+			\item[-]Zee/vv-leptonic/semileptonic 
+			\item[-]singleZsingleWMix-leptonic 
+			\item[-]WW-hadronic/leptonic
+			\item[-]ZZ-hadronic/leptonic/semileptonic
+			\item[-]ZZWWMix-hadronic/leptonic
+		\end{itemize}
+	
+
+\end{itemize}
+
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{itemize}
+	\item[--] 6-fermion
+	\begin{itemize}
+		\scriptsize
+		\item[-]eeWW, llWW, vvWW, xxWW
+		\item[-]ttbar
+		\item[-]xxxxZ, yyyyZ
+	\end{itemize}
+	\item[--] SM Higgs
+		\begin{itemize}
+			\scriptsize
+			\item[-] eeH, qqH, $\mu\mu$H, $\tau\tau$H, $\nu\nu$H
+		\end{itemize}\quad\quad
+\end{itemize}
+\end{column}
+\end{columns}
+\quad \quad \\
+\scriptsize
+Note: singleW semileptonic is split into $WW\rightarrow qqe\nu$ signal and also 4f background\\
+events that contain an off shell W ($\pm 10 GeV$ to nominal mass) are considered backround
+
+\end{frame}
+
+\begin{frame}{Analysis Approach}
+\textbf{Step 1}-\\
+Treat all lepton flavors universally\\
+Start by identifiying signal tau candidates with TauFinder\\
+\scriptsize
+\quad	Optimize TauFinder to efficiently find taus (based on decay products) and also reject tau fakes from hadronic jets\\
+\quad \quad	\quad Separate into 4 categories:\\
+\begin{center}		
+		$\tau\rightarrow \mu \nu \nu$ \\
+		$\tau\rightarrow e \nu \nu$\\
+		$\tau \rightarrow$ hadronic 1-prong\\
+		$\tau \rightarrow$ hadronic 3-prong\\
+\end{center}
+\quad \quad \quad	This approach simultaneously optimizes lepton selection for prompt $\mu/e$\\
+	\normalsize
+\textbf{Step 2}-\\
+With a selected lepton, treat the remaining system as hadronic components of $W\rightarrow qq$\\
+\quad \quad \scriptsize Use y-cut and kinematic cuts on mini-jets to mitigate pileup ($\gamma \gamma$)\\
+\normalsize
+\textbf{Step 3}- Perform basic event selection for multiple polarization scenarios\\
+\end{frame}
+
+\begin{frame}{(1) TauFinder}
+TauFinder basic operation\\
+Processor starts by seeding tau candidates with tracks ordered by $|P|$\\
+\quad --Particles that fall within a search cone around the seed track are added to the candidate\\
+\quad --Particles are sequentially added until there are no more in the search cone or until acceptance conditions are violated\\
+\quad \quad \\
+\quad \quad Operating criteria\\
+
+ \begin{itemize}
+ \scriptsize
+ 	\item[-]Search Cone Angle - The opening angle of the search cone for the tau jet [rad]
+ 	\item[-]Isolation Cone Angle - Outer isolation cone anound the search cone of the tau jet [rad]
+ 	\item[-]Isolation Energy - The total energy allowed within the isolation cone region [GeV]
+ 	\item[-]Invariant Mass - The upper limit on tau candidate mass [GeV]
+ \end{itemize}
+\end{frame}
+
+\begin{frame}{(1) TauFinder Optimization}
+Optimization of 3 parameters:\\
+-- searchCone $\in \, [0,0.15] $ rad with $0.01 $ rad steps\\
+-- isolationCone $\in \, [0,0.15] $ rad with $0.01 $ rad steps\\
+-- isolationEnergy $\in \, [0,5.5] $ GeV with $0.5 $ GeV steps \\
+
+For simplicity, fix invariant mass cut at 3 GeV
+
+Define optimization metrics:\\
+\begin{columns}
+\begin{column}{0.5\textwidth}
+Efficiency using $WW\rightarrow qq l nu$ for
+true leptons:\\
+$\varepsilon_s = N_{matched}/N_{Stotal} $\\
+	\scriptsize
+	\quad -- a tau candidate is considered matched within 100 mrads of the gen lepton\\ 
+	\quad -- if the gen lepton is a tau, the jet is matched to the gen visible components -- excluding FSR
+	\quad -- $N_{Stotal}$ is the Number of events with 3 visible gen fermions $|cos\theta |< 0.99$
+\end{column}
+\begin{column}{0.5\textwidth}
+fake leptons:
+Use $WW \rightarrow qqqq$ \\
+-- $\varepsilon_b = N_b/N_{Btotal}$ \\
+	\scriptsize
+	$N_b$ is any event with at least one reconstructed tau jet
+\quad \quad \\
+
+\quad 4 quarks give 4 chances to create a tau jet $\varepsilon_b$\\
+--Use a better tuning parameter $P_{fake}$ which is the probability of reconstructing a tau jet from a single quark jet\\
+\quad \quad \\
+$P_{fake} = 1-(1 - \varepsilon_b)^{\frac{1}{4} }$\\
+$\sigma_{P_{fake}} = \frac{1}{4} \sqrt{\frac{\varepsilon_b}{N_{Btotal} \sqrt{1-\varepsilon_b}} }$
+
+\end{column}
+\end{columns}
+
+The optimal working point is chosen from the two tuning parameters max$[(1-P_{fake}) \varepsilon_s]$
+\end{frame}
+
+\begin{frame}{(1) TauFinder Optimization Results}
+\scriptsize
+\begin{tabular}{|p{0.15\textwidth}|p{0.1\textwidth}p{0.1\textwidth}p{0.1\textwidth}p{0.1\textwidth}p{0.1\textwidth}p{0.1\textwidth}|}
+
+\hline 
+Channel & $\varepsilon_s$ & $1-P_{fake}$ & \% Matched & searchCone [rad] & isoCone [rad] & isoE [GeV] \\ 
+\hline 
+Prompt $\mu$ & 0.905 & 0.974 & 0.992 & 0.03 & 0.15 & 3.0 \\ 
+
+Inclusive $\tau$ & 0.736 & 0.943 & 0.958 & 0.07 & 0.15 & 4.5 \\ 
+ 
+$\tau \rightarrow \nu \nu \mu$ & 0.802 & 0.974 & 0.984 & 0.03 & 0.15 & 3.0 \\ 
+ 
+$\tau \rightarrow \nu \nu e$ & 0.781 & 0.963 & 0.981 & 0.05 & 0.15 & 3.5 \\ 
+ 
+$\tau$ Had-1p & 0.707 & 0.943 & 0.951 & 0.07 & 0.15 & 4.5 \\ 
+ 
+$\tau$ Had-3p & 0.709 & 0.930 & 0.937 & 0.07 & 0.15 & 5.5 \\ 
+ 
+Prompt $e$ & 0.839 & 0.961 & 0.97 & 0.04 & 0.15 & 4.0 \\ 
+\hline 
+\end{tabular} 
+
+
+
+
+\end{frame}
+
+\begin{frame}{(2) Hadronic System}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+If a lepton(s) have been found by TauFinder, 
+\begin{itemize}
+\scriptsize
+\item[-]select highest energy candidate as signal lepton\\
+\item[-] shuffle remaining fakes back into the hadronic system.\\
+\end{itemize}
+\scriptsize
+At least one quark tends to be very forward, so pileup tends to mix into the jets\\
+These beam particles cannot be cleanly removed by standard methods e.g. kT algorithm tuned R values\\
+\normalsize
+My approach: ``Jet Fragmentation"\\
+  \begin{itemize}
+  	\scriptsize
+  \item[-]tune y-cut($\propto M^2_{jet}$) values on the durham algorthim (eekt)
+  \item[-]apply simple cuts to the resulting ``mini-jets"\\
+  \end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\includegraphics[scale=0.3]{nocutDiff.pdf}
+\end{column}
+\end{columns}
+
+
+\end{frame}
+\begin{frame}{(2) Optimized W Mass}
+Find best W jet parameters over the ranges:\\
+Use only signal events with gen. prompt muons\\
+\begin{itemize}
+\item[-]yCut:$[1\times10^{-3}, 5\times10^{-6}]$ \\
+\item[-]pT:$[0,5]$ bins of 0.5 GeV\\
+\item[-]$|cos\theta|$:$[0.9,1]$ 0.01 bins\\
+\end{itemize}
+\quad \quad \\
+Use 2 optimization parameters from the $M_{qq}^{meas} - M_{qq}^{gen}$ dist.:\\
+\begin{itemize}
+\item[-] Full Width Half Maximum (FWHM) \\
+\item[-]Number of bin Entries in the Mode\\
+\end{itemize}
+\quad \quad \\ 
+\scriptsize
+The Mode Entries is the number of entries in the Maximum bin + the number of Entries of the nearest left/right neighbor bins\\
+The Mode is the weighted mean of the center of the 3 Mode bins\\
+\quad \quad \\ 
+The Maximum for the FWHM is the "Mode Average" or the average number of entries from the 3 mode bins\\
+\quad \quad \\ 
+The edges of the Width for FWHM are the weighted average between the 2 bins around the half maximum ( 1 bin above 1 bin below) 
+\end{frame}
+
+\begin{frame}{(2) Hadronic System Results}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+   	\includegraphics[scale=0.3, left]{SupDiff.pdf}\\
+   	\scriptsize
+   	Comparison of 3 YCuts with the same kinematic cuts Pt$>$2 GeV AND cos$\theta<$1 (optimized for 5e-05)\\
+   	\quad \quad \\
+   	Small peak around -80 GeV is where the W has been incorrectly thrown out\\
+   	\quad \quad \\
+   	
+   
+\end{column}
+\begin{column}{0.5\textwidth}
+	\includegraphics[scale=0.3, left]{SupMass.pdf}\\
+	\scriptsize
+	\quad \quad \quad \quad Significant Improvement !
+\end{column}	
+\end{columns}
+\tiny
+ Mass Difference Statistics:\\
+ ycut: 0.001  ptcut: 2  costcut: 1  FWHM: 11.769 RMS: 24.1855 Mode: -0.24211 mean: 0.782898 modeEnt: 5199\\
+ ycut: 5e-05  ptcut: 2  costcut: 1  FWHM: 9.7087 RMS: 25.2774 Mode: -0.25127 mean: -3.09776 modeEnt: 6326\\
+ ycut: 5e-06  ptcut: 2  costcut: 1  FWHM: 11.567 RMS: 25.7475 Mode: -1.75521 mean: -9.57673 modeEnt: 5475\\
+
+\quad \quad \\
+\normalsize
+Best Performance is reached with:\\
+\textbf{ycut= 5e-05 and removal of mini-jets with pT $<$ 2 GeV }
+
+
+\end{frame}
+\begin{frame}{(3) Event Selection Overview}
+Perform event selection with two mutually exclusive groups:\\
+1st group will use $\mu$ cone (optimized for prompt muons)
+	\begin{itemize}
+		\scriptsize
+		\item[-]``tight" selection will yield some efficiency $\epsilon_0$ and purity $p_0$
+		\item[-] tight cuts will be targeted towards prompt signal leptons $\mu/e$ 
+	\end{itemize} 
+2nd group will use the $\tau$ cone (optimized for inclusive $\tau$ decays)
+	\begin{itemize}
+	\scriptsize
+		\item[-] ``loose" selection will yield some efficiency $\epsilon_1$ and purity $p_1$
+		\item[-] ``loose" cuts should address $\tau$s not reconstructed by muon cone
+		\item[-] orthognalize selection require 0 tight leptons in loose selection
+	\end{itemize}
+Optimize selection for some overall efficiency $\epsilon = \epsilon_0 + \epsilon_1$ times purity $p = (N_0 + N_1) / (B_0 + B_1 + N_0 +N_1)$\\
+\quad \quad \\
+Description of current cuts:(currently tight/loose are mostly the same)\\
+\tiny
+adapted from ref. \url{I. Marchesini DESY-THESIS 2011}\\
+\scriptsize
+--Note reconstucted particles are boosted against crossing angle boost-- (3.5 GeV in x)\\
+\begin{itemize}
+\item[-]Lepton - Require at least 1 reconstructed lepton
+\item[-]Track Multiplicity $> 10$ - at least 10 tracks in the event (targeting rejection of 2f Bkg.)
+\item[-]Pt $> 5$ GeV - reject events with no genuine missing Pt 
+\item[-]$E_{vis} < 500$ GeV Sum of the total visible energy in the event 
+\item[-]$E_{com} > 100$ GeV - target rejection of 2f and leptonic eeZ, $E_{com} = E_{vis} + E_{miss} \, \,  P^\mu_{miss} = (|P_{miss}|, -\sum{\vec{p}_{vis}}) $
+\item[-]$40<M_{qq}<120$ - constrains jet system to be W-like
+\item[-] $-qcos\theta_W$ - require the $W^-$ to scatter forward
+
+\end{itemize}
+
+
+	
+	
+
+\end{frame}
+
+\begin{frame}{(3) Event Selection}
+\scriptsize
+Tight Signal $\Rightarrow$  muon cone for $\mu,e,\tau$ signal events\\
+Loose Signal $\Rightarrow$  tau cone for $\mu,e,\tau$ signal events with no reconstructed tight lepton\\
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\includegraphics[scale=0.3, left]{nLepHist.pdf} \\
+N Leptons $> 0$
+\end{column}
+\begin{column}{0.5\textwidth}
+\includegraphics[scale=0.3, left]{ntracksHist.pdf} \\
+N Tracks $> 10$
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{(3) Event Selection}
+\scriptsize
+Tight Signal $\Rightarrow$  muon cone for $\mu,e,\tau$ signal events\\
+Loose Signal $\Rightarrow$  tau cone for $\mu,e,\tau$ signal events with no reconstructed tight lepton\\
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\includegraphics[scale=0.3, left]{PtvisHist.pdf} \\
+Visible Pt $> 5$ GeV
+\end{column}
+\begin{column}{0.5\textwidth}
+\includegraphics[scale=0.3, left]{EvisHist.pdf} \\
+Visible Energy $< 500$ GeV
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{(3) Event Selection}
+\scriptsize
+Tight Signal $\Rightarrow$  muon cone for $\mu,e,\tau$ signal events\\
+Loose Signal $\Rightarrow$  tau cone for $\mu,e,\tau$ signal events with no reconstructed tight lepton\\
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\includegraphics[scale=0.3, left]{EcomHist.pdf} \\
+$E_{com} > 100$ GeV
+\end{column}
+\begin{column}{0.5\textwidth}
+\includegraphics[scale=0.3, left]{mwhadHist.pdf} \\
+$ 40 < M_{qq} < 120$
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{(3) Event Selection}
+\scriptsize
+Tight Signal $\Rightarrow$  muon cone for $\mu,e,\tau$ signal events\\
+Loose Signal $\Rightarrow$  tau cone for $\mu,e,\tau$ signal events with no reconstructed tight lepton\\
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\includegraphics[scale=0.3, left]{qcostHist.pdf} \\
+$-qcos\theta_W > -0.95$
+\end{column}
+\begin{column}{0.5\textwidth}
+
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{(3) Event Selection}
+\scriptsize
+Polarization: (-0.8,+0.3)\quad
+Luminosity: 1600 fb$^{-1}$
+\makebox[\linewidth]{\parbox{12.5cm}{  %}}
+\tiny
+Tight Selection with muon cone\\
+  \begin{tabular}{|p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}|}
+\hline 
+   & Prompt $\mu$ & Prompt $e$ & $\tau$ & Tot. Sig. & 2f & 4f & 6f & Higgs \\ \hline 
+nocut &\num{3.87e+06 } & \num{3.89e+06 } & \num{3.90e+06} &\num{1.17e+07} & \num{4.22e+07} & \num{3.22e+07} & \num{2.14e+05} & \num{4.12e+05} \\ 
+\hline 
+lepton &\num{3.31e+06 } & \num{3.20e+06 } & \num{2.28e+06} &\num{8.78e+06} & \num{1.15e+07} & \num{1.18e+07} & \num{1.63e+05} & \num{1.15e+05} \\ 
+\hline 
+ntracks &\num{3.22e+06 } & \num{3.11e+06 } & \num{2.21e+06} &\num{8.54e+06} & \num{2.84e+06} & \num{2.83e+06} & \num{1.50e+05} & \num{9.36e+04} \\ 
+\hline 
+ptcut &\num{3.18e+06 } & \num{3.07e+06 } & \num{2.18e+06} &\num{8.44e+06} & \num{1.81e+06} & \num{2.08e+06} & \num{1.47e+05} & \num{8.40e+04} \\ 
+\hline 
+esum &\num{3.16e+06 } & \num{3.00e+06 } & \num{2.18e+06} &\num{8.33e+06} & \num{1.66e+06} & \num{1.96e+06} & \num{1.46e+05} & \num{8.11e+04} \\ 
+\hline 
+roots &\num{3.15e+06 } & \num{2.99e+06 } & \num{2.16e+06} &\num{8.31e+06} & \num{1.37e+06} & \num{1.63e+06} & \num{1.45e+05} & \num{7.96e+04} \\ 
+\hline 
+mwhad &\num{2.70e+06 } & \num{2.56e+06 } & \num{1.82e+06} &\num{7.08e+06} & \num{4.02e+05} & \num{2.67e+05} & \num{2.08e+04} & \num{3.06e+04} \\ 
+\hline 
+qcostw &\num{2.69e+06 } & \num{2.55e+06 } & \num{1.81e+06} &\num{7.05e+06} & \num{3.21e+05} & \num{2.37e+05} & \num{2.01e+04} & \num{2.94e+04} \\ 
+\hline 
+ $\epsilon$ & $0.6951 \pm 0.00023$ & $0.6551 \pm 0.00024$ & $0.4644 \pm 0.00025$ &  $0.6047 \pm 0.00014$ & $0.007589 \pm 1.3e-05$ & $0.007363 \pm 1.5e-05$ & $0.09395 \pm 0.00063$ & $0.0714 \pm 0.0004$ \\ 
+\hline
+\end{tabular}
+\quad \quad \\
+Loose selection with tau cone\\
+ \begin{tabular}{|p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}|}
+\hline 
+   & Prompt $\mu$ & Prompt $e$ & $\tau$ & Tot. Sig. & 2f & 4f & 6f & Higgs \\ \hline 
+nocut &\num{3.87e+06 } & \num{3.89e+06 } & \num{3.90e+06} &\num{1.17e+07} & \num{4.22e+07} & \num{3.22e+07} & \num{2.14e+05} & \num{4.12e+05} \\ 
+\hline 
+lepton &\num{3.36e+06 } & \num{3.30e+06 } & \num{2.82e+06} &\num{9.48e+06} & \num{1.30e+07} & \num{1.36e+07} & \num{1.77e+05} & \num{1.38e+05} \\ 
+\hline 
+mucone &\num{7.72e+04 } & \num{1.28e+05 } & \num{5.70e+05} &\num{7.76e+05} & \num{1.93e+06} & \num{2.15e+06} & \num{1.61e+04} & \num{3.12e+04} \\ 
+\hline 
+ntracks &\num{7.45e+04 } & \num{1.23e+05 } & \num{5.55e+05} &\num{7.52e+05} & \num{1.61e+06} & \num{1.85e+06} & \num{1.58e+04} & \num{2.81e+04} \\ 
+\hline 
+ptcut &\num{7.34e+04 } & \num{1.22e+05 } & \num{5.48e+05} &\num{7.43e+05} & \num{9.22e+05} & \num{1.12e+06} & \num{1.36e+04} & \num{2.52e+04} \\ 
+\hline 
+esum &\num{7.27e+04 } & \num{1.19e+05 } & \num{5.48e+05} &\num{7.40e+05} & \num{8.75e+05} & \num{1.02e+06} & \num{1.32e+04} & \num{2.46e+04} \\ 
+\hline 
+roots &\num{7.04e+04 } & \num{1.18e+05 } & \num{5.41e+05} &\num{7.29e+05} & \num{7.33e+05} & \num{9.83e+05} & \num{1.32e+04} & \num{2.43e+04} \\ 
+\hline 
+mwhad &\num{4.54e+04 } & \num{8.08e+04 } & \num{4.22e+05} &\num{5.48e+05} & \num{1.85e+05} & \num{1.18e+05} & \num{1.15e+03} & \num{1.28e+04} \\ 
+\hline 
+qcostw &\num{4.00e+04 } & \num{7.74e+04 } & \num{4.12e+05} &\num{5.29e+05} & \num{1.17e+05} & \num{1.01e+05} & \num{1.11e+03} & \num{1.23e+04} \\ 
+\hline 
+ $\epsilon$ & $0.01032 \pm 5.1e-05$ & $0.01991 \pm 7.1e-05$ & $0.1057 \pm 0.00016$ &  $0.0454 \pm 6.1e-05$ & $0.002775 \pm 8.1e-06$ & $0.003146 \pm 9.9e-06$ & $0.005167 \pm 0.00015$ & $0.0299 \pm 0.00027$ \\ 
+
+ \hline
+ \end{tabular}
+
+%end box
+}}
+\end{frame}
+\begin{frame}{(3) Event Selection Summary}
+\tiny
+
+
+tight selection\\
+\begin{tabular}{|p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}|}
+\hline 
+   & Prompt $\mu$ O.S. & Prompt e O.S. & Tau O.S. \\ \hline 
+nocut &\num{1.15e+06 } & \num{3.88e+06 } & \num{1.15e+06}\\ 
+\hline 
+lepton &\num{8.53e+05 } & \num{2.27e+06 } & \num{8.53e+05}\\ 
+\hline 
+ntracks &\num{8.34e+05 } & \num{2.21e+06 } & \num{8.34e+05}\\ 
+\hline 
+ptcut &\num{8.24e+05 } & \num{2.19e+06 } & \num{8.24e+05}\\ 
+\hline 
+esum &\num{8.20e+05 } & \num{2.18e+06 } & \num{8.20e+05}\\ 
+\hline 
+roots &\num{8.18e+05 } & \num{2.17e+06 } & \num{8.18e+05}\\ 
+\hline 
+mwhad &\num{5.78e+05 } & \num{1.88e+06 } & \num{5.78e+05}\\ 
+\hline 
+qcostw &\num{5.76e+05 } & \num{1.80e+06 } & \num{5.76e+05}\\ 
+\hline 
+ $\epsilon$ & $0.1487 \pm 0.00047$ & $0.4637 \pm 0.00025$ & $0.5018 \pm 0.00047$ \\ 
+\end{tabular}
+ \begin{tabular}{|p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}|}
+\hline 
+   & Prompt $\mu$ O.S. & Prompt e O.S. & Tau O.S. \\ \hline 
+nocut &\num{1.15e+06 } & \num{3.88e+06 } & \num{1.15e+06}\\ 
+\hline 
+lepton &\num{9.41e+05 } & \num{2.47e+06 } & \num{9.41e+05}\\ 
+\hline 
+mucone &\num{9.65e+04 } & \num{2.61e+05 } & \num{9.65e+04}\\ 
+\hline 
+ntracks &\num{9.42e+04 } & \num{2.48e+05 } & \num{9.42e+04}\\ 
+\hline 
+ptcut &\num{9.31e+04 } & \num{2.46e+05 } & \num{9.31e+04}\\ 
+\hline 
+esum &\num{9.28e+04 } & \num{2.46e+05 } & \num{9.28e+04}\\ 
+\hline 
+roots &\num{9.21e+04 } & \num{2.35e+05 } & \num{9.21e+04}\\ 
+\hline 
+mwhad &\num{5.30e+04 } & \num{1.28e+05 } & \num{5.30e+04}\\ 
+\hline 
+qcostw &\num{5.13e+04 } & \num{1.18e+05 } & \num{5.13e+04}\\ 
+\hline 
+ $\epsilon$ & $0.01326 \pm 0.00019$ & $0.03039 \pm 8.7e-05$ & $0.04475 \pm 0.00019$ \\
+\end{tabular} 
+
+\end{frame}
+
+\begin{frame}
+RUN 2
+\makebox[\linewidth]{\parbox{12.5cm}{  %}}
+\tiny
+ \begin{tabular}{|p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}|}
+\hline 
+   & Prompt $\mu$ & Prompt $e$ & $\tau$ & Tot. Sig. & 2f & 4f & 6f & Higgs \\ \hline 
+nocut &\num{2.48e+05 } & \num{2.53e+05 } & \num{2.50e+05} &\num{7.51e+05} & \num{2.82e+07} & \num{1.36e+07} & \num{7.80e+04} & \num{1.30e+05} \\ 
+\hline 
+lepton &\num{2.14e+05 } & \num{2.08e+05 } & \num{1.46e+05} &\num{5.68e+05} & \num{9.52e+06} & \num{5.99e+06} & \num{5.81e+04} & \num{4.45e+04} \\ 
+\hline 
+ntracks &\num{2.08e+05 } & \num{2.02e+05 } & \num{1.42e+05} &\num{5.53e+05} & \num{2.00e+06} & \num{9.00e+05} & \num{5.53e+04} & \num{4.04e+04} \\ 
+\hline 
+ptcut &\num{2.06e+05 } & \num{2.00e+05 } & \num{1.40e+05} &\num{5.47e+05} & \num{1.28e+06} & \num{7.37e+05} & \num{5.39e+04} & \num{3.43e+04} \\ 
+\hline 
+esum &\num{2.04e+05 } & \num{1.96e+05 } & \num{1.40e+05} &\num{5.40e+05} & \num{1.19e+06} & \num{7.18e+05} & \num{5.36e+04} & \num{3.24e+04} \\ 
+\hline 
+roots &\num{2.04e+05 } & \num{1.95e+05 } & \num{1.39e+05} &\num{5.39e+05} & \num{9.81e+05} & \num{4.23e+05} & \num{5.36e+04} & \num{3.22e+04} \\ 
+\hline 
+mwhad &\num{1.76e+05 } & \num{1.67e+05 } & \num{1.18e+05} &\num{4.61e+05} & \num{2.90e+05} & \num{9.09e+04} & \num{7.26e+03} & \num{5.38e+03} \\ 
+\hline 
+qcostw &\num{1.75e+05 } & \num{1.66e+05 } & \num{1.17e+05} &\num{4.58e+05} & \num{2.22e+05} & \num{7.47e+04} & \num{6.84e+03} & \num{5.21e+03} \\ 
+\hline 
+ $\epsilon$ & $0.7037 \pm 0.00092$ & $0.6584 \pm 0.00094$ & $0.4674 \pm 0.001$ &  $0.6099 \pm 0.00056$ & $0.007886 \pm 1.7e-05$ & $0.005502 \pm 2e-05$ & $0.08772 \pm 0.001$ & $0.03996 \pm 0.00054$ \\
+\end{tabular}
+  \begin{tabular}{|p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}|}
+\hline 
+   & Prompt $\mu$ & Prompt $e$ & $\tau$ & Tot. Sig. & 2f & 4f & 6f & Higgs \\ \hline 
+nocut &\num{2.48e+05 } & \num{2.53e+05 } & \num{2.50e+05} &\num{7.51e+05} & \num{2.82e+07} & \num{1.36e+07} & \num{7.80e+04} & \num{1.30e+05} \\ 
+\hline 
+lepton &\num{2.17e+05 } & \num{2.15e+05 } & \num{1.82e+05} &\num{6.14e+05} & \num{1.05e+07} & \num{6.29e+06} & \num{6.34e+04} & \num{5.20e+04} \\ 
+\hline 
+mucone &\num{4.82e+03 } & \num{8.45e+03 } & \num{3.76e+04} &\num{5.09e+04} & \num{1.25e+06} & \num{3.72e+05} & \num{6.32e+03} & \num{1.05e+04} \\ 
+\hline 
+ntracks &\num{4.65e+03 } & \num{8.12e+03 } & \num{3.66e+04} &\num{4.94e+04} & \num{1.02e+06} & \num{2.03e+05} & \num{6.27e+03} & \num{1.01e+04} \\ 
+\hline 
+ptcut &\num{4.58e+03 } & \num{8.04e+03 } & \num{3.62e+04} &\num{4.89e+04} & \num{5.77e+05} & \num{1.38e+05} & \num{5.43e+03} & \num{8.17e+03} \\ 
+\hline 
+esum &\num{4.54e+03 } & \num{7.90e+03 } & \num{3.62e+04} &\num{4.87e+04} & \num{5.45e+05} & \num{1.29e+05} & \num{5.26e+03} & \num{7.78e+03} \\ 
+\hline 
+roots &\num{4.40e+03 } & \num{7.81e+03 } & \num{3.58e+04} &\num{4.80e+04} & \num{4.32e+05} & \num{1.11e+05} & \num{5.25e+03} & \num{7.74e+03} \\ 
+\hline 
+mwhad &\num{2.86e+03 } & \num{5.41e+03 } & \num{2.81e+04} &\num{3.64e+04} & \num{1.13e+05} & \num{1.74e+04} & \num{3.75e+02} & \num{1.71e+03} \\ 
+\hline 
+qcostw &\num{2.53e+03 } & \num{5.18e+03 } & \num{2.74e+04} &\num{3.51e+04} & \num{6.39e+04} & \num{1.42e+04} & \num{3.47e+02} & \num{1.66e+03} \\ 
+\hline 
+ $\epsilon$ & $0.01017 \pm 0.0002$ & $0.02048 \pm 0.00028$ & $0.1099 \pm 0.00063$ &  $0.04679 \pm 0.00024$ & $0.002268 \pm 9e-06$ & $0.001048 \pm 8.8e-06$ & $0.004447 \pm 0.00024$ & $0.01271 \pm 0.00031$ \\
+ \end{tabular}
+ %end box
+ }}
+\end{frame}
+
+
+\begin{frame}
+RUN2 OS\\
+\tiny
+tight\\
+ \begin{tabular}{|p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}|}
+\hline 
+   & Prompt $\mu$ O.S. & Prompt e O.S. & Tau O.S. \\ \hline 
+nocut &\num{7.80e+04 } & \num{6.62e+05 } & \num{7.80e+04}\\ 
+\hline 
+lepton &\num{5.84e+04 } & \num{2.78e+05 } & \num{5.84e+04}\\ 
+\hline 
+ntracks &\num{5.71e+04 } & \num{2.70e+05 } & \num{5.71e+04}\\ 
+\hline 
+ptcut &\num{5.65e+04 } & \num{2.68e+05 } & \num{5.65e+04}\\ 
+\hline 
+esum &\num{5.62e+04 } & \num{2.67e+05 } & \num{5.62e+04}\\ 
+\hline 
+roots &\num{5.61e+04 } & \num{2.65e+05 } & \num{5.61e+04}\\ 
+\hline 
+mwhad &\num{4.05e+04 } & \num{2.30e+05 } & \num{4.05e+04}\\ 
+\hline 
+qcostw &\num{4.03e+04 } & \num{2.15e+05 } & \num{4.03e+04}\\ 
+\hline 
+ $\epsilon$ & $0.1623 \pm 0.0018$ & $0.3241 \pm 0.00058$ & $0.5165 \pm 0.0018$ \\ \
+ \end{tabular}
+  \begin{tabular}{|p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}|}
+\hline 
+   & Prompt $\mu$ O.S. & Prompt e O.S. & Tau O.S. \\ \hline 
+nocut &\num{7.80e+04 } & \num{6.62e+05 } & \num{7.80e+04}\\ 
+\hline 
+lepton &\num{6.45e+04 } & \num{3.25e+05 } & \num{6.45e+04}\\ 
+\hline 
+mucone &\num{6.64e+03 } & \num{5.65e+04 } & \num{6.64e+03}\\ 
+\hline 
+ntracks &\num{6.50e+03 } & \num{5.33e+04 } & \num{6.50e+03}\\ 
+\hline 
+ptcut &\num{6.43e+03 } & \num{5.28e+04 } & \num{6.43e+03}\\ 
+\hline 
+esum &\num{6.41e+03 } & \num{5.28e+04 } & \num{6.41e+03}\\ 
+\hline 
+roots &\num{6.37e+03 } & \num{5.02e+04 } & \num{6.37e+03}\\ 
+\hline 
+mwhad &\num{3.83e+03 } & \num{2.37e+04 } & \num{3.83e+03}\\ 
+\hline 
+qcostw &\num{3.72e+03 } & \num{2.16e+04 } & \num{3.72e+03}\\ 
+\hline 
+ $\epsilon$ & $0.01497 \pm 0.00076$ & $0.03269 \pm 0.00022$ & $0.04766 \pm 0.00076$ \\ 
+\end{tabular}
+\end{frame}
+
+\end{document}
