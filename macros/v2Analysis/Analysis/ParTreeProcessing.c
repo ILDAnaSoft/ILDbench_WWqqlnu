@@ -108,6 +108,7 @@ int main(int argc, char *argv[])
 	h.AnalyzeEntry(s); 
 	
       }
+	h.printtablesspecial();
 //	h.printtables();
 	h.normtables();
 	h.printtables();

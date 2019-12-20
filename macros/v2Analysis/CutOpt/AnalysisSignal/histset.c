@@ -19,7 +19,9 @@
 class histset{
 	
 	public:
-	   histset(TFile* f,std::string ofilename, std::string tag);	
+//	   histset(TFile* f,std::string ofilename, std::string tag);	
+histset(TFile* f,std::string selmode,std::string cutfile,  std::string tag );
+
 	   void init(); 
 
 	  //lumi stuff
@@ -52,7 +54,7 @@ class histset{
 	 std::vector<ROOT::TThreadedObject<TH2D>* >  TH2Manager{};
 	//std::vector<TH1D> TH1Manager{};
 	//st
-	TH1D* EvisHist{};//{(_tag+"EvisHist").c_str(),"Visible Energy;GeV; Entries per 10 GeV bin", 70, 0 , 700};
+/*	TH1D* EvisHist{};//{(_tag+"EvisHist").c_str(),"Visible Energy;GeV; Entries per 10 GeV bin", 70, 0 , 700};
 	TH1D* PtvisHist{};
 	TH1D* nLepHist{};
 	TH1D* mwlepHist{};
@@ -82,6 +84,39 @@ class histset{
         TH1D* costwlHist2{};
         TH1D* costwqHist2{};
         TH1D* qcostHist2{};
+*/
+
+	TH1D* maxntracksNum{};
+        TH1D* maxntracksDen{};
+	TH1D* minntracksNum{};
+        TH1D* minntracksDen{};
+        TH1D* minvisptNum{};
+        TH1D* minvisptDen{};
+        TH1D* minviseNum{};
+        TH1D* minviseDen{};
+        TH1D* maxviseNum{};
+        TH1D* maxviseDen{};
+        TH1D* minrootsNum{};
+        TH1D* minrootsDen{};
+        TH1D* maxrootsNum{};
+        TH1D* maxrootsDen{};
+        TH1D* minqqmassNum{};
+        TH1D* minqqmassDen{};
+        TH1D* maxqqmassNum{};
+        TH1D* maxqqmassDen{};
+        TH1D* minqcostNum{};
+        TH1D* minqcostDen{};
+
+	TH1D*  maxvrecNum{};
+        TH1D* maxvrecDen{};
+
+	TH1D* maxmwlepNum{};
+        TH1D* maxmwlepDen{};
+
+	TH1D* minmwlepNum{};
+        TH1D* minmwlepDen{};
+
+        void processCutFile(std::string cutfile);
 
 
 
@@ -105,13 +140,19 @@ class histset{
 	bool orderCuts = true;
 	//std::vector<std::string> _cutsequence{"nocut", "lepton", "ntracks", "esum","roots","mwlep", "mwhad", "costwl", "costwq"};
 //	std::vector<std::string> _cutsequence{"nocut", "lepton", "ntracks","ptcut", "esum", "roots", "mwhad","mwlep", "qcostw"};
-	std::vector<std::string> _cutsequence{"nocut", "lepton", "ntracks", "ptcut", "esum", "roots", "mwhad", "qcostw"};
+//	std::vector<std::string> _cutsequence{"nocut", "lepton", "ntracks", "ptcut", "esum", "roots", "mwhad", "qcostw"};
 	std::vector<int> _nLLpass{};
 	std::vector<int> _nLRpass{};
 	std::vector<int> _nRLpass{};
 	std::vector<int> _nRRpass{};
 	std::vector<int> _nTotpass{};	
 
+std::vector<std::string> _cutsequence{"nocut","lepton"};
+        std::vector<double> _cutrangeLO{1,1};
+        std::vector<double> _cutrangeHI{1,1};
+        std::vector<double> _cutbin{1,1};
+
+	 std::vector<double> _cutval{1,1};
 		
 	
 	std::vector<int>& getPassPol(int pol1, int pol2);
@@ -131,15 +172,74 @@ class histset{
 	
 	
 };
+template <typename Out>
+void split(const std::string &s, char delim, Out result) {
+    std::istringstream iss(s);
+    std::string item;
+    while (std::getline(iss, item, delim)) {
+        *result++ = item;
+    }
+}
+std::vector<std::string> split(const std::string &s, char delim) {
+    std::vector<std::string> elems;
+    split(s, delim, std::back_inserter(elems));
+    return elems;
+}
+void histset::processCutFile(std::string cutfile){
+        ifstream file;
+        file.open (cutfile);
+        //$ means set a value that is optimized
+        //
+        //* means scan for optimal value        
+          std::string line;
+         while (getline(file, line)) {
+                // using printf() in all tests for consistency
+     //         printf("%s", line.c_str());
+	//	if( strs[0].compare("*")==0){
+                std::vector<std::string> strs = split(line,  ' ');
+         if( strs[0].compare("*")==0){
+       
+	//push back cut names 
+                _cutsequence.push_back(strs[1]);
+                _cutrangeLO.push_back(std::stod(strs[2]));
+                _cutrangeHI.push_back(std::stod(strs[3]));
+                _cutbin.push_back(std::stod(strs[4]));
+		_cutval.push_back(1);
+		}
+		 if( strs[0].compare("$")==0){
+                _cutval.push_back(std::stod(strs[2]));
+                _cutsequence.push_back(strs[1]);
+                _cutrangeHI.push_back(1);
+                _cutrangeLO.push_back(1);
+                _cutbin.push_back(1);
+                }	
+         }
+  //    getline(file, line);
+//      std::vector<std::string> strs = split(line, ' ');
+        for(int i=0; i< _cutsequence.size(); i++){
+                std::cout<<_cutsequence.at(i)<<" ";
+        }
 
-histset::histset(TFile* f,std::string ofilename, std::string tag = ""){
+        std::cout<<std::endl;
+
+         file.close();
+}
+
+histset::histset(TFile* f,std::string selmode,std::string cutfile,  std::string tag = "" ){
+
 	_tag = tag; 
 
-	if(ofilename.compare("eventSelSTau.root")==0){ _tauConeMode = true;
+	if(selmode.compare("LOOSE")==0){ _tauConeMode = true;
 
-        std::vector<std::string> cutsequence{"nocut", "lepton","mucone", "ntracks","ptcut", "esum", "roots", "mwhad", "qcostw"};
-        _cutsequence = cutsequence;
-        }
+     //   std::vector<std::string> cutsequence{"nocut", "lepton","mucone", "ntracks","ptcut", "esum", "roots", "mwhad", "qcostw"};
+      //  _cutsequence = cutsequence;
+       _cutsequence.push_back("mucone");
+         _cutrangeLO.push_back(1);
+         _cutrangeHI.push_back(1);
+         _cutbin.push_back(1);
+	_cutval.push_back(1);
+
+	 }
 
 
 	if(_tag.compare("WS1")==0){
@@ -160,30 +260,8 @@ histset::histset(TFile* f,std::string ofilename, std::string tag = ""){
 	if(_tag.compare("WWS2BG")==0){
 		tausBG = true;
 	}
-	
 
-
-
-   //f1 = TFile::Open("hsimple.root");
-  /* TIter keyList(f->GetListOfKeys());
-   TKey *key;
-   //TCanvas c1;
-  // c1.Print("hsimple.ps[");
-   while ((key = (TKey*)keyList())) {
-      TClass *cl = gROOT->GetClass(key->GetClassName());
-      if (!cl->InheritsFrom("TH1")) continue;
-      TH1 *h = (TH1*)key->ReadObj();
-	std::string name = std::string(h->GetName());
-	std::string tagname = tag+name;
-	h->SetName(tagname.c_str());	
-   }*/
-
-	
-//	 std::vector<ROOT::TThreadedObject<TH1D>*>  Manager1(numTH1Hist);
-//	TH1Manager=Manager1;
-
-//	 std::vector<ROOT::TThreadedObject<TH2D>*>  Manager2(numTH2Hist);
-//	TH2Manager=Manager2;
+	processCutFile(cutfile);	
 
 	init();
 
@@ -262,7 +340,7 @@ void histset::printtables(){
 	
 }
 void histset::init(){
-	
+/*	
 	EvisHist = new TH1D((_tag+"EvisHist").c_str(),"Visible Energy;GeV; Entries per 10 GeV bin", 70, 0 , 700 );
 	PtvisHist = new TH1D((_tag+"PtvisHist").c_str(),"Visible Pt; GeV; Entries per 10 GeV bin",50,0,500);
 	nLepHist = new TH1D((_tag+"nLepHist").c_str(),"Number of Reconstructed Leptons; n #l jets; Entries Per Lepton",11,-0.5,10.5);
@@ -280,8 +358,8 @@ void histset::init(){
 	 mqqdiffHist = new TH1D((_tag+"mqqdiffHist").c_str(),"Measured and Gen. Mass Difference ;M^{meas}_{qq}-M^{gen}_{qq} ;Events per 2 GeV bin",100,-100,100 );
          qcostdiffHist = new TH1D((_tag+"qcostdiffHist").c_str(), "Measured and Gen W^{-} Scattering Difference; -q(cos#theta^{meas}_{W} - cos#theta^{gen}_{W}); Events per 0.05 bin",40,-1,1);
 
-
-	if(electrons){
+*/
+//	if(electrons){
 
 /*
         EvisHist2 = new TH1D((_tag+"BGEvisHist").c_str(),"Visible Energy;GeV; Entries per 10 GeV bin", 70, 0 , 700 );
@@ -297,9 +375,76 @@ void histset::init(){
         costwlHist2 = new TH1D((_tag+"BGcostwlHist").c_str(),"Leptonic W cos#theta;cos#theta;Entries per .01 bin",200,-1,1);
         costwqHist2 = new TH1D((_tag+"BGcostwqHist").c_str(),"Hadronic W cos#theta;cos#theta;Entries per .01 bin",200,-1,1);
         qcostHist2 = new TH1D((_tag+"BGqcostHist").c_str(),"W Scattering angle; -qcos#theta",200,-1,1); */
-	}
+//	}
+
+
+	maxntracksNum = new TH1D((_tag+"maxntracksNUM").c_str(), "Maximum Track Multiplicity;Ntracks < x;#epsilon",31,39.5,70.5);
+        maxntracksNum->Sumw2 (true);
+        maxntracksDen = new TH1D((_tag+"maxntracksDEN").c_str(), "maxtracks den",31,39.5,70.5);
+        maxntracksDen->Sumw2(true);
+	
+	minntracksNum= new TH1D((_tag+"minntracksNUM").c_str(), "Minimum Track Multiplicity;Ntracks > x;#epsilon",20,0.5,20.5);
+        minntracksDen= new TH1D((_tag+"minntracksDEN").c_str(), "Minimum Track Multiplicity;Ntracks > x;#epsilon",20,0.5,20.5);
+        minntracksNum->Sumw2 (true);
+        minntracksDen->Sumw2 (true);
+
+        minvisptNum= new TH1D((_tag+"minvisptNUM").c_str(), "Minimum Visible Pt;Pt > x;#epsilon",51,-.5,50.5);
+        minvisptDen= new TH1D((_tag+"minvisptDEN").c_str(), "Minimum Visible Pt;Pt > x;#epsilon",51,-.5,50.5);
+        minvisptNum->Sumw2 (true);
+        minvisptDen->Sumw2 (true);
+
+
+        minviseNum= new TH1D((_tag+"minviseNUM").c_str(), "Minimum Visible Energy;E_{vis} > x;#epsilon",26,-5,255);
+        minviseDen= new TH1D((_tag+"minviseDEN").c_str(), "Minimum Visible Energy;E_{vis} > x;#epsilon",26,-5,255);
+        minviseNum->Sumw2 (true);
+        minviseDen->Sumw2 (true);
+
+        maxviseNum= new TH1D((_tag+"maxviseNUM").c_str(), "Maximum Visible Energy;E_{vis} < x;#epsilon",24,465,705);
+        maxviseDen= new TH1D((_tag+"maxviseDEN").c_str(), "Maximum Visible Energy;E_{vis} < x;#epsilon",24,465,705);
+        maxviseNum->Sumw2 (true);
+        maxviseDen->Sumw2 (true);
+
+        minrootsNum= new TH1D((_tag+"minrootsNUM").c_str(), "Minimum Total Rest Energy;#sqrt{s} > x;#epsilon",41,-5,405);
+        minrootsDen= new TH1D((_tag+"minrootsDEN").c_str(), "Minimum Total Rest Energy;#sqrt{s} > x;#epsilon",41,-5,405);
+        minrootsNum->Sumw2 (true);
+        minrootsDen->Sumw2 (true);
+
+        maxrootsNum =new TH1D((_tag+"maxrootsNUM").c_str(), "Maximum Total Rest Energy;#sqrt{s} < x;#epsilon",24,465,705);
+        maxrootsDen=new TH1D((_tag+"maxrootsDEN").c_str(), "Maximum Total Rest Energy;#sqrt{s} < x;#epsilon",24,465,705);
+        maxrootsNum->Sumw2 (true);
+        maxrootsDen->Sumw2 (true);
+
+        minqqmassNum =new TH1D((_tag+"minqqmassNUM").c_str(), "Minimum Hadronic Mass;M_{qq} > x;#epsilon",71,-0.5,70.5);
+        minqqmassDen =new TH1D((_tag+"minqqmassDEN").c_str(), "Minimum Hadronic Mass;M_{qq} > x;#epsilon",71,-0.5,70.5);
+        minqqmassNum->Sumw2 (true);
+        minqqmassDen->Sumw2 (true);
+
+        maxqqmassNum=new TH1D((_tag+"maxqqmassNUM").c_str(), "Maximum Hadronic Mass;M_{qq} < x;#epsilon",301,99.5,400.5);
+        maxqqmassDen=new TH1D((_tag+"maxqqmassDEN").c_str(), "Maximum Hadronic Mass;M_{qq} < x;#epsilon",301,99.5,400.5);
+        maxqqmassNum->Sumw2 (true);
+        maxqqmassDen->Sumw2 (true);
+
+        minqcostNum=new TH1D((_tag+"minqcostNUM").c_str(), "Minimum W^{-} deflection angle;-qcos#theta > x;#epsilon",191,-100.500, 90.500);
+        minqcostDen=new TH1D((_tag+"minqcostDEN").c_str(), "Minimum W^{-} deflection angle; -qcos#theta > x;#epsilon",191,-100.500,90.500);
+        minqcostNum->Sumw2 (true);
+        minqcostDen->Sumw2 (true);
+
+	maxvrecNum = new TH1D((_tag+"maxvrecNUM").c_str(), "Maximum Mass^{2} Recoiling from qq#ell system; Mass^{2} < x ; #epsilon", 20, 125000, 225000);
+        maxvrecDen = new TH1D((_tag+"maxvrecDEN").c_str(), "Maximum Mass^{2} Recoinling from qq#ell system; Mass^{2} < x ; #epsilon", 20, 125000, 225000);
+        maxvrecNum->Sumw2(true);
+        maxvrecDen->Sumw2(true);	
 
 	
+	maxmwlepNum = new TH1D((_tag+"maxmwlepNUM").c_str(), "Maximum leptonic W mass; Mass^{2} < x; #epsilon",281, 119.5,400.5);
+        maxmwlepDen = new TH1D((_tag+"maxmwlepDEN").c_str(), "Maximum leptonic W mass; Mass^{2} < x; #epsilon", 281, 119.5, 400.5);
+        maxmwlepNum->Sumw2(true);
+        maxmwlepDen->Sumw2(true);
+
+	
+	minmwlepNum = new TH1D((_tag+"minmwlepNUM").c_str(), "Minimum leptonic W mass; Mass^{2} < x; #epsilon", 70  , 0.5, 70.5);
+        minmwlepDen = new TH1D((_tag+"minmwlepDEN").c_str(), "Minimum leptonic W mass; Mass^{2} < x; #epsilon", 70  , 0.5, 70.5);
+        minmwlepNum->Sumw2(true);
+        minmwlepDen->Sumw2(true);
 
 //init TH1D
 	//TH1Manager.at(ind_EvisHist) = new ROOT::TThreadedObject<TH1D>("EvisHist", "Visble Energy;GeV;Entries per 10 GeV bin", 70, 0, 700);
@@ -354,6 +499,37 @@ void histset::WriteHist(std::string outputfilename, std::string TFileOption){
 	}	
 
 }
+void docuteff(TH1D* num,TH1D* den, double xlow, double xup, double bin, std::function<bool(double,double)> func, double value, double evtw){
+        //declare operation 
+        // 1 => observed value < cut value X
+        // 2 => observed value = cut value X
+        // 3 => observed value > cut value X
+        //we pass in operation func such that func(observedvalue, cutvalue)     
+
+        //this will be slow to do everytime
+        //based on xlow xup generate cuts
+        std::vector<double> cuts{xlow};
+        for(double i= xlow+bin; i<=xup; i=i+bin){
+                cuts.push_back(i);
+        //        std::cout<<"cuts "<<i<<" ";
+        }
+      //  std::cout<<std::endl;
+
+        //loop over cuts and fill
+        bool pass;
+        for(int i=0; i<cuts.size(); i++){
+                pass = func(value,cuts[i]);
+                if(pass){
+                        num->Fill(cuts[i], evtw);
+                }
+                den->Fill(cuts[i],evtw);
+        }
+
+
+
+
+}
+
 bool leptoncut(int& count, int ntau){
 	if(ntau > 0){ 
 		count++;
@@ -437,7 +613,14 @@ bool muconecut(int& count, double nmucone){
         return false;
 
 }
+bool performcut(int& count, double observedvalue, double cutvalue, std::function<bool(double,double)> func ){
+        if( func(observedvalue, cutvalue) ){
+                count++;
+                return true;
+        }
+        return false;
 
+}
 
 std::vector<int>& histset::getPassPol(int pol1, int pol2){
 	if(pol1 == -1 && pol2 == -1) return _nLLpass;
@@ -654,7 +837,7 @@ void histset::AnalyzeEntry(myselector& s){
 	//ntracksHist->Fill(nPandoraTrks,evtw);
 
           //locate the histo
-	nLepHist->Fill(nlep, evtw);
+//	nLepHist->Fill(nlep, evtw);
 //	nRemHist->Fill(njets0, evtw);
 	if(nlep ==0){
 		nocut(getPassPol(pol1,pol2)[0]);
@@ -687,7 +870,7 @@ void histset::AnalyzeEntry(myselector& s){
 	}
 	int njets0 = remE0.size();
 	//////////////////////////////////////////////////////
-	 nRemHist->Fill(njets0, evtw);
+//	 nRemHist->Fill(njets0, evtw);
 
 //	double Emiss;
 	double Ejets=0.;
@@ -761,7 +944,7 @@ void histset::AnalyzeEntry(myselector& s){
 	TLorentzVector nu0;
 	nu0.SetXYZM(-(Wqq0+lep0).Px(), -(Wqq0+lep0).Py(), -(Wqq0+lep0).Pz(), 0 );
 	TLorentzVector Wlep0 = lep0+nu0;
-	mwlepHist->Fill(Wlep0.M(), evtw);
+//	mwlepHist->Fill(Wlep0.M(), evtw);
 
 //	mwhadHist->Fill(Wqq0.M(), evtw);
 
@@ -808,8 +991,8 @@ void histset::AnalyzeEntry(myselector& s){
 */
 
 
-	vrecoilHist->Fill(mvrecoil,evtw);
-	wlrecoilHist->Fill(mwlrecoil,evtw);
+//	vrecoilHist->Fill(mvrecoil,evtw);
+//	wlrecoilHist->Fill(mwlrecoil,evtw);
 
 
 	//make some charge determination for each W	
@@ -863,6 +1046,10 @@ void histset::AnalyzeEntry(myselector& s){
 bool pass;
         for(unsigned int i=0; i<_cutsequence.size(); i++){
                 std::string cut = _cutsequence.at(i);
+		double cutlo = _cutrangeLO.at(i);
+                double cuthi = _cutrangeHI.at(i);
+                double cutbin = _cutbin.at(i);
+		 double cutvalue= _cutval.at(i);
 
 		if(cut.compare("nocut")==0){
 			pass = nocut(getPassPol(pol1,pol2)[i]);
@@ -871,7 +1058,94 @@ bool pass;
                         pass = leptoncut(getPassPol(pol1,pol2)[i], nlep);
                          if(!pass && orderCuts) break;
                 }
-                if( cut.compare("ntracks")==0){// track multiplicity
+		if( cut.compare("maxntracks")==0){
+                //      pass = maxntrackscut(getPassPol(pol1,pol2)[i], nPandoraTrks)i;
+                        //optimize 
+                        //ith element in cut sequce ranges also
+                        //(numerator, denominator, xlow, xup, bin)
+                        docuteff(maxntracksNum,maxntracksDen, cutlo,cuthi,cutbin, std::less<double>(), nPandoraTrks, evtw);
+                 //       pass = performcut( getPassPol(pol1,pol2)[i], nPandoraTrks, cutvalue, std::less<double>());
+                       // if(!pass && orderCuts) break;
+
+                }
+                if( cut.compare("minntracks")==0){
+                        //docuteff(minntracksNum, minntracksDen, cutlo, cuthi, cutbin, std::greater<double>(), nPandoraTrks, evtw);
+                        pass = performcut( getPassPol(pol1,pol2)[i], nPandoraTrks, cutvalue, std::greater<double>());
+                        if(!pass && orderCuts) break;
+
+                }
+                if( cut.compare("minvispt")==0){
+                        //docuteff(minvisptNum,minvisptDen, cutlo, cuthi, cutbin, std::greater<double>(), (lep0+Wqq0).Pt(), evtw);
+                        pass = performcut( getPassPol(pol1,pol2)[i], (lep0+Wqq0).Pt(), cutvalue, std::greater<double>());
+                        if(!pass && orderCuts) break;
+                 }
+                if( cut.compare("minvise")==0){
+                        //docuteff(minviseNum,minviseDen, cutlo, cuthi, cutbin, std::greater<double>(), Evis, evtw);
+                        pass = performcut( getPassPol(pol1,pol2)[i], Evis, cutvalue, std::greater<double>());
+                        if(!pass && orderCuts) break;
+
+                }
+                if( cut.compare("maxvise")==0){
+                        //docuteff(maxviseNum,maxviseDen, cutlo, cuthi, cutbin, std::less<double>(), Evis, evtw);
+                        pass = performcut( getPassPol(pol1,pol2)[i], Evis, cutvalue, std::less<double>());
+                        if(!pass && orderCuts) break;
+
+                }
+                if( cut.compare("minroots")==0){
+                        //docuteff(minrootsNum,minrootsDen, cutlo,cuthi, cutbin, std::greater<double>(), Tot.E(), evtw);
+                        pass = performcut( getPassPol(pol1,pol2)[i], Tot.E(), cutvalue, std::greater<double>());
+                        if(!pass && orderCuts) break;
+
+                }
+		 if( cut.compare("maxroots")==0){
+                       // docuteff(maxrootsNum, maxrootsDen, cutlo, cuthi, cutbin, std::less<double>(), Tot.E(), evtw);
+                        pass = performcut( getPassPol(pol1,pol2)[i], Tot.E(), cutvalue, std::less<double>());
+                        if(!pass && orderCuts) break;
+
+                }
+                if( cut.compare("minqqmass")==0){
+                        //docuteff(minqqmassNum, minqqmassDen, cutlo, cuthi, cutbin, std::greater<double>(), Wqq0.M(), evtw);
+                        pass = performcut( getPassPol(pol1,pol2)[i], Wqq0.M(), cutvalue, std::greater<double>());
+                        if(!pass && orderCuts) break;
+
+                }
+                if( cut.compare("maxqqmass")==0){
+                        //docuteff(maxqqmassNum, maxqqmassDen, cutlo, cuthi, cutbin, std::less<double>(), Wqq0.M(), evtw);
+                        pass = performcut( getPassPol(pol1,pol2)[i], Wqq0.M(), cutvalue, std::less<double>());
+                        if(!pass && orderCuts) break;
+
+                }
+                if( cut.compare("minqcost")==0){
+                         if( qwl == -1){
+                         //if(pass) 
+                         //docuteff(minqcostNum,minqcostDen,cutlo,cuthi,cutbin, std::greater<double>(), -qwl*Wlep0.CosTheta()*100.,evtw);
+                        pass = performcut( getPassPol(pol1,pol2)[i], -qwl*Wlep0.CosTheta()*100., cutvalue, std::greater<double>());
+                        if(!pass && orderCuts) break;
+
+                        }else{
+                         //if(pass)
+                        // docuteff(minqcostNum,minqcostDen,cutlo,cuthi,cutbin,std::greater<double>(),-qwqq*Wqq0.CosTheta()*100.,evtw);
+                        pass = performcut( getPassPol(pol1,pol2)[i], -qwqq*Wqq0.CosTheta()*100., cutvalue, std::greater<double>());
+                        if(!pass && orderCuts) break;
+
+                        }
+
+                }
+
+                if(cut.compare("maxvrec")==0){
+                       // docuteff(maxvrecNum,maxvrecDen,cutlo,cuthi,cutbin, std::less<double>(), mvrecoil ,evtw);
+                 pass = performcut( getPassPol(pol1,pol2)[i], mvrecoil, cutvalue, std::less<double>());
+                        if(!pass && orderCuts) break;	
+		}
+			
+		if(cut.compare("maxmwlep")==0){
+//                        docuteff(maxmwlepNum,maxmwlepDen, cutlo,cuthi,cutbin, std::less<double>(), Wlep0.M(), evtw);
+                }
+		if(cut.compare("minmwlep")==0){
+                        docuteff(minmwlepNum,minmwlepDen, cutlo, cuthi, cutbin, std::greater<double>(), Wlep0.M(), evtw);
+                }
+			
+  /*              if( cut.compare("ntracks")==0){// track multiplicity
                         pass = ntrackscut(getPassPol(pol1,pol2)[i], nPandoraTrks);
                  	//if(pass)
                  	ntracksHist->Fill(nPandoraTrks,evtw);
@@ -928,10 +1202,11 @@ bool pass;
                         if(pass) PtvisHist->Fill((lep0+Wqq0).Pt(), evtw);
                         if(!pass & orderCuts) break;
                 }	
+*/
 		if( cut.compare("mucone")==0){
                         pass = muconecut(getPassPol(pol1,pol2)[i], nmucone);
                         //if(pass)
-                        nLepHist->Fill(nlep, evtw);
+  //                      nLepHist->Fill(nlep, evtw);
                         if(!pass & orderCuts) break;
 
                 

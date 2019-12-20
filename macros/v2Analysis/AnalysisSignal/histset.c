@@ -263,20 +263,21 @@ void histset::printtables(){
 }
 void histset::init(){
 	
-	EvisHist = new TH1D((_tag+"EvisHist").c_str(),"Visible Energy;GeV; Entries per 10 GeV bin", 70, 0 , 700 );
-	PtvisHist = new TH1D((_tag+"PtvisHist").c_str(),"Visible Pt; GeV; Entries per 10 GeV bin",50,0,500);
-	nLepHist = new TH1D((_tag+"nLepHist").c_str(),"Number of Reconstructed Leptons; n #l jets; Entries Per Lepton",11,-0.5,10.5);
-	mwlepHist = new TH1D((_tag+"mwlepHist").c_str(),"W #rightarrow l #nu Reconstructed Mass; Mass GeV; Entries Per 5 GeV Bin", 50,0,250);
-	mwhadHist = new TH1D((_tag+"mwhadHist").c_str(),"W #rightarrow qq Reconstructed Mass;Mass GeV; Entries Per 5 GeV Bin", 50,0,250);
-	EcomHist = new TH1D((_tag+"EcomHist").c_str(),"#sqrt{s};GeV; Entries per 10 GeV bin", 70,0, 700);
-	nRemHist = new TH1D((_tag+"nRemHist").c_str(), "Number of Jet Fragments;N Jets",21,-0.5,20.5);
-	vrecoilHist = new TH1D((_tag+"vrecoilHist").c_str(),"Mass^{2} Recoiling from qql;  GeV^{2}; Entries per 1e4 GeV^{2} bin",25,-100,300000);
-	wlrecoilHist = new TH1D((_tag+"wlrecoilHist").c_str(),"Mass^{2} Recoiling from qq; GeV^{2}; Entries per 1e4 GeV^{2} bin",25,-100,300000);
-	ntracksHist = new TH1D((_tag+"ntracksHist").c_str(),"Total Track Multiplicity; N Tracks",101,-0.5,100.5);
-	costwlHist = new TH1D((_tag+"costwlHist").c_str(),"Leptonic W cos#theta;cos#theta;Entries per .01 bin",200,-1,1);
-	costwqHist = new TH1D((_tag+"costwqHist").c_str(),"Hadronic W cos#theta;cos#theta;Entries per .01 bin",200,-1,1);
-	qcostHist = new TH1D((_tag+"qcostHist").c_str(),"W Scattering angle; -qcos#theta",200,-1,1);
+	 EvisHist = new TH1D((_tag+"EvisHist").c_str(),"Visible Energy;GeV; Entries per 10 GeV bin", 70, 0 , 700 );
+        PtvisHist = new TH1D((_tag+"PtvisHist").c_str(),"Visible Pt; GeV; Entries per GeV bin",151,-0.5,150.5);
+        nLepHist = new TH1D((_tag+"nLepHist").c_str(),"Number of Reconstructed Leptons; N Lep. Jets; Entries Per Lepton",6,-0.5,5.5);
+        mwlepHist = new TH1D((_tag+"mwlepHist").c_str(),"W #rightarrow l #nu Reconstructed Mass; Mass GeV; Entries Per 5 GeV Bin", 80,0,400);
+        mwhadHist = new TH1D((_tag+"mwhadHist").c_str(),"W #rightarrow qq Reconstructed Mass;Mass GeV; Entries Per 5 GeV Bin", 41,-0.5,200.5);
+        EcomHist = new TH1D((_tag+"EcomHist").c_str(),"#sqrt{s};GeV; Entries per 10 GeV bin", 70,0, 700);
+        nRemHist = new TH1D((_tag+"nRemHist").c_str(), "Number of Jet Fragments;N Jets",21,-0.5,20.5);
+        vrecoilHist = new TH1D((_tag+"vrecoilHist").c_str(),"Mass^{2} Recoiling from qql;  GeV^{2}; Entries per 1e4 GeV^{2} bin",26,-10000,255000);
+        wlrecoilHist = new TH1D((_tag+"wlrecoilHist").c_str(),"Mass^{2} Recoiling from qq; GeV^{2}; Entries per 1e4 GeV^{2} bin",26,-10000,255000);
+        ntracksHist = new TH1D((_tag+"ntracksHist").c_str(),"Total Track Multiplicity; N Tracks",61,-0.5,60.5);
+        costwlHist = new TH1D((_tag+"costwlHist").c_str(),"Leptonic W cos#theta;cos#theta;Entries per .01 bin",200,-1,1);
+        costwqHist = new TH1D((_tag+"costwqHist").c_str(),"Hadronic W cos#theta;cos#theta;Entries per .01 bin",200,-1,1);
+        qcostHist = new TH1D((_tag+"qcostHist").c_str(),"W Scattering angle; -qcos#theta;Entries per .05 bin",40,-1,1);
 
+	
 	 mqqdiffHist = new TH1D((_tag+"mqqdiffHist").c_str(),"Measured and Gen. Mass Difference ;M^{meas}_{qq}-M^{gen}_{qq} ;Events per 2 GeV bin",100,-100,100 );
          qcostdiffHist = new TH1D((_tag+"qcostdiffHist").c_str(), "Measured and Gen W^{-} Scattering Difference; -q(cos#theta^{meas}_{W} - cos#theta^{gen}_{W}); Events per 0.05 bin",40,-1,1);
 

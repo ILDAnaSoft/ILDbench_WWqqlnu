@@ -36,16 +36,21 @@ int main(int argc, char *argv[])
   //always need a tag, if you dont want this "" should work
   std::string tag(argv[3]);
 
+ //tight or loose selection
+  std::string selmode(argv[4]);
+
+  std::string cutfile(argv[5]);
+
   //set outputfilename in 4th input argument
-  std::string ofilename(argv[4]);
+  std::string ofilename(argv[6]);
 
   //set outputfileOption in 5th argument .. either recreate or udpate
-  std::string ofileoption(argv[5]);
+  std::string ofileoption(argv[7]);
 
   //argv6 pem --- argv7 pep --- argv8 ilumi
-  double pem = std::stod(std::string(argv[6]));
-  double pep = std::stod(std::string(argv[7]));
-  double ilumi = std::stod(std::string(argv[8]));
+  double pem = std::stod(std::string(argv[8]));
+  double pep = std::stod(std::string(argv[9]));
+  double ilumi = std::stod(std::string(argv[10]));
 
    // First enable implicit multi-threading globally, so that the implicit parallelisation is on.
    // The parameter of the call specifies the number of threads to use.
@@ -57,7 +62,7 @@ int main(int argc, char *argv[])
    //
    TChain *tc = new TChain("tree");
    std::vector<std::string_view> ifilelist{};
-   for(int i=9; i<argc; i++){
+   for(int i=11; i<argc; i++){
 	ifilelist.push_back(std::string_view(argv[i]));
 	tc->Add(std::string(argv[i]).c_str());
 
@@ -66,7 +71,7 @@ int main(int argc, char *argv[])
  //extract number of events for each pol 
  TFile* ofile = new TFile( ofilename.c_str(), ofileoption.c_str());	
    //Create our ThreadedHistograms and Analysis Class
-   histset h( ofile,ofilename, tag);
+   histset h( ofile, selmode, cutfile,  tag);
   
   //make our parallel tree processor
   // ROOT::TTreeProcessorMT tp(ifilelist,treename.c_str());
@@ -118,7 +123,8 @@ int main(int argc, char *argv[])
 	
   //automatically do all merging and writing
 //  h.WriteHist(ofilename, ofileoption);
-	ofile->Write();	
+	ofile->Write();
+	ofile->Close();	
    return 0;
 }
 #endif

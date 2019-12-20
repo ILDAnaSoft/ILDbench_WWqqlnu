@@ -65,6 +65,9 @@ class histset{
 	TH1D* costwlHist{};
 	TH1D* costwqHist{};
 	TH1D* qcostHist{};
+	TH1D* mwhadCutsHist{};
+
+	 void printtablesspecial();
 	  //locate the histogram and perform ptr copying 
 	  void FillTH1(int index, double x, double w);
 	  void FillTH2(int index, double x, double y);
@@ -192,6 +195,24 @@ void histset::normtables(){
 		_nRLpass[i]= _nRLpass[i]*_evtwRL;
 		_nRRpass[i]= _nRRpass[i]*_evtwRR;
 	}
+}
+void histset::printtablesspecial(){
+	for(unsigned int i=0; i< _nTotpass.size(); i++){
+                _nTotpass.at(i) = _nLLpass[i] + _nLRpass[i] + _nRLpass[i] + _nRRpass[i];
+        }
+        std::cout<<"$$ "<<_tag<<" cut "<<" ";
+        printvec( _cutsequence );
+        std::cout<<" LL "<<" ";
+        printvec( _nLLpass );
+        std::cout<<" LR " << " ";
+        printvec( _nLRpass );
+        std::cout<<" RL " << " ";
+        printvec( _nRLpass );
+        std::cout<<" RR " << " ";
+        printvec( _nRRpass );
+        std::cout<<"$$ "<<_tag<<" tot " << " ";
+        printvec( _nTotpass );
+	
 } 
 void histset::printtables(){
 	//sum tot
@@ -215,18 +236,21 @@ void histset::printtables(){
 }
 void histset::init(){
 	EvisHist = new TH1D((_tag+"EvisHist").c_str(),"Visible Energy;GeV; Entries per 10 GeV bin", 70, 0 , 700 );
-	PtvisHist = new TH1D((_tag+"PtvisHist").c_str(),"Visible Pt; GeV; Entries per 10 GeV bin",50,0,500);
-	nLepHist = new TH1D((_tag+"nLepHist").c_str(),"Number of Reconstructed Leptons; N Lep. Jets; Entries Per Lepton",11,-0.5,10.5);
-	mwlepHist = new TH1D((_tag+"mwlepHist").c_str(),"W #rightarrow l #nu Reconstructed Mass; Mass GeV; Entries Per 5 GeV Bin", 50,0,250);
-	mwhadHist = new TH1D((_tag+"mwhadHist").c_str(),"W #rightarrow qq Reconstructed Mass;Mass GeV; Entries Per 10 GeV Bin", 20,0,200);
+	PtvisHist = new TH1D((_tag+"PtvisHist").c_str(),"Visible Pt; GeV; Entries per GeV bin",151,-0.5,150.5);
+	nLepHist = new TH1D((_tag+"nLepHist").c_str(),"Number of Reconstructed Leptons; N Lep. Jets; Entries Per Lepton",6,-0.5,5.5);
+	mwlepHist = new TH1D((_tag+"mwlepHist").c_str(),"W #rightarrow l #nu Reconstructed Mass; Mass GeV; Entries Per 5 GeV Bin", 80,0,400);
+	mwhadHist = new TH1D((_tag+"mwhadHist").c_str(),"W #rightarrow qq Reconstructed Mass;Mass GeV; Entries Per 5 GeV Bin", 41,-0.5,200.5);
 	EcomHist = new TH1D((_tag+"EcomHist").c_str(),"#sqrt{s};GeV; Entries per 10 GeV bin", 70,0, 700);
 	nRemHist = new TH1D((_tag+"nRemHist").c_str(), "Number of Jet Fragments;N Jets",21,-0.5,20.5);
-	vrecoilHist = new TH1D((_tag+"vrecoilHist").c_str(),"Mass^{2} Recoiling from qql;  GeV^{2}; Entries per 1e4 GeV^{2} bin",25,-100,300000);
-	wlrecoilHist = new TH1D((_tag+"wlrecoilHist").c_str(),"Mass^{2} Recoiling from qq; GeV^{2}; Entries per 1e4 GeV^{2} bin",25,-100,300000);
-	ntracksHist = new TH1D((_tag+"ntracksHist").c_str(),"Total Track Multiplicity; N Tracks",101,-0.5,100.5);
-	costwlHist = new TH1D((_tag+"costwlHist").c_str(),"Leptonic W cos#theta;cos#theta;Entries per .01 bin",200,-1,1);
-	costwqHist = new TH1D((_tag+"costwqHist").c_str(),"Hadronic W cos#theta;cos#theta;Entries per .01 bin",200,-1,1);
-	qcostHist = new TH1D((_tag+"qcostHist").c_str(),"W Scattering angle; -qcos#theta",200,-1,1);
+	vrecoilHist = new TH1D((_tag+"vrecoilHist").c_str(),"Mass^{2} Recoiling from qql;  GeV^{2}; Entries per 1e4 GeV^{2} bin",26,-10000,255000);
+	wlrecoilHist = new TH1D((_tag+"wlrecoilHist").c_str(),"Mass^{2} Recoiling from qq; GeV^{2}; Entries per 1e4 GeV^{2} bin",26,-10000,255000);
+	ntracksHist = new TH1D((_tag+"ntracksHist").c_str(),"Total Track Multiplicity; N Tracks",61,-0.5,60.5);
+	costwlHist = new TH1D((_tag+"costwlHist").c_str(),"Leptonic W cos#theta;cos#theta;Entries per .05 bin",200,-1,1);
+	costwqHist = new TH1D((_tag+"costwqHist").c_str(),"Hadronic W cos#theta;cos#theta;Entries per .05 bin",200,-1,1);
+	qcostHist = new TH1D((_tag+"qcostHist").c_str(),"W Scattering angle; -qcos#theta; Entries per .05 bin",40,-1,1);
+	
+	mwhadCutsHist =  new TH1D((_tag+"mwhadCutsHist").c_str(),"W #rightarrow qq Reconstructed Mass After Cuts;Mass GeV; Entries Per GeV Bin", 200,-0.5,200.5);
+
 
 	
 
@@ -728,6 +752,11 @@ void histset::AnalyzeEntry(myselector& s){
 			PtvisHist->Fill((lep0+Wqq0).Pt(), evtw);
                         if(!pass & orderCuts) break;
                 }
+		 if( i == _cutsequence.size()-1){
+                        //fill distributions like mas
+                        //                         mqqCuts->Fill(Wqq0.M(),evtw);
+                 		mwhadCutsHist->Fill(Wqq0.M(), evtw);       
+		}                        //
 		if( cut.compare("mucone")==0){
                         pass = muconecut(getPassPol(pol1,pol2)[i], nmucone);
                         //if(pass)

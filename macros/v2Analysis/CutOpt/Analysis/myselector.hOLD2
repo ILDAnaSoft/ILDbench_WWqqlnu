@@ -1,0 +1,840 @@
+//////////////////////////////////////////////////////////
+// This class has been automatically generated on
+// Sat Oct 19 01:48:44 2019 by ROOT version 5.34/38
+// from TTree tree/Tree
+// found on file: 2f_Z_bhabhagfile.root
+//////////////////////////////////////////////////////////
+
+#ifndef myselector_h
+#define myselector_h
+
+#include <TROOT.h>
+#include <TChain.h>
+#include <TFile.h>
+
+// Header file for the classes stored in the TTree if any.
+#include <vector>
+#include <vector>
+#include <vector>
+using namespace std;
+// Fixed size dimensions of array or collections stored in the TTree if any.
+
+class myselector {
+public :
+   TTree          *fChain;   //!pointer to the analyzed TTree or TChain
+   Int_t           fCurrent; //!current Tree number in a TChain
+
+   // Declaration of leaf types
+   Float_t         xsec;
+   Float_t         xsecerr;
+   Int_t           beampart1;
+   Int_t           beampart2;
+   Int_t           polarization1;
+   Int_t           polarization2;
+   Int_t           nLL;
+   Int_t           nRR;
+   Int_t           nLR;
+   Int_t           nRL;
+   Int_t           nevt;
+   Double_t        ycut;
+   Int_t           nPandoraTrks;
+   Int_t           nPandoraPfos;
+   Int_t           genMuon;
+   Int_t           genTau;
+   Int_t           genElectron;
+   Int_t           genTauType;
+   vector<int>     *MCf_PDG;
+   vector<double>  *MCf_Px;
+   vector<double>  *MCf_Py;
+   vector<double>  *MCf_Pz;
+   vector<double>  *MCf_E;
+   vector<double>  *MCfprodVtxX;
+   vector<double>  *MCfprodVtxY;
+   vector<double>  *MCfprodVtxZ;
+   vector<double>  *MCfendVtxX;
+   vector<double>  *MCfendVtxY;
+   vector<double>  *MCfendVtxZ;
+   vector<int>     *genTauVisPDG;
+   vector<double>  *genTauVisPx;
+   vector<double>  *genTauVisPy;
+   vector<double>  *genTauVisPz;
+   vector<double>  *genTauVisE;
+   vector<bool>    *genTauVisVtxisNOTParentEnd;
+   vector<double>  *genTauVisX;
+   vector<double>  *genTauVisY;
+   vector<double>  *genTauVisZ;
+   vector<int>     *genTauIPDG;
+   vector<double>  *genTauIPx;
+   vector<double>  *genTauIPy;
+   vector<double>  *genTauIPz;
+   Int_t           ntau0;
+   vector<double>  *tauPx0;
+   vector<double>  *tauPy0;
+   vector<double>  *tauPz0;
+   vector<double>  *tauE0;
+   vector<int>     *tauNTrks0;
+   vector<int>     *tauNPfos0;
+   Double_t        candPx0;
+   Double_t        candPy0;
+   Double_t        candPz0;
+   Double_t        candE0;
+   Int_t           candNTrks0;
+   Int_t           candNPfos0;
+   vector<double>  *candNeuPx0;
+   vector<double>  *candNeuPy0;
+   vector<double>  *candNeuPz0;
+   vector<double>  *candNeuE0;
+   vector<double>  *candTrkd00;
+   vector<double>  *candTrkPhi0;
+   vector<double>  *candTrkOm0;
+   vector<double>  *candTrkz00;
+   vector<double>  *candTrktlam0;
+   vector<vector<float> > *candTrkCov0;
+   Int_t           njets0;
+   vector<int>     *remNtrk0;
+   vector<int>     *remNpfo0;
+   vector<double>  *remPx0;
+   vector<double>  *remPy0;
+   vector<double>  *remPz0;
+   vector<double>  *remE0;
+   Int_t           ntau1;
+   vector<double>  *tauPx1;
+   vector<double>  *tauPy1;
+   vector<double>  *tauPz1;
+   vector<double>  *tauE1;
+   vector<int>     *tauNTrks1;
+   vector<int>     *tauNPfos1;
+   Double_t        candPx1;
+   Double_t        candPy1;
+   Double_t        candPz1;
+   Double_t        candE1;
+   Int_t           candNTrks1;
+   Int_t           candNPfos1;
+   vector<double>  *candNeuPx1;
+   vector<double>  *candNeuPy1;
+   vector<double>  *candNeuPz1;
+   vector<double>  *candNeuE1;
+   vector<double>  *candTrkd01;
+   vector<double>  *candTrkPhi1;
+   vector<double>  *candTrkOm1;
+   vector<double>  *candTrkz01;
+   vector<double>  *candTrktlam1;
+   vector<vector<float> > *candTrkCov1;
+   Int_t           njets1;
+   vector<int>     *remNtrk1;
+   vector<int>     *remNpfo1;
+   vector<double>  *remPx1;
+   vector<double>  *remPy1;
+   vector<double>  *remPz1;
+   vector<double>  *remE1;
+   Int_t           ntau2;
+   vector<double>  *tauPx2;
+   vector<double>  *tauPy2;
+   vector<double>  *tauPz2;
+   vector<double>  *tauE2;
+   vector<int>     *tauNTrks2;
+   vector<int>     *tauNPfos2;
+   Double_t        candPx2;
+   Double_t        candPy2;
+   Double_t        candPz2;
+   Double_t        candE2;
+   Int_t           candNTrks2;
+   Int_t           candNPfos2;
+   vector<double>  *candNeuPx2;
+   vector<double>  *candNeuPy2;
+   vector<double>  *candNeuPz2;
+   vector<double>  *candNeuE2;
+   vector<double>  *candTrkd02;
+   vector<double>  *candTrkPhi2;
+   vector<double>  *candTrkOm2;
+   vector<double>  *candTrkz02;
+   vector<double>  *candTrktlam2;
+   vector<vector<float> > *candTrkCov2;
+   Int_t           njets2;
+   vector<int>     *remNtrk2;
+   vector<int>     *remNpfo2;
+   vector<double>  *remPx2;
+   vector<double>  *remPy2;
+   vector<double>  *remPz2;
+   vector<double>  *remE2;
+   Int_t           ntau3;
+   vector<double>  *tauPx3;
+   vector<double>  *tauPy3;
+   vector<double>  *tauPz3;
+   vector<double>  *tauE3;
+   vector<int>     *tauNTrks3;
+   vector<int>     *tauNPfos3;
+   Double_t        candPx3;
+   Double_t        candPy3;
+   Double_t        candPz3;
+   Double_t        candE3;
+   Int_t           candNTrks3;
+   Int_t           candNPfos3;
+   vector<double>  *candNeuPx3;
+   vector<double>  *candNeuPy3;
+   vector<double>  *candNeuPz3;
+   vector<double>  *candNeuE3;
+   vector<double>  *candTrkd03;
+   vector<double>  *candTrkPhi3;
+   vector<double>  *candTrkOm3;
+   vector<double>  *candTrkz03;
+   vector<double>  *candTrktlam3;
+   vector<vector<float> > *candTrkCov3;
+   Int_t           njets3;
+   vector<int>     *remNtrk3;
+   vector<int>     *remNpfo3;
+   vector<double>  *remPx3;
+   vector<double>  *remPy3;
+   vector<double>  *remPz3;
+   vector<double>  *remE3;
+   Int_t           ntau4;
+   vector<double>  *tauPx4;
+   vector<double>  *tauPy4;
+   vector<double>  *tauPz4;
+   vector<double>  *tauE4;
+   vector<int>     *tauNTrks4;
+   vector<int>     *tauNPfos4;
+   Double_t        candPx4;
+   Double_t        candPy4;
+   Double_t        candPz4;
+   Double_t        candE4;
+   Int_t           candNTrks4;
+   Int_t           candNPfos4;
+   vector<double>  *candNeuPx4;
+   vector<double>  *candNeuPy4;
+   vector<double>  *candNeuPz4;
+   vector<double>  *candNeuE4;
+   vector<double>  *candTrkd04;
+   vector<double>  *candTrkPhi4;
+   vector<double>  *candTrkOm4;
+   vector<double>  *candTrkz04;
+   vector<double>  *candTrktlam4;
+   vector<vector<float> > *candTrkCov4;
+   Int_t           njets4;
+   vector<int>     *remNtrk4;
+   vector<int>     *remNpfo4;
+   vector<double>  *remPx4;
+   vector<double>  *remPy4;
+   vector<double>  *remPz4;
+   vector<double>  *remE4;
+
+   // List of branches
+   TBranch        *b_xsec;   //!
+   TBranch        *b_xsecerr;   //!
+   TBranch        *b_beampart1;   //!
+   TBranch        *b_beampart2;   //!
+   TBranch        *b_polarization1;   //!
+   TBranch        *b_polarization2;   //!
+   TBranch        *b_nLL;   //!
+   TBranch        *b_nRR;   //!
+   TBranch        *b_nLR;   //!
+   TBranch        *b_nRL;   //!
+   TBranch        *b_nevt;   //!
+   TBranch        *b_ycut;   //!
+   TBranch        *b_nPandoraTrks;   //!
+   TBranch        *b_nPandoraPfos;   //!
+   TBranch        *b_isMuon;   //!
+   TBranch        *b_isTau;   //!
+   TBranch        *b_isElectron;   //!
+   TBranch        *b_tauType;   //!
+   TBranch        *b_MCf_PDG;   //!
+   TBranch        *b_MCf_Px;   //!
+   TBranch        *b_MCf_Py;   //!
+   TBranch        *b_MCf_Pz;   //!
+   TBranch        *b_MCf_E;   //!
+   TBranch        *b_MCfprodVtxX;   //!
+   TBranch        *b_MCfprodVtxY;   //!
+   TBranch        *b_MCfprodVtxZ;   //!
+   TBranch        *b_MCfendVtxX;   //!
+   TBranch        *b_MCfendVtxY;   //!
+   TBranch        *b_MCfendVtxZ;   //!
+   TBranch        *b_genTauVisPDG;   //!
+   TBranch        *b_genTauVisPx;   //!
+   TBranch        *b_genTauVisPy;   //!
+   TBranch        *b_genTauVisPz;   //!
+   TBranch        *b_genTauVisE;   //!
+   TBranch        *b_genTauVisVtxisNOTParentEnd;   //!
+   TBranch        *b_genTauVisX;   //!
+   TBranch        *b_genTauVisY;   //!
+   TBranch        *b_genTauVisZ;   //!
+   TBranch        *b_genTauIPDG;   //!
+   TBranch        *b_genTauIPx;   //!
+   TBranch        *b_genTauIPy;   //!
+   TBranch        *b_genTauIPz;   //!
+   TBranch        *b_ntau0;   //!
+   TBranch        *b_tauPx0;   //!
+   TBranch        *b_tauPy0;   //!
+   TBranch        *b_tauPz0;   //!
+   TBranch        *b_tauE0;   //!
+   TBranch        *b_tauNTrks0;   //!
+   TBranch        *b_tauNPfos0;   //!
+   TBranch        *b_candPx0;   //!
+   TBranch        *b_candPy0;   //!
+   TBranch        *b_candPz0;   //!
+   TBranch        *b_candE0;   //!
+   TBranch        *b_candNTrks0;   //!
+   TBranch        *b_candNPfos0;   //!
+   TBranch        *b_candNeuPx0;   //!
+   TBranch        *b_candNeuPy0;   //!
+   TBranch        *b_candNeuPz0;   //!
+   TBranch        *b_candNeuE0;   //!
+   TBranch        *b_candTrkd00;   //!
+   TBranch        *b_candTrkPhi0;   //!
+   TBranch        *b_candTrkOm0;   //!
+   TBranch        *b_candTrkz00;   //!
+   TBranch        *b_candTrktlam0;   //!
+   TBranch        *b_candTrkCov0;   //!
+   TBranch        *b_njets0;   //!
+   TBranch        *b_remNtrk0;   //!
+   TBranch        *b_remNpfo0;   //!
+   TBranch        *b_remPx0;   //!
+   TBranch        *b_remPy0;   //!
+   TBranch        *b_remPz0;   //!
+   TBranch        *b_remE0;   //!
+   TBranch        *b_ntau1;   //!
+   TBranch        *b_tauPx1;   //!
+   TBranch        *b_tauPy1;   //!
+   TBranch        *b_tauPz1;   //!
+   TBranch        *b_tauE1;   //!
+   TBranch        *b_tauNTrks1;   //!
+   TBranch        *b_tauNPfos1;   //!
+   TBranch        *b_candPx1;   //!
+   TBranch        *b_candPy1;   //!
+   TBranch        *b_candPz1;   //!
+   TBranch        *b_candE1;   //!
+   TBranch        *b_candNTrks1;   //!
+   TBranch        *b_candNPfos1;   //!
+   TBranch        *b_candNeuPx1;   //!
+   TBranch        *b_candNeuPy1;   //!
+   TBranch        *b_candNeuPz1;   //!
+   TBranch        *b_candNeuE1;   //!
+   TBranch        *b_candTrkd01;   //!
+   TBranch        *b_candTrkPhi1;   //!
+   TBranch        *b_candTrkOm1;   //!
+   TBranch        *b_candTrkz01;   //!
+   TBranch        *b_candTrktlam1;   //!
+   TBranch        *b_candTrkCov1;   //!
+   TBranch        *b_njets1;   //!
+   TBranch        *b_remNtrk1;   //!
+   TBranch        *b_remNpfo1;   //!
+   TBranch        *b_remPx1;   //!
+   TBranch        *b_remPy1;   //!
+   TBranch        *b_remPz1;   //!
+   TBranch        *b_remE1;   //!
+   TBranch        *b_ntau2;   //!
+   TBranch        *b_tauPx2;   //!
+   TBranch        *b_tauPy2;   //!
+   TBranch        *b_tauPz2;   //!
+   TBranch        *b_tauE2;   //!
+   TBranch        *b_tauNTrks2;   //!
+   TBranch        *b_tauNPfos2;   //!
+   TBranch        *b_candPx2;   //!
+   TBranch        *b_candPy2;   //!
+   TBranch        *b_candPz2;   //!
+   TBranch        *b_candE2;   //!
+   TBranch        *b_candNTrks2;   //!
+   TBranch        *b_candNPfos2;   //!
+   TBranch        *b_candNeuPx2;   //!
+   TBranch        *b_candNeuPy2;   //!
+   TBranch        *b_candNeuPz2;   //!
+   TBranch        *b_candNeuE2;   //!
+   TBranch        *b_candTrkd02;   //!
+   TBranch        *b_candTrkPhi2;   //!
+   TBranch        *b_candTrkOm2;   //!
+   TBranch        *b_candTrkz02;   //!
+   TBranch        *b_candTrktlam2;   //!
+   TBranch        *b_candTrkCov2;   //!
+   TBranch        *b_njets2;   //!
+   TBranch        *b_remNtrk2;   //!
+   TBranch        *b_remNpfo2;   //!
+   TBranch        *b_remPx2;   //!
+   TBranch        *b_remPy2;   //!
+   TBranch        *b_remPz2;   //!
+   TBranch        *b_remE2;   //!
+   TBranch        *b_ntau3;   //!
+   TBranch        *b_tauPx3;   //!
+   TBranch        *b_tauPy3;   //!
+   TBranch        *b_tauPz3;   //!
+   TBranch        *b_tauE3;   //!
+   TBranch        *b_tauNTrks3;   //!
+   TBranch        *b_tauNPfos3;   //!
+   TBranch        *b_candPx3;   //!
+   TBranch        *b_candPy3;   //!
+   TBranch        *b_candPz3;   //!
+   TBranch        *b_candE3;   //!
+   TBranch        *b_candNTrks3;   //!
+   TBranch        *b_candNPfos3;   //!
+   TBranch        *b_candNeuPx3;   //!
+   TBranch        *b_candNeuPy3;   //!
+   TBranch        *b_candNeuPz3;   //!
+   TBranch        *b_candNeuE3;   //!
+   TBranch        *b_candTrkd03;   //!
+   TBranch        *b_candTrkPhi3;   //!
+   TBranch        *b_candTrkOm3;   //!
+   TBranch        *b_candTrkz03;   //!
+   TBranch        *b_candTrktlam3;   //!
+   TBranch        *b_candTrkCov3;   //!
+   TBranch        *b_njets3;   //!
+   TBranch        *b_remNtrk3;   //!
+   TBranch        *b_remNpfo3;   //!
+   TBranch        *b_remPx3;   //!
+   TBranch        *b_remPy3;   //!
+   TBranch        *b_remPz3;   //!
+   TBranch        *b_remE3;   //!
+   TBranch        *b_ntau4;   //!
+   TBranch        *b_tauPx4;   //!
+   TBranch        *b_tauPy4;   //!
+   TBranch        *b_tauPz4;   //!
+   TBranch        *b_tauE4;   //!
+   TBranch        *b_tauNTrks4;   //!
+   TBranch        *b_tauNPfos4;   //!
+   TBranch        *b_candPx4;   //!
+   TBranch        *b_candPy4;   //!
+   TBranch        *b_candPz4;   //!
+   TBranch        *b_candE4;   //!
+   TBranch        *b_candNTrks4;   //!
+   TBranch        *b_candNPfos4;   //!
+   TBranch        *b_candNeuPx4;   //!
+   TBranch        *b_candNeuPy4;   //!
+   TBranch        *b_candNeuPz4;   //!
+   TBranch        *b_candNeuE4;   //!
+   TBranch        *b_candTrkd04;   //!
+   TBranch        *b_candTrkPhi4;   //!
+   TBranch        *b_candTrkOm4;   //!
+   TBranch        *b_candTrkz04;   //!
+   TBranch        *b_candTrktlam4;   //!
+   TBranch        *b_candTrkCov4;   //!
+   TBranch        *b_njets4;   //!
+   TBranch        *b_remNtrk4;   //!
+   TBranch        *b_remNpfo4;   //!
+   TBranch        *b_remPx4;   //!
+   TBranch        *b_remPy4;   //!
+   TBranch        *b_remPz4;   //!
+   TBranch        *b_remE4;   //!
+
+   myselector(TTree *tree=0);
+   virtual ~myselector();
+   virtual Int_t    Cut(Long64_t entry);
+   virtual Int_t    GetEntry(Long64_t entry);
+   virtual Long64_t LoadTree(Long64_t entry);
+   virtual void     Init(TTree *tree);
+   virtual void     Loop();
+   virtual Bool_t   Notify();
+   virtual void     Show(Long64_t entry = -1);
+};
+
+#endif
+
+#ifdef myselector_cxx
+myselector::myselector(TTree *tree) : fChain(0) 
+{
+// if parameter tree is not specified (or zero), connect the file
+// used to generate this class and read the Tree.
+   if (tree == 0) {
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("2f_Z_bhabhagfile.root");
+      if (!f || !f->IsOpen()) {
+         f = new TFile("2f_Z_bhabhagfile.root");
+      }
+      f->GetObject("tree",tree);
+
+   }
+   Init(tree);
+}
+
+myselector::~myselector()
+{
+   if (!fChain) return;
+   delete fChain->GetCurrentFile();
+}
+
+Int_t myselector::GetEntry(Long64_t entry)
+{
+// Read contents of entry.
+   if (!fChain) return 0;
+   return fChain->GetEntry(entry);
+}
+Long64_t myselector::LoadTree(Long64_t entry)
+{
+// Set the environment to read one entry
+   if (!fChain) return -5;
+   Long64_t centry = fChain->LoadTree(entry);
+   if (centry < 0) return centry;
+   if (fChain->GetTreeNumber() != fCurrent) {
+      fCurrent = fChain->GetTreeNumber();
+      Notify();
+   }
+   return centry;
+}
+
+void myselector::Init(TTree *tree)
+{
+   // The Init() function is called when the selector needs to initialize
+   // a new tree or chain. Typically here the branch addresses and branch
+   // pointers of the tree will be set.
+   // It is normally not necessary to make changes to the generated
+   // code, but the routine can be extended by the user if needed.
+   // Init() will be called many times when running on PROOF
+   // (once per file to be processed).
+
+   // Set object pointer
+   MCf_PDG = 0;
+   MCf_Px = 0;
+   MCf_Py = 0;
+   MCf_Pz = 0;
+   MCf_E = 0;
+   MCfprodVtxX = 0;
+   MCfprodVtxY = 0;
+   MCfprodVtxZ = 0;
+   MCfendVtxX = 0;
+   MCfendVtxY = 0;
+   MCfendVtxZ = 0;
+   genTauVisPDG = 0;
+   genTauVisPx = 0;
+   genTauVisPy = 0;
+   genTauVisPz = 0;
+   genTauVisE = 0;
+   genTauVisVtxisNOTParentEnd = 0;
+   genTauVisX = 0;
+   genTauVisY = 0;
+   genTauVisZ = 0;
+   genTauIPDG = 0;
+   genTauIPx = 0;
+   genTauIPy = 0;
+   genTauIPz = 0;
+   tauPx0 = 0;
+   tauPy0 = 0;
+   tauPz0 = 0;
+   tauE0 = 0;
+   tauNTrks0 = 0;
+   tauNPfos0 = 0;
+   candNeuPx0 = 0;
+   candNeuPy0 = 0;
+   candNeuPz0 = 0;
+   candNeuE0 = 0;
+   candTrkd00 = 0;
+   candTrkPhi0 = 0;
+   candTrkOm0 = 0;
+   candTrkz00 = 0;
+   candTrktlam0 = 0;
+   candTrkCov0 = 0;
+   remNtrk0 = 0;
+   remNpfo0 = 0;
+   remPx0 = 0;
+   remPy0 = 0;
+   remPz0 = 0;
+   remE0 = 0;
+   tauPx1 = 0;
+   tauPy1 = 0;
+   tauPz1 = 0;
+   tauE1 = 0;
+   tauNTrks1 = 0;
+   tauNPfos1 = 0;
+   candNeuPx1 = 0;
+   candNeuPy1 = 0;
+   candNeuPz1 = 0;
+   candNeuE1 = 0;
+   candTrkd01 = 0;
+   candTrkPhi1 = 0;
+   candTrkOm1 = 0;
+   candTrkz01 = 0;
+   candTrktlam1 = 0;
+   candTrkCov1 = 0;
+   remNtrk1 = 0;
+   remNpfo1 = 0;
+   remPx1 = 0;
+   remPy1 = 0;
+   remPz1 = 0;
+   remE1 = 0;
+   tauPx2 = 0;
+   tauPy2 = 0;
+   tauPz2 = 0;
+   tauE2 = 0;
+   tauNTrks2 = 0;
+   tauNPfos2 = 0;
+   candNeuPx2 = 0;
+   candNeuPy2 = 0;
+   candNeuPz2 = 0;
+   candNeuE2 = 0;
+   candTrkd02 = 0;
+   candTrkPhi2 = 0;
+   candTrkOm2 = 0;
+   candTrkz02 = 0;
+   candTrktlam2 = 0;
+   candTrkCov2 = 0;
+   remNtrk2 = 0;
+   remNpfo2 = 0;
+   remPx2 = 0;
+   remPy2 = 0;
+   remPz2 = 0;
+   remE2 = 0;
+   tauPx3 = 0;
+   tauPy3 = 0;
+   tauPz3 = 0;
+   tauE3 = 0;
+   tauNTrks3 = 0;
+   tauNPfos3 = 0;
+   candNeuPx3 = 0;
+   candNeuPy3 = 0;
+   candNeuPz3 = 0;
+   candNeuE3 = 0;
+   candTrkd03 = 0;
+   candTrkPhi3 = 0;
+   candTrkOm3 = 0;
+   candTrkz03 = 0;
+   candTrktlam3 = 0;
+   candTrkCov3 = 0;
+   remNtrk3 = 0;
+   remNpfo3 = 0;
+   remPx3 = 0;
+   remPy3 = 0;
+   remPz3 = 0;
+   remE3 = 0;
+   tauPx4 = 0;
+   tauPy4 = 0;
+   tauPz4 = 0;
+   tauE4 = 0;
+   tauNTrks4 = 0;
+   tauNPfos4 = 0;
+   candNeuPx4 = 0;
+   candNeuPy4 = 0;
+   candNeuPz4 = 0;
+   candNeuE4 = 0;
+   candTrkd04 = 0;
+   candTrkPhi4 = 0;
+   candTrkOm4 = 0;
+   candTrkz04 = 0;
+   candTrktlam4 = 0;
+   candTrkCov4 = 0;
+   remNtrk4 = 0;
+   remNpfo4 = 0;
+   remPx4 = 0;
+   remPy4 = 0;
+   remPz4 = 0;
+   remE4 = 0;
+   // Set branch addresses and branch pointers
+   if (!tree) return;
+   fChain = tree;
+   fCurrent = -1;
+   fChain->SetMakeClass(1);
+
+   fChain->SetBranchAddress("xsec", &xsec, &b_xsec);
+   fChain->SetBranchAddress("xsecerr", &xsecerr, &b_xsecerr);
+   fChain->SetBranchAddress("beampart1", &beampart1, &b_beampart1);
+   fChain->SetBranchAddress("beampart2", &beampart2, &b_beampart2);
+   fChain->SetBranchAddress("polarization1", &polarization1, &b_polarization1);
+   fChain->SetBranchAddress("polarization2", &polarization2, &b_polarization2);
+   fChain->SetBranchAddress("nLL", &nLL, &b_nLL);
+   fChain->SetBranchAddress("nRR", &nRR, &b_nRR);
+   fChain->SetBranchAddress("nLR", &nLR, &b_nLR);
+   fChain->SetBranchAddress("nRL", &nRL, &b_nRL);
+   fChain->SetBranchAddress("nevt", &nevt, &b_nevt);
+   fChain->SetBranchAddress("ycut", &ycut, &b_ycut);
+   fChain->SetBranchAddress("nPandoraTrks", &nPandoraTrks, &b_nPandoraTrks);
+   fChain->SetBranchAddress("nPandoraPfos", &nPandoraPfos, &b_nPandoraPfos);
+   fChain->SetBranchAddress("genMuon", &genMuon, &b_isMuon);
+   fChain->SetBranchAddress("genTau", &genTau, &b_isTau);
+   fChain->SetBranchAddress("genElectron", &genElectron, &b_isElectron);
+   fChain->SetBranchAddress("genTauType", &genTauType, &b_tauType);
+   fChain->SetBranchAddress("MCf_PDG", &MCf_PDG, &b_MCf_PDG);
+   fChain->SetBranchAddress("MCf_Px", &MCf_Px, &b_MCf_Px);
+   fChain->SetBranchAddress("MCf_Py", &MCf_Py, &b_MCf_Py);
+   fChain->SetBranchAddress("MCf_Pz", &MCf_Pz, &b_MCf_Pz);
+   fChain->SetBranchAddress("MCf_E", &MCf_E, &b_MCf_E);
+   fChain->SetBranchAddress("MCfprodVtxX", &MCfprodVtxX, &b_MCfprodVtxX);
+   fChain->SetBranchAddress("MCfprodVtxY", &MCfprodVtxY, &b_MCfprodVtxY);
+   fChain->SetBranchAddress("MCfprodVtxZ", &MCfprodVtxZ, &b_MCfprodVtxZ);
+   fChain->SetBranchAddress("MCfendVtxX", &MCfendVtxX, &b_MCfendVtxX);
+   fChain->SetBranchAddress("MCfendVtxY", &MCfendVtxY, &b_MCfendVtxY);
+   fChain->SetBranchAddress("MCfendVtxZ", &MCfendVtxZ, &b_MCfendVtxZ);
+   fChain->SetBranchAddress("genTauVisPDG", &genTauVisPDG, &b_genTauVisPDG);
+   fChain->SetBranchAddress("genTauVisPx", &genTauVisPx, &b_genTauVisPx);
+   fChain->SetBranchAddress("genTauVisPy", &genTauVisPy, &b_genTauVisPy);
+   fChain->SetBranchAddress("genTauVisPz", &genTauVisPz, &b_genTauVisPz);
+   fChain->SetBranchAddress("genTauVisE", &genTauVisE, &b_genTauVisE);
+   fChain->SetBranchAddress("genTauVisVtxisNOTParentEnd", &genTauVisVtxisNOTParentEnd, &b_genTauVisVtxisNOTParentEnd);
+   fChain->SetBranchAddress("genTauVisX", &genTauVisX, &b_genTauVisX);
+   fChain->SetBranchAddress("genTauVisY", &genTauVisY, &b_genTauVisY);
+   fChain->SetBranchAddress("genTauVisZ", &genTauVisZ, &b_genTauVisZ);
+   fChain->SetBranchAddress("genTauIPDG", &genTauIPDG, &b_genTauIPDG);
+   fChain->SetBranchAddress("genTauIPx", &genTauIPx, &b_genTauIPx);
+   fChain->SetBranchAddress("genTauIPy", &genTauIPy, &b_genTauIPy);
+   fChain->SetBranchAddress("genTauIPz", &genTauIPz, &b_genTauIPz);
+   fChain->SetBranchAddress("ntau0", &ntau0, &b_ntau0);
+   fChain->SetBranchAddress("tauPx0", &tauPx0, &b_tauPx0);
+   fChain->SetBranchAddress("tauPy0", &tauPy0, &b_tauPy0);
+   fChain->SetBranchAddress("tauPz0", &tauPz0, &b_tauPz0);
+   fChain->SetBranchAddress("tauE0", &tauE0, &b_tauE0);
+   fChain->SetBranchAddress("tauNTrks0", &tauNTrks0, &b_tauNTrks0);
+   fChain->SetBranchAddress("tauNPfos0", &tauNPfos0, &b_tauNPfos0);
+   fChain->SetBranchAddress("candPx0", &candPx0, &b_candPx0);
+   fChain->SetBranchAddress("candPy0", &candPy0, &b_candPy0);
+   fChain->SetBranchAddress("candPz0", &candPz0, &b_candPz0);
+   fChain->SetBranchAddress("candE0", &candE0, &b_candE0);
+   fChain->SetBranchAddress("candNTrks0", &candNTrks0, &b_candNTrks0);
+   fChain->SetBranchAddress("candNPfos0", &candNPfos0, &b_candNPfos0);
+   fChain->SetBranchAddress("candNeuPx0", &candNeuPx0, &b_candNeuPx0);
+   fChain->SetBranchAddress("candNeuPy0", &candNeuPy0, &b_candNeuPy0);
+   fChain->SetBranchAddress("candNeuPz0", &candNeuPz0, &b_candNeuPz0);
+   fChain->SetBranchAddress("candNeuE0", &candNeuE0, &b_candNeuE0);
+   fChain->SetBranchAddress("candTrkd00", &candTrkd00, &b_candTrkd00);
+   fChain->SetBranchAddress("candTrkPhi0", &candTrkPhi0, &b_candTrkPhi0);
+   fChain->SetBranchAddress("candTrkOm0", &candTrkOm0, &b_candTrkOm0);
+   fChain->SetBranchAddress("candTrkz00", &candTrkz00, &b_candTrkz00);
+   fChain->SetBranchAddress("candTrktlam0", &candTrktlam0, &b_candTrktlam0);
+   fChain->SetBranchAddress("candTrkCov0", &candTrkCov0, &b_candTrkCov0);
+   fChain->SetBranchAddress("njets0", &njets0, &b_njets0);
+   fChain->SetBranchAddress("remNtrk0", &remNtrk0, &b_remNtrk0);
+   fChain->SetBranchAddress("remNpfo0", &remNpfo0, &b_remNpfo0);
+   fChain->SetBranchAddress("remPx0", &remPx0, &b_remPx0);
+   fChain->SetBranchAddress("remPy0", &remPy0, &b_remPy0);
+   fChain->SetBranchAddress("remPz0", &remPz0, &b_remPz0);
+   fChain->SetBranchAddress("remE0", &remE0, &b_remE0);
+   fChain->SetBranchAddress("ntau1", &ntau1, &b_ntau1);
+   fChain->SetBranchAddress("tauPx1", &tauPx1, &b_tauPx1);
+   fChain->SetBranchAddress("tauPy1", &tauPy1, &b_tauPy1);
+   fChain->SetBranchAddress("tauPz1", &tauPz1, &b_tauPz1);
+   fChain->SetBranchAddress("tauE1", &tauE1, &b_tauE1);
+   fChain->SetBranchAddress("tauNTrks1", &tauNTrks1, &b_tauNTrks1);
+   fChain->SetBranchAddress("tauNPfos1", &tauNPfos1, &b_tauNPfos1);
+   fChain->SetBranchAddress("candPx1", &candPx1, &b_candPx1);
+   fChain->SetBranchAddress("candPy1", &candPy1, &b_candPy1);
+   fChain->SetBranchAddress("candPz1", &candPz1, &b_candPz1);
+   fChain->SetBranchAddress("candE1", &candE1, &b_candE1);
+   fChain->SetBranchAddress("candNTrks1", &candNTrks1, &b_candNTrks1);
+   fChain->SetBranchAddress("candNPfos1", &candNPfos1, &b_candNPfos1);
+   fChain->SetBranchAddress("candNeuPx1", &candNeuPx1, &b_candNeuPx1);
+   fChain->SetBranchAddress("candNeuPy1", &candNeuPy1, &b_candNeuPy1);
+   fChain->SetBranchAddress("candNeuPz1", &candNeuPz1, &b_candNeuPz1);
+   fChain->SetBranchAddress("candNeuE1", &candNeuE1, &b_candNeuE1);
+   fChain->SetBranchAddress("candTrkd01", &candTrkd01, &b_candTrkd01);
+   fChain->SetBranchAddress("candTrkPhi1", &candTrkPhi1, &b_candTrkPhi1);
+   fChain->SetBranchAddress("candTrkOm1", &candTrkOm1, &b_candTrkOm1);
+   fChain->SetBranchAddress("candTrkz01", &candTrkz01, &b_candTrkz01);
+   fChain->SetBranchAddress("candTrktlam1", &candTrktlam1, &b_candTrktlam1);
+   fChain->SetBranchAddress("candTrkCov1", &candTrkCov1, &b_candTrkCov1);
+   fChain->SetBranchAddress("njets1", &njets1, &b_njets1);
+   fChain->SetBranchAddress("remNtrk1", &remNtrk1, &b_remNtrk1);
+   fChain->SetBranchAddress("remNpfo1", &remNpfo1, &b_remNpfo1);
+   fChain->SetBranchAddress("remPx1", &remPx1, &b_remPx1);
+   fChain->SetBranchAddress("remPy1", &remPy1, &b_remPy1);
+   fChain->SetBranchAddress("remPz1", &remPz1, &b_remPz1);
+   fChain->SetBranchAddress("remE1", &remE1, &b_remE1);
+   fChain->SetBranchAddress("ntau2", &ntau2, &b_ntau2);
+   fChain->SetBranchAddress("tauPx2", &tauPx2, &b_tauPx2);
+   fChain->SetBranchAddress("tauPy2", &tauPy2, &b_tauPy2);
+   fChain->SetBranchAddress("tauPz2", &tauPz2, &b_tauPz2);
+   fChain->SetBranchAddress("tauE2", &tauE2, &b_tauE2);
+   fChain->SetBranchAddress("tauNTrks2", &tauNTrks2, &b_tauNTrks2);
+   fChain->SetBranchAddress("tauNPfos2", &tauNPfos2, &b_tauNPfos2);
+   fChain->SetBranchAddress("candPx2", &candPx2, &b_candPx2);
+   fChain->SetBranchAddress("candPy2", &candPy2, &b_candPy2);
+   fChain->SetBranchAddress("candPz2", &candPz2, &b_candPz2);
+   fChain->SetBranchAddress("candE2", &candE2, &b_candE2);
+   fChain->SetBranchAddress("candNTrks2", &candNTrks2, &b_candNTrks2);
+   fChain->SetBranchAddress("candNPfos2", &candNPfos2, &b_candNPfos2);
+   fChain->SetBranchAddress("candNeuPx2", &candNeuPx2, &b_candNeuPx2);
+   fChain->SetBranchAddress("candNeuPy2", &candNeuPy2, &b_candNeuPy2);
+   fChain->SetBranchAddress("candNeuPz2", &candNeuPz2, &b_candNeuPz2);
+   fChain->SetBranchAddress("candNeuE2", &candNeuE2, &b_candNeuE2);
+   fChain->SetBranchAddress("candTrkd02", &candTrkd02, &b_candTrkd02);
+   fChain->SetBranchAddress("candTrkPhi2", &candTrkPhi2, &b_candTrkPhi2);
+   fChain->SetBranchAddress("candTrkOm2", &candTrkOm2, &b_candTrkOm2);
+   fChain->SetBranchAddress("candTrkz02", &candTrkz02, &b_candTrkz02);
+   fChain->SetBranchAddress("candTrktlam2", &candTrktlam2, &b_candTrktlam2);
+   fChain->SetBranchAddress("candTrkCov2", &candTrkCov2, &b_candTrkCov2);
+   fChain->SetBranchAddress("njets2", &njets2, &b_njets2);
+   fChain->SetBranchAddress("remNtrk2", &remNtrk2, &b_remNtrk2);
+   fChain->SetBranchAddress("remNpfo2", &remNpfo2, &b_remNpfo2);
+   fChain->SetBranchAddress("remPx2", &remPx2, &b_remPx2);
+   fChain->SetBranchAddress("remPy2", &remPy2, &b_remPy2);
+   fChain->SetBranchAddress("remPz2", &remPz2, &b_remPz2);
+   fChain->SetBranchAddress("remE2", &remE2, &b_remE2);
+   fChain->SetBranchAddress("ntau3", &ntau3, &b_ntau3);
+   fChain->SetBranchAddress("tauPx3", &tauPx3, &b_tauPx3);
+   fChain->SetBranchAddress("tauPy3", &tauPy3, &b_tauPy3);
+   fChain->SetBranchAddress("tauPz3", &tauPz3, &b_tauPz3);
+   fChain->SetBranchAddress("tauE3", &tauE3, &b_tauE3);
+   fChain->SetBranchAddress("tauNTrks3", &tauNTrks3, &b_tauNTrks3);
+   fChain->SetBranchAddress("tauNPfos3", &tauNPfos3, &b_tauNPfos3);
+   fChain->SetBranchAddress("candPx3", &candPx3, &b_candPx3);
+   fChain->SetBranchAddress("candPy3", &candPy3, &b_candPy3);
+   fChain->SetBranchAddress("candPz3", &candPz3, &b_candPz3);
+   fChain->SetBranchAddress("candE3", &candE3, &b_candE3);
+   fChain->SetBranchAddress("candNTrks3", &candNTrks3, &b_candNTrks3);
+   fChain->SetBranchAddress("candNPfos3", &candNPfos3, &b_candNPfos3);
+   fChain->SetBranchAddress("candNeuPx3", &candNeuPx3, &b_candNeuPx3);
+   fChain->SetBranchAddress("candNeuPy3", &candNeuPy3, &b_candNeuPy3);
+   fChain->SetBranchAddress("candNeuPz3", &candNeuPz3, &b_candNeuPz3);
+   fChain->SetBranchAddress("candNeuE3", &candNeuE3, &b_candNeuE3);
+   fChain->SetBranchAddress("candTrkd03", &candTrkd03, &b_candTrkd03);
+   fChain->SetBranchAddress("candTrkPhi3", &candTrkPhi3, &b_candTrkPhi3);
+   fChain->SetBranchAddress("candTrkOm3", &candTrkOm3, &b_candTrkOm3);
+   fChain->SetBranchAddress("candTrkz03", &candTrkz03, &b_candTrkz03);
+   fChain->SetBranchAddress("candTrktlam3", &candTrktlam3, &b_candTrktlam3);
+   fChain->SetBranchAddress("candTrkCov3", &candTrkCov3, &b_candTrkCov3);
+   fChain->SetBranchAddress("njets3", &njets3, &b_njets3);
+   fChain->SetBranchAddress("remNtrk3", &remNtrk3, &b_remNtrk3);
+   fChain->SetBranchAddress("remNpfo3", &remNpfo3, &b_remNpfo3);
+   fChain->SetBranchAddress("remPx3", &remPx3, &b_remPx3);
+   fChain->SetBranchAddress("remPy3", &remPy3, &b_remPy3);
+   fChain->SetBranchAddress("remPz3", &remPz3, &b_remPz3);
+   fChain->SetBranchAddress("remE3", &remE3, &b_remE3);
+   fChain->SetBranchAddress("ntau4", &ntau4, &b_ntau4);
+   fChain->SetBranchAddress("tauPx4", &tauPx4, &b_tauPx4);
+   fChain->SetBranchAddress("tauPy4", &tauPy4, &b_tauPy4);
+   fChain->SetBranchAddress("tauPz4", &tauPz4, &b_tauPz4);
+   fChain->SetBranchAddress("tauE4", &tauE4, &b_tauE4);
+   fChain->SetBranchAddress("tauNTrks4", &tauNTrks4, &b_tauNTrks4);
+   fChain->SetBranchAddress("tauNPfos4", &tauNPfos4, &b_tauNPfos4);
+   fChain->SetBranchAddress("candPx4", &candPx4, &b_candPx4);
+   fChain->SetBranchAddress("candPy4", &candPy4, &b_candPy4);
+   fChain->SetBranchAddress("candPz4", &candPz4, &b_candPz4);
+   fChain->SetBranchAddress("candE4", &candE4, &b_candE4);
+   fChain->SetBranchAddress("candNTrks4", &candNTrks4, &b_candNTrks4);
+   fChain->SetBranchAddress("candNPfos4", &candNPfos4, &b_candNPfos4);
+   fChain->SetBranchAddress("candNeuPx4", &candNeuPx4, &b_candNeuPx4);
+   fChain->SetBranchAddress("candNeuPy4", &candNeuPy4, &b_candNeuPy4);
+   fChain->SetBranchAddress("candNeuPz4", &candNeuPz4, &b_candNeuPz4);
+   fChain->SetBranchAddress("candNeuE4", &candNeuE4, &b_candNeuE4);
+   fChain->SetBranchAddress("candTrkd04", &candTrkd04, &b_candTrkd04);
+   fChain->SetBranchAddress("candTrkPhi4", &candTrkPhi4, &b_candTrkPhi4);
+   fChain->SetBranchAddress("candTrkOm4", &candTrkOm4, &b_candTrkOm4);
+   fChain->SetBranchAddress("candTrkz04", &candTrkz04, &b_candTrkz04);
+   fChain->SetBranchAddress("candTrktlam4", &candTrktlam4, &b_candTrktlam4);
+   fChain->SetBranchAddress("candTrkCov4", &candTrkCov4, &b_candTrkCov4);
+   fChain->SetBranchAddress("njets4", &njets4, &b_njets4);
+   fChain->SetBranchAddress("remNtrk4", &remNtrk4, &b_remNtrk4);
+   fChain->SetBranchAddress("remNpfo4", &remNpfo4, &b_remNpfo4);
+   fChain->SetBranchAddress("remPx4", &remPx4, &b_remPx4);
+   fChain->SetBranchAddress("remPy4", &remPy4, &b_remPy4);
+   fChain->SetBranchAddress("remPz4", &remPz4, &b_remPz4);
+   fChain->SetBranchAddress("remE4", &remE4, &b_remE4);
+   Notify();
+}
+
+Bool_t myselector::Notify()
+{
+   // The Notify() function is called when a new file is opened. This
+   // can be either for a new TTree in a TChain or when when a new TTree
+   // is started when using PROOF. It is normally not necessary to make changes
+   // to the generated code, but the routine can be extended by the
+   // user if needed. The return value is currently not used.
+
+   return kTRUE;
+}
+
+void myselector::Show(Long64_t entry)
+{
+// Print contents of entry.
+// If entry is not specified, print current entry
+   if (!fChain) return;
+   fChain->Show(entry);
+}
+Int_t myselector::Cut(Long64_t entry)
+{
+// This function may be called from Loop.
+// returns  1 if entry is accepted.
+// returns -1 otherwise.
+   return 1;
+}
+#endif // #ifdef myselector_cxx

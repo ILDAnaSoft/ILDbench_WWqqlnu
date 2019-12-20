@@ -122,7 +122,8 @@ void stackplot(std::string histname ){
 	//do signal
 	TH1D* _Stight = _wwstight[0];
 	_Stight->Add( _wstight[0] );
-	_Stight->SetFillColor(kRed);
+	_Stight->SetFillColor(kGreen);
+
 
 //	TH1D* _Sloose = _wwsloose[0];
 //	_Sloose->Add(_wsloose[0]);
