@@ -43,7 +43,7 @@ WWAnalysis::WWAnalysis() : Processor("WWAnalysis") {
 							"Name of the Input particle collections",
 							_inputJetCollectionsNames,
 							inputCollectionNames);
-
+ 
     	//input remain collection 
 	std::vector<std::string> inputRemainCollectionsNames{"x"};
 	registerInputCollections( LCIO::RECONSTRUCTEDPARTICLE,
@@ -68,6 +68,14 @@ WWAnalysis::WWAnalysis() : Processor("WWAnalysis") {
 			      	inputRecoRelationCollectionName);
 
 	//parameters for running in backgrounds: #fermions, # leptons
+	//need to store y cut for remain jets, i dont see how to pull it from lcio
+	//only store 1 value -- restrict us to 1 jet collection per run
+	registerProcessorParameter("RemainYCut",
+								"Ycut for remain jet collection",
+								_remainYcut,
+								(double) -1.);
+
+
 	registerProcessorParameter("NFermions",
 								"number of fermions in event",
 								_nfermions,
@@ -111,6 +119,8 @@ WWAnalysis::WWAnalysis() : Processor("WWAnalysis") {
 
 
 }
+	
+
 void WWAnalysis::initTauFinderOptimization(){
 
 		//the number of tau jet collections should match the number of remain collections
@@ -129,14 +139,22 @@ void WWAnalysis::initTauFinderOptimization(){
 			_rp = r;
 			_ol1j = j1;
 
-		
+			//Here are some hax, make vector of ttree all pointers to the same tree
+			//then we can make a no effort super tree with all the branches for working on the optimized taufinder
+					TTree* supertree=new TTree("tree","Tree");
+				
+			//hacks will need to be removed if you want to do jet/tau optimization again
 
 			for(unsigned int i=0; i< _inputJetCollectionsNames.size(); i++){
-				_trees.at(i) = new TTree(_inputJetCollectionsNames.at(i).c_str(), _inputJetCollectionsNames.at(i).c_str());
+			//	_trees.at(i) = new TTree(_inputJetCollectionsNames.at(i).c_str(), _inputJetCollectionsNames.at(i).c_str());
+			//begin hack
+				_trees.at(i) = supertree;
+
 				//for each tree init branches for event level information
-				_trees.at(i)->Branch("xsec",&_xsec,"xsec/D");
-				_trees.at(i)->Branch("xsecerr",&_xsecerr,"xsecerr/D");
-				_trees.at(i)->Branch("nevt",&_nEvt,"nevt/I");
+				_trees.at(i)->Branch((_inputJetCollectionsNames.at(i)+"xsec").c_str(),&_xsec,"xsec/D");
+				_trees.at(i)->Branch((_inputJetCollectionsNames.at(i)+"xsecerr").c_str(),&_xsecerr,"xsecerr/D");
+				_trees.at(i)->Branch((_inputJetCollectionsNames.at(i)+"nevt").c_str(),&_nEvt,"nevt/I");
+				_trees.at(i)->Branch((_inputJetCollectionsNames.at(i)+"ycut").c_str(),&_remainYcut,"ycut/D");
 
 				_tf.at(i) = new tauFinderVariables(_inputJetCollectionsNames.at(i).c_str(), _trees.at(i));
 				_tf.at(i)->initLocalTree();
@@ -515,7 +533,8 @@ void WWAnalysis::SetTauOptimizationVariables(LCEvent* evt){
 				//there is no lepton
 			 	initEmptyTau( _tf.at(i), NULL);
 			}
-			_trees.at(i)->Fill();
+			//remove for hax
+			//_trees.at(i)->Fill();
 		}
 		else{
 			//there are reconstructed taus
@@ -587,16 +606,18 @@ void WWAnalysis::SetTauOptimizationVariables(LCEvent* evt){
 				//debug print OL
 			//std::cout<<"debug print OL"<<std::endl;
 			//_ol1j.at(i)->printOL();
-			_trees.at(i)->Fill();
+			//_trees.at(i)->Fill();
+			//continued super tree hacks
+		//	_trees.at(0)->Fill(); //only fill one tree or we end up filling the same tree many times
 		}
 
 	}
-
+	_trees.at(0)->Fill();
 
 }
 void WWAnalysis::processEvent( LCEvent * evt ) {
 
- 
+ std::cout<<"Ycut: "<< _remainYcut<<std::endl;
  std::cout<<"event No. "<< _nEvt<<std::endl;
  // Get Process name and cross section
  //  *_Process = evt->getParameters().getStringVal("Process");

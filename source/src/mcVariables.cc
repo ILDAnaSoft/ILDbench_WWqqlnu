@@ -304,8 +304,8 @@ void mcVariables::initLocalTree(){
 	_localTree->Branch((vsn+"MCTauInvisibleDaughters").c_str(),"vector<TLorentzVector>", &_MCTauInvisibleDaughters);
 	_localTree->Branch((vsn+"MCTauInvisibleDaughters_pdg").c_str(),"vector<int>", &_MCTauInvisibleDaughters_pdg);
 
-	_localTree->Branch("mcl","TLorentzVector",&_mcl,16000,0);
-	_localTree->Branch("mcqq","TLorentzVector",&_mcqq,16000,0);
+	_localTree->Branch((vsn+"mcl").c_str(),"TLorentzVector",&_mcl,16000,0);
+	_localTree->Branch((vsn+"mcqq").c_str(),"TLorentzVector",&_mcqq,16000,0);
 	//_localTree->Branch("mcqq.",&_mcl);
 	
 	

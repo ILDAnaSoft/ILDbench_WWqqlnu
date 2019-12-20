@@ -1,0 +1,9 @@
+$ minntracks 10
+$ minvispt 5
+$ maxvise 500
+$ minroots 100
+$ minqqmass 40
+$ maxqqmass 120
+$ minqcost -95
+$ maxvrec 135000
+* minmwlep 1 70 1

@@ -129,7 +129,7 @@ using namespace lcio;
  std::vector<jetOverlay*> _rjOL{};
 
 
-
+ 
 TTree* _tree{};//single run tree
 //non tau optimization
 
@@ -137,6 +137,8 @@ TTree* _tree{};//single run tree
   int _nEvt{};
   double _xsec{}; 
   double _xsecerr{};
+
+  double _remainYcut{};
 
 std::string _outpath;
 
