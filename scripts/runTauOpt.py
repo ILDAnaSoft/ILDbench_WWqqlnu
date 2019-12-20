@@ -10,6 +10,7 @@ def bash( bashCommand ):
 	process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
 	#process = subprocess.Popen(bashCommand.split())
 	output, error = process.communicate()
+	#print output
 	return output ,error
 
 #bashCommand ='ls ./steeringMacros/TauFinderSteeringS1LR/' 

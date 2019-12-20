@@ -9,7 +9,7 @@
 \setbeamertemplate{footline}[frame number]
 \usepackage{siunitx}
 \author{Justin Anguiano}
-\title{$WW\rightarrow qql\nu$ Benchmark}
+\title{Study of $WW\rightarrow qql\nu$ at ILC500}
 %\setbeamercovered{transparent} 
 %\setbeamertemplate{navigation symbols}{} 
 %\logo{} 
@@ -128,8 +128,8 @@ MC Background Samples (DBD)--\\
 \end{columns}
 \quad \quad \\
 \scriptsize
-Note: singleW semileptonic is split into $WW\rightarrow qqe\nu$ signal and also 4f background\\
-events that contain an off shell W ($\pm 10 GeV$ to nominal mass) are considered backround
+Note: signal events are split into WW-like and not WW-like events\\
+events that contain an off shell W ($\pm 10 GeV$ to nominal mass) are considered to be not WW-like
 
 \end{frame}
 
@@ -139,14 +139,17 @@ Treat all lepton flavors universally\\
 Start by identifiying signal tau candidates with TauFinder\\
 \scriptsize
 \quad	Optimize TauFinder to efficiently find taus (based on decay products) and also reject tau fakes from hadronic jets\\
-\quad \quad	\quad Separate into 4 categories:\\
+\quad \quad	\quad Separate into 7 categories:\\
 \begin{center}		
+		prompt $\mu$\\
+		prompt $e$\\
+		Inclusive $\tau$\\
 		$\tau\rightarrow \mu \nu \nu$ \\
 		$\tau\rightarrow e \nu \nu$\\
 		$\tau \rightarrow$ hadronic 1-prong\\
 		$\tau \rightarrow$ hadronic 3-prong\\
 \end{center}
-\quad \quad \quad	This approach simultaneously optimizes lepton selection for prompt $\mu/e$\\
+\quad \quad \quad	%This approach simultaneously optimizes lepton selection for prompt $\mu/e$\\
 	\normalsize
 \textbf{Step 2}-\\
 With a selected lepton, treat the remaining system as hadronic components of $W\rightarrow qq$\\
@@ -297,7 +300,7 @@ The edges of the Width for FWHM are the weighted average between the 2 bins arou
 \begin{column}{0.5\textwidth}
    	\includegraphics[scale=0.3, left]{SupDiff.pdf}\\
    	\scriptsize
-   	Comparison of 3 YCuts with the same kinematic cuts Pt$>$2 GeV AND cos$\theta<$1 (optimized for 5e-05)\\
+   	Comparison of 3 YCuts with the same kinematic cuts Pt$>$2 GeV AND $|cos\theta|<$1 (optimized for 5e-05)\\
    	\quad \quad \\
    	Small peak around -80 GeV is where the W has been incorrectly thrown out\\
    	\quad \quad \\
@@ -350,7 +353,7 @@ adapted from ref. \url{I. Marchesini DESY-THESIS 2011}\\
 \item[-]Track Multiplicity $> 10$ - at least 10 tracks in the event (targeting rejection of 2f Bkg.)
 \item[-]Pt $> 5$ GeV - reject events with no genuine missing Pt 
 \item[-]$E_{vis} < 500$ GeV Sum of the total visible energy in the event 
-\item[-]$E_{com} > 100$ GeV - target rejection of 2f and leptonic eeZ, $E_{com} = E_{vis} + E_{miss} \, \,  P^\mu_{miss} = (|P_{miss}|, -\sum{\vec{p}_{vis}}) $
+\item[-]$E_{com} > 100$ GeV - target rejection of 2f and leptonic eeZ, $E_{com} = E_{vis} + |P_{miss}| \, \,  \, \, P^\mu_{miss} = (|P_{miss}| , -\sum{\vec{p}_{vis}}) $
 \item[-]$40<M_{qq}<120$ - constrains jet system to be W-like
 \item[-] $-qcos\theta_W$ - require the $W^-$ to scatter forward
 
@@ -362,10 +365,12 @@ adapted from ref. \url{I. Marchesini DESY-THESIS 2011}\\
 
 \end{frame}
 
-\begin{frame}{(3) Event Selection}
+\begin{frame}{(3) Event Selection (Tight)}
 \scriptsize
 Tight Signal $\Rightarrow$  muon cone for $\mu,e,\tau$ signal events\\
-Loose Signal $\Rightarrow$  tau cone for $\mu,e,\tau$ signal events with no reconstructed tight lepton\\
+All plots include an N Lepton $> 0$ cut (except N Lepton plot)\\
+Polarization: (-0.8,+0.3)\quad
+Luminosity: 1600 fb$^{-1}$
 \begin{columns}
 \begin{column}{0.5\textwidth}
 \includegraphics[scale=0.3, left]{nLepHist.pdf} \\
@@ -378,10 +383,12 @@ N Tracks $> 10$
 \end{columns}
 \end{frame}
 
-\begin{frame}{(3) Event Selection}
+\begin{frame}{(3) Event Selection (Tight)}
 \scriptsize
 Tight Signal $\Rightarrow$  muon cone for $\mu,e,\tau$ signal events\\
-Loose Signal $\Rightarrow$  tau cone for $\mu,e,\tau$ signal events with no reconstructed tight lepton\\
+All plots include an N Lepton $> 0$ cut\\
+Polarization: (-0.8,+0.3)\quad
+Luminosity: 1600 fb$^{-1}$
 \begin{columns}
 \begin{column}{0.5\textwidth}
 \includegraphics[scale=0.3, left]{PtvisHist.pdf} \\
@@ -394,10 +401,12 @@ Visible Energy $< 500$ GeV
 \end{columns}
 \end{frame}
 
-\begin{frame}{(3) Event Selection}
+\begin{frame}{(3) Event Selection (Tight)}
 \scriptsize
 Tight Signal $\Rightarrow$  muon cone for $\mu,e,\tau$ signal events\\
-Loose Signal $\Rightarrow$  tau cone for $\mu,e,\tau$ signal events with no reconstructed tight lepton\\
+All plots include an N Lepton $> 0$ cut\\
+Polarization: (-0.8,+0.3)\quad
+Luminosity: 1600 fb$^{-1}$
 \begin{columns}
 \begin{column}{0.5\textwidth}
 \includegraphics[scale=0.3, left]{EcomHist.pdf} \\
@@ -410,10 +419,12 @@ $ 40 < M_{qq} < 120$
 \end{columns}
 \end{frame}
 
-\begin{frame}{(3) Event Selection}
+\begin{frame}{(3) Event Selection (Tight)}
 \scriptsize
 Tight Signal $\Rightarrow$  muon cone for $\mu,e,\tau$ signal events\\
-Loose Signal $\Rightarrow$  tau cone for $\mu,e,\tau$ signal events with no reconstructed tight lepton\\
+All plots include an N Lepton $> 0$ cut\\
+Polarization: (-0.8,+0.3)\quad
+Luminosity: 1600 fb$^{-1}$\\
 \begin{columns}
 \begin{column}{0.5\textwidth}
 \includegraphics[scale=0.3, left]{qcostHist.pdf} \\
@@ -424,8 +435,45 @@ $-qcos\theta_W > -0.95$
 \end{column}
 \end{columns}
 \end{frame}
+\begin{frame}{(3) Event Selection (Tight)}
+Performance of hadronic mass and $W^{-}$ scattering angle\\
+Polarization: (-0.8,+0.3)\quad
+Luminosity: 1600 fb$^{-1}$\\
+All cuts applied, tight selection only with $\mu ,e, \tau$
 
-\begin{frame}{(3) Event Selection}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\includegraphics[scale=0.3, left]{qcostdiffHist.pdf} \\
+
+\end{column}
+\begin{column}{0.5\textwidth}
+\includegraphics[scale=0.3, left]{mqqdiffHist.pdf} \\
+
+\end{column}
+\end{columns}
+
+\end{frame}
+\begin{frame}
+Comparison of Generator mass differences\\
+with pileup rejection and selection cuts vs. no pileup rejection or selection cuts
+\scriptsize
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\includegraphics[scale=0.3, left]{mqqdiffHist.pdf} \\
+ after cuts
+\end{column}
+\begin{column}{0.5\textwidth}
+\includegraphics[scale=0.28, left]{nocutDiff.pdf} \\
+before cuts
+\end{column}
+\end{columns}
+\quad \quad \\
+\quad \quad \\
+Note: right distribution is not weighted and $100\%$ LR
+
+\end{frame}
+
+\begin{frame}{(3) Event Selection -- ``WW-like" Signal}
 \scriptsize
 Polarization: (-0.8,+0.3)\quad
 Luminosity: 1600 fb$^{-1}$
@@ -435,21 +483,21 @@ Tight Selection with muon cone\\
    \begin{tabular}{|p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}|}
 \hline 
    & Prompt $\mu$ & Prompt $e$ & $\tau$ & Tot. Sig. & 2f & 4f & 6f & Higgs \\ \hline 
-nocut &\num{3.87e+06 } & \num{3.89e+06 } & \num{3.90e+06} &\num{1.17e+07} & \num{4.22e+07} & \num{3.22e+07} & \num{2.14e+05} & \num{4.12e+05} \\ 
+Base Evts. &\num{3.87e+06 } & \num{3.89e+06 } & \num{3.90e+06} &\num{1.17e+07} & \num{4.22e+07} & \num{3.22e+07} & \num{2.14e+05} & \num{4.12e+05} \\ 
  
-lepton &\num{3.31e+06 } & \num{3.20e+06 } & \num{2.28e+06} &\num{8.78e+06} & \num{1.15e+07} & \num{1.18e+07} & \num{1.63e+05} & \num{1.15e+05} \\ 
+Lepton &\num{3.31e+06 } & \num{3.20e+06 } & \num{2.28e+06} &\num{8.78e+06} & \num{1.15e+07} & \num{1.18e+07} & \num{1.63e+05} & \num{1.15e+05} \\ 
 
-ntracks &\num{3.22e+06 } & \num{3.11e+06 } & \num{2.21e+06} &\num{8.54e+06} & \num{2.84e+06} & \num{2.83e+06} & \num{1.50e+05} & \num{9.36e+04} \\ 
+N Tracks &\num{3.22e+06 } & \num{3.11e+06 } & \num{2.21e+06} &\num{8.54e+06} & \num{2.84e+06} & \num{2.83e+06} & \num{1.50e+05} & \num{9.36e+04} \\ 
 
-ptcut &\num{3.18e+06 } & \num{3.07e+06 } & \num{2.18e+06} &\num{8.44e+06} & \num{1.81e+06} & \num{2.08e+06} & \num{1.47e+05} & \num{8.40e+04} \\ 
+Pt visible &\num{3.18e+06 } & \num{3.07e+06 } & \num{2.18e+06} &\num{8.44e+06} & \num{1.81e+06} & \num{2.08e+06} & \num{1.47e+05} & \num{8.40e+04} \\ 
 
-esum &\num{3.16e+06 } & \num{3.00e+06 } & \num{2.18e+06} &\num{8.33e+06} & \num{1.66e+06} & \num{1.96e+06} & \num{1.46e+05} & \num{8.11e+04} \\ 
+E visible &\num{3.16e+06 } & \num{3.00e+06 } & \num{2.18e+06} &\num{8.33e+06} & \num{1.66e+06} & \num{1.96e+06} & \num{1.46e+05} & \num{8.11e+04} \\ 
 
-roots &\num{3.15e+06 } & \num{2.99e+06 } & \num{2.16e+06} &\num{8.31e+06} & \num{1.37e+06} & \num{1.63e+06} & \num{1.45e+05} & \num{7.96e+04} \\ 
+$E_{com}$ &\num{3.15e+06 } & \num{2.99e+06 } & \num{2.16e+06} &\num{8.31e+06} & \num{1.37e+06} & \num{1.63e+06} & \num{1.45e+05} & \num{7.96e+04} \\ 
  
-mwhad &\num{2.70e+06 } & \num{2.56e+06 } & \num{1.82e+06} &\num{7.08e+06} & \num{4.02e+05} & \num{2.67e+05} & \num{2.08e+04} & \num{3.06e+04} \\ 
+$M_{qq}$ &\num{2.70e+06 } & \num{2.56e+06 } & \num{1.82e+06} &\num{7.08e+06} & \num{4.02e+05} & \num{2.67e+05} & \num{2.08e+04} & \num{3.06e+04} \\ 
 
-qcostw &\num{2.69e+06 } & \num{2.55e+06 } & \num{1.81e+06} &\num{7.05e+06} & \num{3.21e+05} & \num{2.37e+05} & \num{2.01e+04} & \num{2.94e+04} \\ 
+$-qcos\theta_W$ &\num{2.69e+06 } & \num{2.55e+06 } & \num{1.81e+06} &\num{7.05e+06} & \num{3.21e+05} & \num{2.37e+05} & \num{2.01e+04} & \num{2.94e+04} \\ 
 \hline 
  $\epsilon$ & $0.6951 \pm 0.0018$ & $0.6551 \pm 0.0019$ & $0.4644 \pm 0.002$ &  $0.6047 \pm 0.0011$ & $0.007589 \pm 1.3e-05$ & $0.007363 \pm 1.5e-05$ & $0.09395 \pm 0.00063$ & $0.0714 \pm 0.0004$ \\
 \hline
@@ -459,23 +507,23 @@ Loose selection with tau cone\\
  \begin{tabular}{|p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}|}
 \hline 
    & Prompt $\mu$ & Prompt $e$ & $\tau$ & Tot. Sig. & 2f & 4f & 6f & Higgs \\ \hline 
-nocut &\num{3.87e+06 } & \num{3.89e+06 } & \num{3.90e+06} &\num{1.17e+07} & \num{4.22e+07} & \num{3.22e+07} & \num{2.14e+05} & \num{4.12e+05} \\ 
+Base Evts. &\num{3.87e+06 } & \num{3.89e+06 } & \num{3.90e+06} &\num{1.17e+07} & \num{4.22e+07} & \num{3.22e+07} & \num{2.14e+05} & \num{4.12e+05} \\ 
  
-lepton &\num{3.36e+06 } & \num{3.30e+06 } & \num{2.82e+06} &\num{9.48e+06} & \num{1.30e+07} & \num{1.36e+07} & \num{1.77e+05} & \num{1.38e+05} \\ 
+Lepton &\num{3.36e+06 } & \num{3.30e+06 } & \num{2.82e+06} &\num{9.48e+06} & \num{1.30e+07} & \num{1.36e+07} & \num{1.77e+05} & \num{1.38e+05} \\ 
 
-mucone &\num{7.72e+04 } & \num{1.28e+05 } & \num{5.70e+05} &\num{7.76e+05} & \num{1.93e+06} & \num{2.15e+06} & \num{1.61e+04} & \num{3.12e+04} \\ 
+Veto Tight Lep. &\num{7.72e+04 } & \num{1.28e+05 } & \num{5.70e+05} &\num{7.76e+05} & \num{1.93e+06} & \num{2.15e+06} & \num{1.61e+04} & \num{3.12e+04} \\ 
 
-ntracks &\num{7.45e+04 } & \num{1.23e+05 } & \num{5.55e+05} &\num{7.52e+05} & \num{1.61e+06} & \num{1.85e+06} & \num{1.58e+04} & \num{2.81e+04} \\ 
+N Tracks &\num{7.45e+04 } & \num{1.23e+05 } & \num{5.55e+05} &\num{7.52e+05} & \num{1.61e+06} & \num{1.85e+06} & \num{1.58e+04} & \num{2.81e+04} \\ 
 
-ptcut &\num{7.34e+04 } & \num{1.22e+05 } & \num{5.48e+05} &\num{7.43e+05} & \num{9.22e+05} & \num{1.12e+06} & \num{1.36e+04} & \num{2.52e+04} \\ 
+Pt visible &\num{7.34e+04 } & \num{1.22e+05 } & \num{5.48e+05} &\num{7.43e+05} & \num{9.22e+05} & \num{1.12e+06} & \num{1.36e+04} & \num{2.52e+04} \\ 
 
-esum &\num{7.27e+04 } & \num{1.19e+05 } & \num{5.48e+05} &\num{7.40e+05} & \num{8.75e+05} & \num{1.02e+06} & \num{1.32e+04} & \num{2.46e+04} \\ 
+E visible &\num{7.27e+04 } & \num{1.19e+05 } & \num{5.48e+05} &\num{7.40e+05} & \num{8.75e+05} & \num{1.02e+06} & \num{1.32e+04} & \num{2.46e+04} \\ 
 
-roots &\num{7.04e+04 } & \num{1.18e+05 } & \num{5.41e+05} &\num{7.29e+05} & \num{7.33e+05} & \num{9.83e+05} & \num{1.32e+04} & \num{2.43e+04} \\ 
+$E_{com}$ &\num{7.04e+04 } & \num{1.18e+05 } & \num{5.41e+05} &\num{7.29e+05} & \num{7.33e+05} & \num{9.83e+05} & \num{1.32e+04} & \num{2.43e+04} \\ 
 
-mwhad &\num{4.54e+04 } & \num{8.08e+04 } & \num{4.22e+05} &\num{5.48e+05} & \num{1.85e+05} & \num{1.18e+05} & \num{1.15e+03} & \num{1.28e+04} \\ 
+$M_{qq}$ &\num{4.54e+04 } & \num{8.08e+04 } & \num{4.22e+05} &\num{5.48e+05} & \num{1.85e+05} & \num{1.18e+05} & \num{1.15e+03} & \num{1.28e+04} \\ 
  
-qcostw &\num{4.00e+04 } & \num{7.74e+04 } & \num{4.12e+05} &\num{5.29e+05} & \num{1.17e+05} & \num{1.01e+05} & \num{1.11e+03} & \num{1.23e+04} \\ 
+$-qcos\theta_W$ &\num{4.00e+04 } & \num{7.74e+04 } & \num{4.12e+05} &\num{5.29e+05} & \num{1.17e+05} & \num{1.01e+05} & \num{1.11e+03} & \num{1.23e+04} \\ 
 \hline 
  $\epsilon$ & $0.01032 \pm 0.0004$ & $0.01991 \pm 0.0005$ & $0.1057 \pm 0.0012$ &  $0.0454 \pm 0.0005$ & $0.002775 \pm 8.1e-06$ & $0.003146 \pm 9.9e-06$ & $0.005167 \pm 0.00015$ & $0.0299 \pm 0.00027$ \\ 
 
@@ -485,12 +533,15 @@ qcostw &\num{4.00e+04 } & \num{7.74e+04 } & \num{4.12e+05} &\num{5.29e+05} & \nu
 %end box
 }}
 \end{frame}
-\begin{frame}{(3) Event Selection -- Not "WW-like" Signal}
+\begin{frame}{(3) Event Selection -- Not ``WW-like" Signal}
 \scriptsize
 Polarization: (-0.8,+0.3)\quad
 Luminosity: 1600 fb$^{-1}$\\
 Signal events containing off-shell W\\
+ \scriptsize
+Signal events with at least 1 off off shell(O.S.) W are separated into a new category of not ``WW-like" signal events
 \tiny
+
 Tight Selection with muon cone\\
     \begin{tabular}{|p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}|}
 \hline 
@@ -512,7 +563,8 @@ mwhad &\num{3.41e+05 } & \num{1.88e+06 } & \num{2.37e+05}\\
 qcostw &\num{3.40e+05 } & \num{1.80e+06 } & \num{2.36e+05}\\ 
 \hline 
  $\epsilon$ & $0.5885 \pm 0.0052$ & $0.463 \pm 0.002$ & $0.4138 \pm 0.0052$ \\ 
-\end{tabular}\\
+\end{tabular}
+
 Loose Selection with tau cone\\
   \begin{tabular}{|p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}|}
 \hline 
@@ -537,61 +589,113 @@ qcostw &\num{3.63e+03 } & \num{1.18e+05 } & \num{4.77e+04}\\
 \hline 
  $\epsilon$ & $0.0062 \pm 0.0081$ & $0.0303 \pm 0.0007$ & $0.083 \pm 0.003$ \\ 
 
-\end{tabular} 
+\end{tabular} \\
+\scriptsize
+-- selection is not that efficient for these types of events
+  
 
 \end{frame}
 
-\begin{frame}{Event Selection Summary}
+\begin{frame}{Event Selection Summary (LR)}
  \tiny
  (-0.8, +0.3) 1600 fb${^-1}$\\
- \begin{tabular}{ |p{0.08\textwidth}|p{0.08\textwidth}p{0.08\textwidth}|p{0.08\textwidth}|p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}|} 
+ \begin{tabular}{ |p{0.08\textwidth}|p{0.08\textwidth}p{0.11\textwidth}|p{0.08\textwidth}|p{0.08\textwidth}p{0.11\textwidth}p{0.08\textwidth}|} 
  \hline 
    &  \multicolumn{3}{|l|}{Tight Selection} &  \multicolumn{3}{|l|}{ Tight + Loose Sel.}  \\  \hline  
  & Sel. Total & Efficiency & Purity & Sel. Total & Efficiency & Purity \\ 
  \hline  
  Bkg. & 6.07e+05 & & & 8.39e+05 & &  \\ 
- Signal & 4.5e+06 & 0.579 & 0.881 & 4.95e+06 & 0.638 & 0.855 \\ 
- Sig.+O.S. & 6.98e+06 & 0.545 & 0.92 & 7.56e+06 & 0.59 & 0.9 \\ 
+ Signal & 4.50e+06 & $0.579 \pm 0.002$ & 0.881 & 4.95e+06 & $0.638 \pm 0.002$ & 0.855 \\ 
+ Sig.+O.S. & 6.98e+06 & $0.545 \pm 0.002$ & 0.920 & 7.56e+06 & $0.590 \pm 0.002$ & 0.900 \\ 
 \hline 
-\end{tabular} 
+\end{tabular} \\
+\normalsize
+\quad \quad \\
+\scriptsize
+\begin{itemize}
+\item[-] Signal is only on-shell WW-like events
+\item[-] Signal + O.S. includes both selections including the not WW-like signal events
+\item[-] in LR we find ratio of S/B to be 1 order of magnitude
+\item[-] Good efficiency and high purity for the signal case
+\item[-] When adding O.S. events we only strengthen the purity, but efficiency drops because the events are not ideal for selection
+\end{itemize}
 
+\end{frame}
+
+\begin{frame}{Event Selection Summary (RL,LL,RR)}
+
+\tiny
 (+0.8, -0.3) 1600 fb$^{-1}$\\
- \begin{tabular}{ |p{0.08\textwidth}|p{0.08\textwidth}p{0.08\textwidth}|p{0.08\textwidth}|p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}|} 
+ \begin{tabular}{ |p{0.08\textwidth}|p{0.08\textwidth}p{0.11\textwidth}|p{0.08\textwidth}|p{0.08\textwidth}p{0.11\textwidth}p{0.08\textwidth}|} 
  \hline 
    &  \multicolumn{3}{|l|}{Tight Selection} &  \multicolumn{3}{|l|}{ Tight + Loose Sel.}  \\  \hline  
  & Sel. Total & Efficiency & Purity & Sel. Total & Efficiency & Purity \\ 
  \hline  
  Bkg. & 3.09e+05 & & & 3.89e+05 & &  \\ 
- Signal & 2.91e+05 & 0.585 & 0.485 & 3.21e+05 & 0.645 & 0.452 \\ 
- Sig.+O.S. & 5.54e+05 & 0.447 & 0.642 & 6.06e+05 & 0.489 & 0.609 \\ 
+ Signal & 2.91e+05 & $0.585 \pm 0.002$ & 0.485 & 3.21e+05 & $0.645 \pm 0.002$ & 0.452 \\ 
+ Sig.+O.S. & 5.54e+05 & $0.447 \pm 0.002$ & 0.642 & 6.06e+05 & $0.489 \pm 0.002$ & 0.609 \\ 
 \hline 
 \end{tabular} 
 
 (-0.8, -0.3) 400 fb$^{-1}$\\
- \begin{tabular}{ |p{0.08\textwidth}|p{0.08\textwidth}p{0.08\textwidth}|p{0.08\textwidth}|p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}|} 
+ \begin{tabular}{ |p{0.08\textwidth}|p{0.08\textwidth}p{0.11\textwidth}|p{0.08\textwidth}|p{0.08\textwidth}p{0.11\textwidth}p{0.08\textwidth}|} 
  \hline 
    &  \multicolumn{3}{|l|}{Tight Selection} &  \multicolumn{3}{|l|}{ Tight + Loose Sel.}  \\  \hline  
  & Sel. Total & Efficiency & Purity & Sel. Total & Efficiency & Purity \\ 
  \hline  
  Bkg. & 1e+05 & & & 1.33e+05 & &  \\ 
- Signal & 6.06e+05 & 0.579 & 0.858 & 6.67e+05 & 0.638 & 0.834 \\ 
- Sig.+O.S. & 9.7e+05 & 0.525 & 0.906 & 1.05e+06 & 0.569 & 0.888 \\ 
+ Signal & 6.06e+05 & $0.579 \pm 0.002$ & 0.858 & 6.67e+05 & $0.638 \pm 0.002$ & 0.834 \\ 
+ Sig.+O.S. & 9.7e+05  & $0.525 \pm 0.002$ & 0.906 & 1.05e+06 & $0.569 \pm 0.002$ & 0.888 \\ 
 \hline 
 \end{tabular} \\
 (+0.8, +03) 400 fb$^{-1}$\\
- \begin{tabular}{ |p{0.08\textwidth}|p{0.08\textwidth}p{0.08\textwidth}|p{0.08\textwidth}|p{0.08\textwidth}p{0.08\textwidth}p{0.08\textwidth}|} 
+ \begin{tabular}{ |p{0.08\textwidth}|p{0.08\textwidth}p{0.11\textwidth}|p{0.08\textwidth}|p{0.08\textwidth}p{0.11\textwidth}p{0.08\textwidth}|} 
  \hline 
    &  \multicolumn{3}{|l|}{Tight Selection} &  \multicolumn{3}{|l|}{ Tight + Loose Sel.}  \\  \hline  
  & Sel. Total & Efficiency & Purity & Sel. Total & Efficiency & Purity \\ 
  \hline  
  Bkg. & 6.61e+04 & & & 8.16e+04 & &  \\ 
- Signal & 1.28e+05 & 0.581 & 0.659 & 1.41e+05 & 0.64 & 0.633 \\ 
- Sig.+O.S. & 2.4e+05 & 0.45 & 0.784 & 2.62e+05 & 0.492 & 0.763 \\ 
+ Signal & 1.28e+05 & $0.581 \pm 0.002$ & 0.659 & 1.41e+05 & $0.640 \pm 0.002$ & 0.633 \\ 
+ Sig.+O.S. & 2.4e+05 & $0.450 \pm 0.002$ & 0.784 & 2.62e+05 & $0.492 \pm 0.002$ & 0.763 \\ 
 \hline 
-\end{tabular} 
+\end{tabular}
+\scriptsize 
+\begin{itemize}
+\item[-] semi-leptonic decays are suppressed in RL, so purity is reduced
+\item[-] other polarizations (LL,RR) are comparable to LR but slightly worse
+\item[-] Can potentially improve with more cuts :
+	\begin{itemize}
+		\scriptsize
+		\item[--] Recoil mass
+		\item[--] Leptonic W mass (fitted) 
+		\item[--] Other fit quantities
+	\end{itemize}	
+\end{itemize}
+\quad \quad \\
+W.I.P-- Kinematic fitting with E,P and equal mass constraints. Currently ``working" but there appears to be a clash between neutrino fit object and isr photon fit objects in Marlin Kinfit
+
+
+
 
 \end{frame}
 
+\begin{frame}{Summary}
+Completed Tasks:
+\begin{itemize}
+	\item[-] Performed a benchmarking analysis with $WW\rightarrow qql\nu$
+	\item[-] Treated the leptons universally with TauFinder
+	\item[-] Rejected $\gamma \gamma$ pileup by fragmenting jets and making a Pt cut on the resulting mini-jets
+	\item[-] Performed a basic event selection for all polarizations for a total of 4000 fb$^-1$ of data
+	
+\end{itemize}
+TODO:
+\begin{itemize}
+	\item[-] fix constrained fitting
+	\item[-] improve event selection
+	\item[-] study efficiency as a function of $cos\theta$ of the lepton 
 
+\end{itemize}
+
+\end{frame}
 
 \end{document}
