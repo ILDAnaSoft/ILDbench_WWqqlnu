@@ -1,0 +1,10 @@
+$ maxntracks 51
+$ maxqqmass 389
+$ maxroots 620
+$ maxvise 490
+$ minntracks 14
+$ minqcost -22
+$ minqqmass 62
+$ minroots 240
+$ minvise 160
+$ minvispt 25

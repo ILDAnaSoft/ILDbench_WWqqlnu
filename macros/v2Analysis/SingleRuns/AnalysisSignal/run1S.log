@@ -1,0 +1,108 @@
+nocut 1 lepton 1 maxvise 500 minntracks 10 minqcost -95 minqqmass 40 maxqqmass 120 minroots 100 minvispt 5 maxvrec 135000 
+entries144520
+Running with 1600 -0.8 0.3  37151 58827 11413 37129
+$$ WS1 cut  nocut lepton maxvise minntracks minqcost minqqmass maxqqmass minroots minvispt maxvrec 
+ LL  325 113 111 106 80 76 67 67 67 64 
+ LR  31242 25708 25054 24361 24238 22526 20705 20705 20481 20453 
+ RL  8984 8281 8231 8041 7929 7872 7105 7105 7082 7067 
+ RR  310 123 123 120 99 91 86 86 86 83 
+$$ WS1 tot  40861 34225 33519 32628 32346 30565 27963 27963 27716 27667 
+* WS1 cut  nocut lepton maxvise minntracks minqcost minqqmass maxqqmass minroots minvispt maxvrec 
+ LL  3320 1154 1134 1082 817 776 684 684 684 653 
+ LR  3880077 3192786 3111563 3025496 3010220 2797599 2571442 2571442 2543622 2540145 
+ RL  1006 927 921 900 888 881 795 795 793 791 
+ RR  651 258 258 252 207 191 180 180 180 174 
+* WS1 tot  3885054 3195125 3113876 3027730 3012132 2799447 2573101 2573101 2545279 2541763 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleW_semileptonic/4f_singleW_semileptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree WS1 TIGHT ../Analysis/mastercuts/mastercutR1_TIGHT.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutCombOptFiles/intermediateRootFile/test2Tight.root RECREATE -0.8 0.3 1600 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleW_semileptonic/4f_singleW_semileptonicfile.root" 
+nocut 1 lepton 1 maxvise 500 minntracks 10 minqcost -95 minqqmass 40 maxqqmass 120 minroots 100 minvispt 5 maxvrec 135000 
+entries144520
+Running with 1600 -0.8 0.3  37151 58827 11413 37129
+$$ WSBG cut  nocut lepton maxvise minntracks minqcost minqqmass maxqqmass minroots minvispt maxvrec 
+ LL  36826 11969 11941 11532 10508 9650 8998 8964 8903 8210 
+ LR  27585 17052 16918 16496 15869 15226 13692 13672 13600 13348 
+ RL  2429 2185 2171 2125 2075 2051 1727 1727 1723 1718 
+ RR  36819 11970 11950 11583 10528 9715 9091 9042 8990 8339 
+$$ WSBG tot  103659 43176 42980 41736 38980 36642 33508 33405 33216 31615 
+* WSBG cut  nocut lepton maxvise minntracks minqcost minqqmass maxqqmass minroots minvispt maxvrec 
+ LL  376226 122279 121993 117814 107353 98587 91926 91579 90956 83876 
+ LR  3425898 2117760 2101118 2048708 1970838 1890981 1700467 1697983 1689041 1657745 
+ RL  272 244 243 238 232 229 193 193 192 192 
+ RR  77355 25148 25106 24335 22119 20410 19099 18997 18887 17520 
+* WSBG tot  3879751 2265431 2248460 2191095 2100542 2010207 1811685 1808752 1799076 1759333 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleW_semileptonic/4f_singleW_semileptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree WSBG TIGHT ../Analysis/mastercuts/mastercutR1_TIGHT.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutCombOptFiles/intermediateRootFile/test2Tight.root UPDATE -0.8 0.3 1600 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleW_semileptonic/4f_singleW_semileptonicfile.root" 
+nocut 1 lepton 1 maxvise 500 minntracks 10 minqcost -95 minqqmass 40 maxqqmass 120 minroots 100 minvispt 5 maxvrec 135000 
+entries81672
+Running with 1600 -0.8 0.3  0 58883 22789 0
+$$ WWS1 cut  nocut lepton maxvise minntracks minqcost minqqmass maxqqmass minroots minvispt maxvrec 
+ LL  0 0 0 0 0 0 0 0 0 0 
+ LR  25572 21875 21682 21094 20974 19402 17981 17981 17775 17757 
+ RL  8944 8517 8503 8322 8218 8159 7389 7389 7363 7350 
+ RR  0 0 0 0 0 0 0 0 0 0 
+$$ WWS1 tot  34516 30392 30185 29416 29192 27561 25370 25370 25138 25107 
+* WWS1 cut  nocut lepton maxvise minntracks minqcost minqqmass maxqqmass minroots minvispt maxvrec 
+ LL  0 0 0 0 0 0 0 0 0 0 
+ LR  3870380 3310831 3281620 3192625 3174463 2936537 2721465 2721465 2690287 2687562 
+ RL  1001 953 952 932 920 913 827 827 824 823 
+ RR  0 0 0 0 0 0 0 0 0 0 
+* WWS1 tot  3871381 3311784 3282572 3193557 3175383 2937450 2722292 2722292 2691111 2688385 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_semileptonic/4f_WW_semileptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree WWS1 TIGHT ../Analysis/mastercuts/mastercutR1_TIGHT.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutCombOptFiles/intermediateRootFile/test2Tight.root UPDATE -0.8 0.3 1600 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_semileptonic/4f_WW_semileptonicfile.root" 
+nocut 1 lepton 1 maxvise 500 minntracks 10 minqcost -95 minqqmass 40 maxqqmass 120 minroots 100 minvispt 5 maxvrec 135000 
+entries81672
+Running with 1600 -0.8 0.3  0 58883 22789 0
+$$ WWS2 cut  nocut lepton maxvise minntracks minqcost minqqmass maxqqmass minroots minvispt maxvrec 
+ LL  0 0 0 0 0 0 0 0 0 0 
+ LR  25733 15037 15012 14604 14425 13432 12110 12106 11950 11878 
+ RL  8826 5388 5386 5302 5216 5171 4509 4509 4506 4479 
+ RR  0 0 0 0 0 0 0 0 0 0 
+$$ WWS2 tot  34559 20425 20398 19906 19641 18603 16619 16615 16456 16357 
+* WWS2 cut  nocut lepton maxvise minntracks minqcost minqqmass maxqqmass minroots minvispt maxvrec 
+ LL  0 0 0 0 0 0 0 0 0 0 
+ LR  3894748 2275884 2272100 2210348 2183256 2032964 1832876 1832270 1808659 1797762 
+ RL  988 603 603 593 584 579 505 505 504 501 
+ RR  0 0 0 0 0 0 0 0 0 0 
+* WWS2 tot  3895736 2276487 2272703 2210941 2183840 2033543 1833381 1832775 1809163 1798263 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_semileptonic/4f_WW_semileptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree WWS2 TIGHT ../Analysis/mastercuts/mastercutR1_TIGHT.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutCombOptFiles/intermediateRootFile/test2Tight.root UPDATE -0.8 0.3 1600 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_semileptonic/4f_WW_semileptonicfile.root" 
+nocut 1 lepton 1 maxvise 500 minntracks 10 minqcost -95 minqqmass 40 maxqqmass 120 minroots 100 minvispt 5 maxvrec 135000 
+entries81672
+Running with 1600 -0.8 0.3  0 58883 22789 0
+$$ WWS1BG cut  nocut lepton maxvise minntracks minqcost minqqmass maxqqmass minroots minvispt maxvrec 
+ LL  0 0 0 0 0 0 0 0 0 0 
+ LR  3817 3375 3352 3270 3263 3085 2274 2274 2246 2245 
+ RL  2494 2339 2330 2276 2222 2181 1841 1841 1835 1833 
+ RR  0 0 0 0 0 0 0 0 0 0 
+$$ WWS1BG tot  6311 5714 5682 5546 5485 5266 4115 4115 4081 4078 
+* WWS1BG cut  nocut lepton maxvise minntracks minqcost minqqmass maxqqmass minroots minvispt maxvrec 
+ LL  0 0 0 0 0 0 0 0 0 0 
+ LR  577711 510814 507332 494922 493862 466921 344175 344175 339937 339785 
+ RL  279 261 260 254 248 244 206 206 205 205 
+ RR  0 0 0 0 0 0 0 0 0 0 
+* WWS1BG tot  577990 511075 507592 495176 494110 467165 344381 344381 340142 339990 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_semileptonic/4f_WW_semileptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree WWS1BG TIGHT ../Analysis/mastercuts/mastercutR1_TIGHT.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutCombOptFiles/intermediateRootFile/test2Tight.root UPDATE -0.8 0.3 1600 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_semileptonic/4f_WW_semileptonicfile.root" 
+nocut 1 lepton 1 maxvise 500 minntracks 10 minqcost -95 minqqmass 40 maxqqmass 120 minroots 100 minvispt 5 maxvrec 135000 
+entries81672
+Running with 1600 -0.8 0.3  0 58883 22789 0
+$$ WWS2BG cut  nocut lepton maxvise minntracks minqcost minqqmass maxqqmass minroots minvispt maxvrec 
+ LL  0 0 0 0 0 0 0 0 0 0 
+ LR  3761 2259 2253 2210 2189 2072 1575 1575 1556 1545 
+ RL  2525 1625 1624 1594 1574 1551 1303 1303 1300 1269 
+ RR  0 0 0 0 0 0 0 0 0 0 
+$$ WWS2BG tot  6286 3884 3877 3804 3763 3623 2878 2878 2856 2814 
+* WWS2BG cut  nocut lepton maxvise minntracks minqcost minqqmass maxqqmass minroots minvispt maxvrec 
+ LL  0 0 0 0 0 0 0 0 0 0 
+ LR  569235 341904 340996 334488 331310 313601 238379 238379 235504 233839 
+ RL  282 181 181 178 176 173 145 145 145 142 
+ RR  0 0 0 0 0 0 0 0 0 0 
+* WWS2BG tot  569517 342085 341177 334666 331486 313774 238524 238524 235649 233981 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_semileptonic/4f_WW_semileptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree WWS2BG TIGHT ../Analysis/mastercuts/mastercutR1_TIGHT.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutCombOptFiles/intermediateRootFile/test2Tight.root UPDATE -0.8 0.3 1600 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_semileptonic/4f_WW_semileptonicfile.root" 

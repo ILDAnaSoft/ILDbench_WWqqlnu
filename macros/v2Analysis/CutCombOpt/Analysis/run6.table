@@ -1,0 +1,45 @@
+ \begin{tabular}{|p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}|}
+\hline 
+   & Prompt $\mu$ & Prompt $e$ & $\tau$ & Tot. Sig. & 2f & 4f & 6f & Higgs \\ \hline 
+nocut &\num{3.87e+06 } & \num{3.89e+06 } & \num{3.90e+06} &\num{1.17e+07} & \num{4.22e+07} & \num{3.22e+07} & \num{2.14e+05} & \num{4.12e+05} \\ 
+\hline 
+lepton &\num{3.31e+06 } & \num{3.20e+06 } & \num{2.28e+06} &\num{8.78e+06} & \num{1.15e+07} & \num{1.18e+07} & \num{1.63e+05} & \num{1.15e+05} \\ 
+\hline 
+maxntracks &\num{3.30e+06 } & \num{3.18e+06 } & \num{2.27e+06} &\num{8.75e+06} & \num{1.13e+07} & \num{1.15e+07} & \num{1.31e+05} & \num{1.04e+05} \\ 
+\hline 
+maxqqmass &\num{3.29e+06 } & \num{3.17e+06 } & \num{2.26e+06} &\num{8.71e+06} & \num{1.09e+07} & \num{1.09e+07} & \num{1.27e+05} & \num{9.79e+04} \\ 
+\hline 
+maxroots &\num{3.28e+06 } & \num{3.15e+06 } & \num{2.26e+06} &\num{8.69e+06} & \num{1.08e+07} & \num{1.09e+07} & \num{1.27e+05} & \num{9.76e+04} \\ 
+\hline 
+maxvise &\num{3.21e+06 } & \num{3.03e+06 } & \num{2.25e+06} &\num{8.49e+06} & \num{9.69e+06} & \num{1.07e+07} & \num{1.27e+05} & \num{9.26e+04} \\ 
+\hline 
+minqcost &\num{3.06e+06 } & \num{2.87e+06 } & \num{2.11e+06} &\num{8.04e+06} & \num{7.60e+06} & \num{8.24e+06} & \num{8.60e+04} & \num{5.89e+04} \\ 
+\hline 
+minvispt &\num{2.63e+06 } & \num{2.51e+06 } & \num{1.81e+06} &\num{6.95e+06} & \num{1.76e+06} & \num{4.69e+06} & \num{7.97e+04} & \num{4.78e+04} \\ 
+\hline 
+ $\epsilon$ & $0.6788 \pm 0.00024$ & $0.646 \pm 0.00024$ & $0.4654 \pm 0.00025$ &  $0.5965 \pm 0.00014$ & $0.04164 \pm 3.1e-05$ & $0.1455 \pm 6.2e-05$ & $0.3722 \pm 0.001$ & $0.1159 \pm 0.0005$ \\ 
+ \begin{tabular}{|p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}||p{0.08\textwidth}|}
+\hline 
+   & Prompt $\mu O.S. & Prompt e O.S. & Tau O.S. \\ \hline 
+nocut &\num{5.78e+05 } & \num{3.88e+06 } & \num{5.70e+05}\\ 
+\hline 
+lepton &\num{5.11e+05 } & \num{2.27e+06 } & \num{3.42e+05}\\ 
+\hline 
+maxntracks &\num{5.02e+05 } & \num{2.25e+06 } & \num{3.37e+05}\\ 
+\hline 
+maxqqmass &\num{4.97e+05 } & \num{2.24e+06 } & \num{3.34e+05}\\ 
+\hline 
+maxroots &\num{4.96e+05 } & \num{2.22e+06 } & \num{3.34e+05}\\ 
+\hline 
+maxvise &\num{4.86e+05 } & \num{2.20e+06 } & \num{3.33e+05}\\ 
+\hline 
+minqcost &\num{4.60e+05 } & \num{1.45e+06 } & \num{3.16e+05}\\ 
+\hline 
+minvispt &\num{4.00e+05 } & \num{1.35e+06 } & \num{2.79e+05}\\ 
+\hline 
+ $\epsilon$ & $0.6929 \pm 0.00061$ & $0.3477 \pm 0.00024$ & $0.4897 \pm 0.00066$ \\ 
+--------------
+ ** allBG 6573758.0 75087084.0 0.0875484524076
+ ** S 4441017.0 7767117.0 0.571771611011 0.403187264379
+ ** OS 2150048.0 5035731.0 0.426958469386
+ ** SOS  6591065.0 12802848.0 0.514812407364 0.50065731989

@@ -1,0 +1,360 @@
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries376000
+Running with 400 -0.8 -0.3  94000 94000 94000 94000
+* BHAg cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  693103 683665 3856 0 0 0 0 0 0 0 0 0 0 
+ LR  459290 453988 2682 0 0 0 0 0 0 0 0 0 0 
+ RL  87674 86622 535 0 0 0 0 0 0 0 0 0 0 
+ RR  41396 40841 246 0 0 0 0 0 0 0 0 0 0 
+* BHAg tot  1281463 1265116 7319 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/2f_Z_bhabhag/2f_Z_bhabhagfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree BHAg LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root RECREATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/2f_Z_bhabhag/2f_Z_bhabhagfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries103771
+Running with 400 -0.8 -0.3  0 50955 52816 0
+* ZHAD cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  0 0 0 0 0 0 0 0 0 0 0 0 0 
+ LR  4091283 419124 217993 0 0 0 0 0 0 0 0 0 0 
+ RL  467862 49296 26397 0 0 0 0 0 0 0 0 0 0 
+ RR  0 0 0 0 0 0 0 0 0 0 0 0 0 
+* ZHAD tot  4559145 468420 244390 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/2f_Z_hadronic/2f_Z_hadronicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree ZHAD LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/2f_Z_hadronic/2f_Z_hadronicfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries324000
+Running with 400 -0.8 -0.3  0 162000 162000 0
+* ZL cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  0 0 0 0 0 0 0 0 0 0 0 0 0 
+ LR  698995 577400 28477 0 0 0 0 0 0 0 0 0 0 
+ RL  112966 89779 4393 0 0 0 0 0 0 0 0 0 0 
+ RR  0 0 0 0 0 0 0 0 0 0 0 0 0 
+* ZL tot  811961 667179 32870 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/2f_Z_leptonic/2f_Z_leptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree ZL LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/2f_Z_leptonic/2f_Z_leptonicfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries400185
+Running with 400 -0.8 -0.3  126000 144000 4185 126000
+* WL cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  58996 50056 4850 0 0 0 0 0 0 0 0 0 0 
+ LR  328330 306106 10155 0 0 0 0 0 0 0 0 0 0 
+ RL  217 214 2 0 0 0 0 0 0 0 0 0 0 
+ RR  3528 2996 286 0 0 0 0 0 0 0 0 0 0 
+* WL tot  391071 359372 15293 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleW_leptonic/4f_singleW_leptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree WL LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleW_leptonic/4f_singleW_leptonicfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries144520
+Running with 400 -0.8 -0.3  37151 58827 11413 37129
+* WS cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  176218 71244 16739 0 0 0 0 0 0 0 0 0 0 
+ LR  983496 751712 46494 0 0 0 0 0 0 0 0 0 0 
+ RL  593 562 21 0 0 0 0 0 0 0 0 0 0 
+ RR  10500 4262 1002 0 0 0 0 0 0 0 0 0 0 
+* WS tot  1170807 827780 64256 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleW_semileptonic/4f_singleW_semileptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree WS LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleW_semileptonic/4f_singleW_semileptonicfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries408000
+Running with 400 -0.8 -0.3  99000 98000 99000 112000
+* ZEEL cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  1635896 763517 25001 0 0 0 0 0 0 0 0 0 0 
+ LR  914472 438377 14659 0 0 0 0 0 0 0 0 0 0 
+ RL  184799 87449 2827 0 0 0 0 0 0 0 0 0 0 
+ RR  97789 45688 1581 0 0 0 0 0 0 0 0 0 0 
+* ZEEL tot  2832956 1335031 44068 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleZee_leptonic/4f_singleZee_leptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree ZEEL LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleZee_leptonic/4f_singleZee_leptonicfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries254736
+Running with 400 -0.8 -0.3  64985 59949 64806 64996
+* ZEES cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  415464 139481 13170 0 0 0 0 0 0 0 0 0 0 
+ LR  247102 92927 7777 0 0 0 0 0 0 0 0 0 0 
+ RL  44890 14556 1456 0 0 0 0 0 0 0 0 0 0 
+ RR  24892 8293 783 0 0 0 0 0 0 0 0 0 0 
+* ZEES tot  732348 255257 23186 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleZee_semileptonic/4f_singleZee_semileptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree ZEES LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleZee_semileptonic/4f_singleZee_semileptonicfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries146824
+Running with 400 -0.8 -0.3  0 139399 7425 0
+* ZNUL cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  0 0 0 0 0 0 0 0 0 0 0 0 0 
+ LR  35128 19140 2339 0 0 0 0 0 0 0 0 0 0 
+ RL  386 228 17 0 0 0 0 0 0 0 0 0 0 
+ RR  0 0 0 0 0 0 0 0 0 0 0 0 0 
+* ZNUL tot  35514 19368 2356 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleZnunu_leptonic/4f_singleZnunu_leptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree ZNUL LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleZnunu_leptonic/4f_singleZnunu_leptonicfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries89417
+Running with 400 -0.8 -0.3  0 59925 29492 0
+* ZNUS cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  0 0 0 0 0 0 0 0 0 0 0 0 0 
+ LR  119916 19006 11396 0 0 0 0 0 0 0 0 0 0 
+ RL  1533 162 95 0 0 0 0 0 0 0 0 0 0 
+ RR  0 0 0 0 0 0 0 0 0 0 0 0 0 
+* ZNUS tot  121449 19168 11491 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleZnunu_semileptonic/4f_singleZnunu_semileptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree ZNUS LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleZnunu_semileptonic/4f_singleZnunu_semileptonicfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries52678
+Running with 400 -0.8 -0.3  0 35917 16761 0
+* WWHAD cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  0 0 0 0 0 0 0 0 0 0 0 0 0 
+ LR  967766 198796 118286 0 0 0 0 0 0 0 0 0 0 
+ RL  871 195 117 0 0 0 0 0 0 0 0 0 0 
+ RR  0 0 0 0 0 0 0 0 0 0 0 0 0 
+* WWHAD tot  968637 198991 118403 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_hadronic/4f_WW_hadronicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree WWHAD LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_hadronic/4f_WW_hadronicfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries152085
+Running with 400 -0.8 -0.3  0 150000 2085 0
+* WWL cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  0 0 0 0 0 0 0 0 0 0 0 0 0 
+ LR  99629 94025 2124 0 0 0 0 0 0 0 0 0 0 
+ RL  108 106 0 0 0 0 0 0 0 0 0 0 0 
+ RR  0 0 0 0 0 0 0 0 0 0 0 0 0 
+* WWL tot  99737 94131 2124 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_leptonic/4f_WW_leptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree WWL LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_leptonic/4f_WW_leptonicfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries81672
+Running with 400 -0.8 -0.3  0 58883 22789 0
+* WWS cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  0 0 0 0 0 0 0 0 0 0 0 0 0 
+ LR  1199702 958674 100078 0 0 0 0 0 0 0 0 0 0 
+ RL  1185 1050 127 0 0 0 0 0 0 0 0 0 0 
+ RR  0 0 0 0 0 0 0 0 0 0 0 0 0 
+* WWS tot  1200887 959724 100205 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_semileptonic/4f_WW_semileptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree WWS LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_semileptonic/4f_WW_semileptonicfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries51652
+Running with 400 -0.8 -0.3  0 31954 19698 0
+* ZZHAD cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  0 0 0 0 0 0 0 0 0 0 0 0 0 
+ LR  85708 17453 9551 0 0 0 0 0 0 0 0 0 0 
+ RL  7068 1347 742 0 0 0 0 0 0 0 0 0 0 
+ RR  0 0 0 0 0 0 0 0 0 0 0 0 0 
+* ZZHAD tot  92776 18800 10293 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_ZZ_hadronic/4f_ZZ_hadronicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree ZZHAD LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_ZZ_hadronic/4f_ZZ_hadronicfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries46427
+Running with 400 -0.8 -0.3  0 29011 17416 0
+* ZZL cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  0 0 0 0 0 0 0 0 0 0 0 0 0 
+ LR  7562 5895 311 0 0 0 0 0 0 0 0 0 0 
+ RL  957 721 39 0 0 0 0 0 0 0 0 0 0 
+ RR  0 0 0 0 0 0 0 0 0 0 0 0 0 
+* ZZL tot  8519 6616 350 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_ZZ_leptonic/4f_ZZ_leptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree ZZL LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_ZZ_leptonic/4f_ZZ_leptonicfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries113977
+Running with 400 -0.8 -0.3  0 55986 57991 0
+* ZZS cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  0 0 0 0 0 0 0 0 0 0 0 0 0 
+ LR  76679 31664 5037 0 0 0 0 0 0 0 0 0 0 
+ RL  7497 3132 479 0 0 0 0 0 0 0 0 0 0 
+ RR  0 0 0 0 0 0 0 0 0 0 0 0 0 
+* ZZS tot  84176 34796 5516 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_ZZ_semileptonic/4f_ZZ_semileptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree ZZS LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_ZZ_semileptonic/4f_ZZ_semileptonicfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries45001
+Running with 400 -0.8 -0.3  10000 15001 10000 10000
+* EEH cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  1365 1318 15 0 0 0 0 0 0 0 0 0 0 
+ LR  1890 1846 15 0 0 0 0 0 0 0 0 0 0 
+ RL  193 190 1 0 0 0 0 0 0 0 0 0 0 
+ RR  81 78 1 0 0 0 0 0 0 0 0 0 0 
+* EEH tot  3529 3432 32 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/eeH/eeHfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree EEH LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/eeH/eeHfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries20000
+Running with 400 -0.8 -0.3  0 10000 10000 0
+* MUH cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  0 0 0 0 0 0 0 0 0 0 0 0 0 
+ LR  715 709 0 0 0 0 0 0 0 0 0 0 0 
+ RL  94 93 0 0 0 0 0 0 0 0 0 0 0 
+ RR  0 0 0 0 0 0 0 0 0 0 0 0 0 
+* MUH tot  809 802 0 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/mumuH/mumuHfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree MUH LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/mumuH/mumuHfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries20000
+Running with 400 -0.8 -0.3  0 10000 10000 0
+* TAUH cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  0 0 0 0 0 0 0 0 0 0 0 0 0 
+ LR  714 684 69 0 0 0 0 0 0 0 0 0 0 
+ RL  94 90 9 0 0 0 0 0 0 0 0 0 0 
+ RR  0 0 0 0 0 0 0 0 0 0 0 0 0 
+* TAUH tot  808 774 78 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/tautauH/tautauHfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree TAUH LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/tautauH/tautauHfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries68431
+Running with 400 -0.8 -0.3  0 35464 32967 0
+* QQH cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  0 0 0 0 0 0 0 0 0 0 0 0 0 
+ LR  14452 4747 1501 0 0 0 0 0 0 0 0 0 0 
+ RL  1909 621 196 0 0 0 0 0 0 0 0 0 0 
+ RR  0 0 0 0 0 0 0 0 0 0 0 0 0 
+* QQH tot  16361 5368 1697 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/qqH/qqHfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree QQH LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/qqH/qqHfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries80557
+Running with 400 -0.8 -0.3  0 58997 21560 0
+* NNH cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  0 0 0 0 0 0 0 0 0 0 0 0 0 
+ LR  36424 9745 2533 0 0 0 0 0 0 0 0 0 0 
+ RL  560 135 32 0 0 0 0 0 0 0 0 0 0 
+ RR  0 0 0 0 0 0 0 0 0 0 0 0 0 
+* NNH tot  36984 9880 2565 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/nunuH/nunuHfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree NNH LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/nunuH/nunuHfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries268056
+Running with 400 -0.8 -0.3  78361 97000 14277 78418
+* ZWML cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  36672 32968 655 0 0 0 0 0 0 0 0 0 0 
+ LR  127377 121268 1214 0 0 0 0 0 0 0 0 0 0 
+ RL  742 617 10 0 0 0 0 0 0 0 0 0 0 
+ RR  2195 1974 38 0 0 0 0 0 0 0 0 0 0 
+* ZWML tot  166986 156827 1917 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleZsingleWMix_leptonic/4f_singleZsingleWMix_leptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree ZWML LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleZsingleWMix_leptonic/4f_singleZsingleWMix_leptonicfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries56608
+Running with 400 -0.8 -0.3  0 35853 20755 0
+* ZZWWH cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  0 0 0 0 0 0 0 0 0 0 0 0 0 
+ LR  806413 166442 97728 0 0 0 0 0 0 0 0 0 0 
+ RL  2046 451 267 0 0 0 0 0 0 0 0 0 0 
+ RR  0 0 0 0 0 0 0 0 0 0 0 0 0 
+* ZZWWH tot  808459 166893 97995 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_ZZWWMix_hadronic/4f_ZZWWMix_hadronicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree ZZWWH LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_ZZWWMix_hadronic/4f_ZZWWMix_hadronicfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries165282
+Running with 400 -0.8 -0.3  0 155771 9511 0
+* ZZWWL cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  0 0 0 0 0 0 0 0 0 0 0 0 0 
+ LR  103297 94804 5196 0 0 0 0 0 0 0 0 0 0 
+ RL  494 330 23 0 0 0 0 0 0 0 0 0 0 
+ RR  0 0 0 0 0 0 0 0 0 0 0 0 0 
+* ZZWWL tot  103791 95134 5219 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_ZZWWMix_leptonic/4f_ZZWWMix_leptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree ZZWWL LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_ZZWWMix_leptonic/4f_ZZWWMix_leptonicfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries707437
+Running with 400 -0.8 -0.3  166977 255690 117723 167047
+* EEWW cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  1551 1444 56 0 0 0 0 0 0 0 0 0 0 
+ LR  2075 1970 46 0 0 0 0 0 0 0 0 0 0 
+ RL  94 84 5 0 0 0 0 0 0 0 0 0 0 
+ RR  92 86 3 0 0 0 0 0 0 0 0 0 0 
+* EEWW tot  3812 3584 110 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/6f_eeWW/6f_eeWWfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree EEWW LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/6f_eeWW/6f_eeWWfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries299698
+Running with 400 -0.8 -0.3  20000 179698 80000 20000
+* LLWW cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  43 38 2 0 0 0 0 0 0 0 0 0 0 
+ LR  1098 1017 46 0 0 0 0 0 0 0 0 0 0 
+ RL  5 5 0 0 0 0 0 0 0 0 0 0 0 
+ RR  2 2 0 0 0 0 0 0 0 0 0 0 0 
+* LLWW tot  1148 1062 48 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/6f_llWW/6f_llWWfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree LLWW LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/6f_llWW/6f_llWWfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries228600
+Running with 400 -0.8 -0.3  25000 90600 88000 25000
+* TTB cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  127 105 8 0 0 0 0 0 0 0 0 0 0 
+ LR  20578 16352 1761 0 0 0 0 0 0 0 0 0 0 
+ RL  1576 1256 138 0 0 0 0 0 0 0 0 0 0 
+ RR  7 6 0 0 0 0 0 0 0 0 0 0 0 
+* TTB tot  22288 17719 1907 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/6f_ttbar/6f_ttbarfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree TTB LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/6f_ttbar/6f_ttbarfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries270049
+Running with 400 -0.8 -0.3  30000 121049 89000 30000
+* VVWW cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  42 32 2 0 0 0 0 0 0 0 0 0 0 
+ LR  1877 1647 110 0 0 0 0 0 0 0 0 0 0 
+ RL  6 5 0 0 0 0 0 0 0 0 0 0 0 
+ RR  2 1 0 0 0 0 0 0 0 0 0 0 0 
+* VVWW tot  1927 1685 112 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/6f_vvWW/6f_vvWWfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree VVWW LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/6f_vvWW/6f_vvWWfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries218159
+Running with 400 -0.8 -0.3  30000 73359 84800 30000
+* XXWW cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  61 47 5 0 0 0 0 0 0 0 0 0 0 
+ LR  1978 1737 128 0 0 0 0 0 0 0 0 0 0 
+ RL  6 5 0 0 0 0 0 0 0 0 0 0 0 
+ RR  3 2 0 0 0 0 0 0 0 0 0 0 0 
+* XXWW tot  2048 1791 133 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/6f_xxWW/6f_xxWWfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree XXWW LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/6f_xxWW/6f_xxWWfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries140000
+Running with 400 -0.8 -0.3  10000 60000 60000 10000
+* XXZ cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  7 5 0 0 0 0 0 0 0 0 0 0 0 
+ LR  8 3 0 0 0 0 0 0 0 0 0 0 0 
+ RL  0 0 0 0 0 0 0 0 0 0 0 0 0 
+ RR  0 0 0 0 0 0 0 0 0 0 0 0 0 
+* XXZ tot  15 8 0 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/6f_xxxxZ/6f_xxxxZfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree XXZ LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/6f_xxxxZ/6f_xxxxZfile.root" 
+nocut 1 1 1 lepton 1 1 1 mucone 1 1 1 maxntracks 1 65 1 minntracks 1 20 1 minvispt 0 50 1 minvise 0 250 10 maxvise 470 700 10 minroots 0 400 10 maxroots 470 700 10 minqqmass 0 70 1 maxqqmass 100 400 1 minqcost -100 90 1 
+entries400915
+Running with 400 -0.8 -0.3  80000 121115 120000 79800
+* YYZ cut  nocut lepton mucone maxntracks minntracks minvispt minvise maxvise minroots maxroots minqqmass maxqqmass minqcost 
+ LL  5 4 0 0 0 0 0 0 0 0 0 0 0 
+ LR  93 72 4 0 0 0 0 0 0 0 0 0 0 
+ RL  2 1 0 0 0 0 0 0 0 0 0 0 0 
+ RR  0 0 0 0 0 0 0 0 0 0 0 0 0 
+* YYZ tot  100 77 4 0 0 0 0 0 0 0 0 0 0 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/6f_yyyyZ/6f_yyyyZfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree YYZ LOOSE cut0.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutOptFiles/intermediateRootFile/testLoose.root UPDATE -0.8 -0.3 400 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/6f_yyyyZ/6f_yyyyZfile.root" 

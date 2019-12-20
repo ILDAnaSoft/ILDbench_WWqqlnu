@@ -1,0 +1,72 @@
+nocut 1 lepton 1 mucone 1 maxntracks 35 maxqqmass 183 maxroots 700 maxvise 470 minqcost -30 minvispt 25 
+entries144520
+Running with 1600 -0.8 0.3  37151 58827 11413 37129
+* WS1 cut  nocut lepton mucone maxntracks maxqqmass maxroots maxvise minqcost minvispt 
+ LL  3320 1287 163 153 153 153 153 91 81 
+ LR  3880077 3296736 128044 118481 103329 102957 92773 73398 54769 
+ RL  1006 957 33 30 27 27 25 19 18 
+ RR  651 294 39 39 37 37 37 25 23 
+* WS1 tot  3885054 3299274 128279 118703 103546 103174 92988 73533 54891 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleW_semileptonic/4f_singleW_semileptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree WS1 LOOSE /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutCombOptFiles/cutcombs/r1LOOSE/6_9_R1_LOOSE.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutCombOptFiles/intermediateRootFile/test6SLoose.root RECREATE -0.8 0.3 1600 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleW_semileptonic/4f_singleW_semileptonicfile.root" 
+nocut 1 lepton 1 mucone 1 maxntracks 35 maxqqmass 183 maxroots 700 maxvise 470 minqcost -30 minvispt 25 
+entries144520
+Running with 1600 -0.8 0.3  37151 58827 11413 37129
+* WSBG cut  nocut lepton mucone maxntracks maxqqmass maxroots maxvise minqcost minvispt 
+ LL  376226 152162 35890 34623 34194 34173 34153 20095 16192 
+ LR  3425898 2287409 217339 205417 197344 197096 195978 121586 98361 
+ RL  272 254 11 10 9 9 9 6 5 
+ RR  77355 31371 7405 7155 7073 7067 7065 4246 3401 
+* WSBG tot  3879751 2471196 260645 247205 238620 238345 237205 145933 117959 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleW_semileptonic/4f_singleW_semileptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree WSBG LOOSE /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutCombOptFiles/cutcombs/r1LOOSE/6_9_R1_LOOSE.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutCombOptFiles/intermediateRootFile/test6SLoose.root UPDATE -0.8 0.3 1600 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_singleW_semileptonic/4f_singleW_semileptonicfile.root" 
+nocut 1 lepton 1 mucone 1 maxntracks 35 maxqqmass 183 maxroots 700 maxvise 470 minqcost -30 minvispt 25 
+entries81672
+Running with 1600 -0.8 0.3  0 58883 22789 0
+* WWS1 cut  nocut lepton mucone maxntracks maxqqmass maxroots maxvise minqcost minvispt 
+ LL  0 0 0 0 0 0 0 0 0 
+ LR  3870380 3362594 77189 71892 65535 65535 62962 45405 33600 
+ RL  1001 962 11 11 9 9 9 5 5 
+ RR  0 0 0 0 0 0 0 0 0 
+* WWS1 tot  3871381 3363556 77200 71903 65544 65544 62971 45410 33605 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_semileptonic/4f_WW_semileptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree WWS1 LOOSE /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutCombOptFiles/cutcombs/r1LOOSE/6_9_R1_LOOSE.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutCombOptFiles/intermediateRootFile/test6SLoose.root UPDATE -0.8 0.3 1600 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_semileptonic/4f_WW_semileptonicfile.root" 
+nocut 1 lepton 1 mucone 1 maxntracks 35 maxqqmass 183 maxroots 700 maxvise 470 minqcost -30 minvispt 25 
+entries81672
+Running with 1600 -0.8 0.3  0 58883 22789 0
+* WWS2 cut  nocut lepton mucone maxntracks maxqqmass maxroots maxvise minqcost minvispt 
+ LL  0 0 0 0 0 0 0 0 0 
+ LR  3894748 2818482 569841 529278 490078 489624 487959 428932 315115 
+ RL  988 807 210 194 180 180 180 123 119 
+ RR  0 0 0 0 0 0 0 0 0 
+* WWS2 tot  3895736 2819289 570051 529472 490258 489804 488139 429055 315234 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_semileptonic/4f_WW_semileptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree WWS2 LOOSE /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutCombOptFiles/cutcombs/r1LOOSE/6_9_R1_LOOSE.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutCombOptFiles/intermediateRootFile/test6SLoose.root UPDATE -0.8 0.3 1600 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_semileptonic/4f_WW_semileptonicfile.root" 
+nocut 1 lepton 1 mucone 1 maxntracks 35 maxqqmass 183 maxroots 700 maxvise 470 minqcost -30 minvispt 25 
+entries81672
+Running with 1600 -0.8 0.3  0 58883 22789 0
+* WWS1BG cut  nocut lepton mucone maxntracks maxqqmass maxroots maxvise minqcost minvispt 
+ LL  0 0 0 0 0 0 0 0 0 
+ LR  577711 514749 8173 6962 6205 6205 5902 4086 2875 
+ RL  279 263 4 3 2 2 2 1 1 
+ RR  0 0 0 0 0 0 0 0 0 
+* WWS1BG tot  577990 515012 8177 6965 6207 6207 5904 4087 2876 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_semileptonic/4f_WW_semileptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree WWS1BG LOOSE /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutCombOptFiles/cutcombs/r1LOOSE/6_9_R1_LOOSE.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutCombOptFiles/intermediateRootFile/test6SLoose.root UPDATE -0.8 0.3 1600 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_semileptonic/4f_WW_semileptonicfile.root" 
+nocut 1 lepton 1 mucone 1 maxntracks 35 maxqqmass 183 maxroots 700 maxvise 470 minqcost -30 minvispt 25 
+entries81672
+Running with 1600 -0.8 0.3  0 58883 22789 0
+* WWS2BG cut  nocut lepton mucone maxntracks maxqqmass maxroots maxvise minqcost minvispt 
+ LL  0 0 0 0 0 0 0 0 0 
+ LR  569235 425754 88238 77492 65081 65081 64778 55697 45405 
+ RL  282 227 48 44 40 40 40 27 25 
+ RR  0 0 0 0 0 0 0 0 0 
+* WWS2BG tot  569517 425981 88286 77536 65121 65121 64818 55724 45430 
+['/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_semileptonic/4f_WW_semileptonicfile.root']
+('from runmacro numFiles == ', 1, ' nthreads == ', '8')
+./compiledthreads 8 tree WWS2BG LOOSE /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutCombOptFiles/cutcombs/r1LOOSE/6_9_R1_LOOSE.cutlist /afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/CutCombOptFiles/intermediateRootFile/test6SLoose.root UPDATE -0.8 0.3 1600 "/afs/desy.de/user/a/anguiano/dust/WWBenchmark/WWFiles/v2files/4f_WW_semileptonic/4f_WW_semileptonicfile.root" 
